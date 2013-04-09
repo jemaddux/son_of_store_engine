@@ -14,8 +14,4 @@ module ApplicationHelper
   def add_all(items=[])
     items.inject(0, :+)
   end
-
-  def category_counts()
-    ########Implement this
-  end
 end
