@@ -1,5 +1,5 @@
 require 'spec_helper'
-describe "cart show", js: true do
+describe "cart show" do
   include_context "standard test dataset"
 
   it "displays a cart" do
@@ -9,7 +9,7 @@ describe "cart show", js: true do
 
   context "cart with one or more items in it" do
     before(:each) do
-      
+
     end
 
 

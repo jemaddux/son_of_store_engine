@@ -4,7 +4,8 @@ describe OrdersController do
   let(:user) {User.create(email: "josh@example.com", role: "user")}
 
   def valid_attributes
-    { "status" => "pending", "user_id" => user.id, "total_cost" => 300 }
+    { "status" => "pending", "user_id" => user.id, "total_cost" => 300,
+      "shipping_id" => 1, "billing_id" => 2 }
   end
 
   describe "GET index" do
