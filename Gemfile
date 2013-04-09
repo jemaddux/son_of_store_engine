@@ -25,7 +25,6 @@ group :development, :test do
   gem 'sqlite3'
   gem 'rspec-rails'
   gem 'unicorn'
-  gem 'growl'
   gem 'simplecov'
   gem 'fabrication'
   gem 'capybara'
@@ -37,3 +36,6 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'selenium-webdriver', '2.31.0'
 end
+
+
+
