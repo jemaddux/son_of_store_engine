@@ -15,6 +15,44 @@
 <% if @order.stripe_card_token.present? %>
   Credit card has been provided.
 <% else %>
+
+  <!--Shipping -->
+  <div class="field">
+    <%= label_tag :shipping_street_name, "Street Name" %>
+    <%= text_field_tag :shipping_street_name, nil, name: nil %>
+  </div>
+  <div class="field">
+    <%= label_tag :shipping_city, "City" %>
+    <%= text_field_tag :shipping_city, nil, name: nil %>
+  </div>
+  <div class="field">
+    <%= label_tag :shipping_state, "State" %>
+    <%= select_tag :shipping_state, options_for_select(us_states) %>
+  </div>
+  <div class="field">
+    <%= label_tag :shipping_zipcode, "Zipcode" %>
+    <%= text_field_tag :shipping_zipcode, nil, name: nil %>
+  </div>
+
+  <!--Billing -->
+  <div class="field">
+    <%= label_tag :billing_street_name, "Street Name" %>
+    <%= text_field_tag :billing_street_name, nil, name: nil %>
+  </div>
+  <div class="field">
+    <%= label_tag :billing_city, "City" %>
+    <%= text_field_tag :billing_city, nil, name: nil %>
+  </div>
+  <div class="field">
+    <%= label_tag :billing_state, "State" %>
+    <%= select_tag :billing_state, options_for_select(us_states) %>
+  </div>
+  <div class="field">
+    <%= label_tag :billing_zipcode, "Zipcode" %>
+    <%= text_field_tag :billing_zipcode, nil, name: nil %>
+  </div>
+
+
   <div class="field">
     <%= label_tag :card_number, "Credit Card Number" %>
     <%= text_field_tag :card_number, nil, name: nil %>
