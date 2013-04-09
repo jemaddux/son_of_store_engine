@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Orders", js: true do
+describe "Orders" do
   include_context "standard test dataset"
 
   let!(:u1) {User.create full_name: "admin",
@@ -22,7 +22,7 @@ describe "Orders", js: true do
 
     it "can go to index" do
       visit "/orders"
-    end 
+    end
 
     it "can go to show" do
       visit "/orders/1"
@@ -34,7 +34,7 @@ describe "Orders", js: true do
     end
 
     it 'can visit new page' do
-      
+
     end
 
 

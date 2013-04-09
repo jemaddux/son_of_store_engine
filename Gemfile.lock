@@ -272,7 +272,6 @@ DEPENDENCIES
   reek
   rspec-rails
   sass-rails (~> 3.2.3)
-  selenium-webdriver (= 2.31.0)
   simplecov
   sorcery
   sqlite3

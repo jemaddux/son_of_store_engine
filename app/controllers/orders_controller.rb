@@ -46,7 +46,9 @@ class OrdersController < ApplicationController
 
     if order = Order.create_from_cart_for_user(current_cart,
                                           current_user,
-                                          params[:order]["stripe_card_token"])
+                                          params[:order]["stripe_card_token"],
+                                          shipping_id,
+                                          billing_id)
 
       UserMailer.order_confirmation(current_user, order).deliver
       current_cart.destroy

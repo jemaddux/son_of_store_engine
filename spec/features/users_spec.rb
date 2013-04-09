@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Users", js: true do
+describe "Users" do
   include_context "standard test dataset"
 
   context "when user credentials are invalid" do
@@ -34,7 +34,7 @@ describe "Users", js: true do
       fill_in 'email', with: 'user@oregonsale.com'
       fill_in 'password', with: 'password'
       click_button 'Log in'
-      
+
       visit profile_path
       page.should have_content "Invoices for joe schmo"
     end
