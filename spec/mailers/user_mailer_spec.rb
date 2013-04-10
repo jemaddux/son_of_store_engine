@@ -3,11 +3,9 @@ require "spec_helper"
 describe UserMailer do
   describe "order_confirmation" do
 
-    let(:user) { User.create(full_name: "JoshMejia",
-                             email: "user@oregonsale.com",
-                             password: "password") }
+    let(:user_email) { "user@oregonsale.com" }
     let(:order) { Order.create(confirmation: "AAAAAA") }
-    let(:mail) { UserMailer.order_confirmation(user, order) }
+    let(:mail) { UserMailer.order_confirmation(user_email, order) }
 
     it "renders the headers" do
       mail.subject.should eq("Order confirmation")
@@ -16,7 +14,7 @@ describe UserMailer do
     end
 
     it "renders the body" do
-      mail.body.encoded.should match("JoshMejia")
+      mail.body.encoded.should match("AAAAAA")
     end
   end
 
