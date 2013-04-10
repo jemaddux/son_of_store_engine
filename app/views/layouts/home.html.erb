@@ -18,5 +18,19 @@
       <%= link_to "Sign Up", signup_path %> 
       <%= link_to "Log In", login_path %>
     </div>
+
+    <div class="breaker" class="container"></div>
+
+    <div class="container">
+
+    <!-- Flash -->
+    <div class="row">
+      <div class="span12">
+        <%= bootstrap_flash %>
+      </div>
+    </div>
+
+    <%= yield %>
+  </div>
   </body>
 </html>
