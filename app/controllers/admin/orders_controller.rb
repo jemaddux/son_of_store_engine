@@ -1,12 +1,16 @@
-class OrdersController < ApplicationController
+class Admin::OrdersController < Admin::AdminController
+  def index
+    @orders = Order.all
+    authorize! :manage, Order
 
+    render :index
+  end
 
   def show
     @order = Order.find(params[:id])
     authorize! :manage, Order
 
     render :show
-
   end
 
   def change_status
@@ -77,4 +81,6 @@ class OrdersController < ApplicationController
 
     redirect_to orders_url
   end
+
 end
+
