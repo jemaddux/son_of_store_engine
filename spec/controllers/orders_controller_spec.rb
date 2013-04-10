@@ -16,12 +16,12 @@ describe OrdersController do
     before do
       login_user(user)
       o = cart.add_product(product)
-      puts o.inspect
+      o.save!
     end
 
     it "allows that person to check out" do 
       post :create,  order: { creditcardnumber: '4242424242424242'} 
-      expect(user.orders).to_not eq [] 
+      expect(Order.find_by_user_id(user.id)).to_not eq [] 
     end 
   end
 
