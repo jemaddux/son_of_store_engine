@@ -45,7 +45,8 @@ class Order < ActiveRecord::Base
 
 
   def self.find_shipping_address(params, current_user)
-    CustomerAddress.find_or_create_by_street_name(params[:shipping_street_name]) do |a|
+    CustomerAddress.create do |a|
+      a.street_name  = params[:shipping_street_name]
       a.city         = params[:shipping_city]
       a.state        = params[:shipping_state]
       a.zipcode      = params[:shipping_zipcode]
@@ -56,7 +57,8 @@ class Order < ActiveRecord::Base
 
 
   def self.find_billing_address(params, current_user)
-    CustomerAddress.find_or_create_by_street_name(params[:billing_street_name]) do |a|
+    CustomerAddress.create do |a|
+      a.street_name  = params[:billing_street_name]
       a.city         = params[:billing_city]
       a.state        = params[:billing_state]
       a.zipcode      = params[:billing_zipcode]
