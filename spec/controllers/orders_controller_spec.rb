@@ -4,6 +4,8 @@ describe OrdersController do
   let(:user) {FactoryGirl.create(:user)}
   let(:product) {FactoryGirl.create(:product)}
   let(:cart) {FactoryGirl.create(:cart)}
+  let(:shipping){ FactoryGirl.create(:shipping_address) }
+  let(:billing){ FactoryGirl.create(:billing_address) }
 
   def valid_attributes
     { "status" => "pending", "user_id" => user.id, "total_cost" => 300, card_number: '4242424242424242' }

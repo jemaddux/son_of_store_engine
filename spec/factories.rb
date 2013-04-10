@@ -39,5 +39,24 @@ FactoryGirl.define do
     cart
     user 
   end 
+
+  factory :billing_address, class: CustomerAddress do 
+    street_name "Mallory Lane"
+    city "Denver"
+    state "Colorado"
+    zipcode "80204"
+    address_type "billing"
+  end 
+
+   factory :shipping_address, class: CustomerAddress do 
+    street_name "Mallory Lane"
+    city "Denver"
+    state "Colorado"
+    zipcode "80204"
+    address_type "shipping"
+  end 
 end 
+
+
+
 

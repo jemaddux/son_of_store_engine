@@ -44,14 +44,15 @@ class OrdersController < ApplicationController
     user_id = ( current_user.id if current_user ) || nil 
     user_email = (current_user.email if current_user ) || params[:user_email]
 
-    shipping = Order.find_shipping_address(params, current_user)
-    billing  = Order.find_billing_address(params, current_user)
+    shipping_id = Order.shipping_address(params, current_user).id
+    billing_id  = Order.billing_address(params, current_user).id
 
-    if @order = Order.create_from_cart_for_user(current_cart,
+    @order = Order.create_from_cart_for_user(current_cart,
                                                 user_id,
                                                 params[:card_number],
-                                                shipping.id,
-                                                billing.id)
+                                                shipping_id,
+                                                billing_id)
+    if @order.valid? 
 
       UserMailer.order_confirmation(user_email, @order).deliver
       current_cart.destroy
@@ -70,7 +71,6 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
 
     if @order.update_attributes(params[:order])
-      puts "updated"
       redirect_to @order, notice: 'Order was successfully updated.'
     else
       render action: "edit"
