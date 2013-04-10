@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe OrdersController do
-  let(:user) {User.create(email: "josh@example.com", role: "user")}
+  let(:user) {FactoryGirl.create(:user)}
   let(:product) {FactoryGirl.create(:product)}
   let(:cart) {FactoryGirl.create(:cart)}
 
