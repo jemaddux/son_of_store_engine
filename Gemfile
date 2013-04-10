@@ -10,11 +10,11 @@ gem 'rspec-rails'
 gem 'sorcery'
 gem 'cancan'
 gem 'stripe'
+gem 'therubyracer'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
-  gem "therubyracer"
   gem "less-rails"
   gem "twitter-bootstrap-rails"
   gem 'bootstrap_helper'
@@ -37,6 +37,9 @@ group :development, :test do
 end
 
 
+
+gem 'factory_girl_rails', '~> 4.0'
+gem 'credit_card_validator'
 
 
 
