@@ -44,9 +44,14 @@ class OrdersController < ApplicationController
       redirect_to login_path and return
     end
 
+    shipping = Order.find_shipping_address(params, current_user)
+    billing  = Order.find_billing_address(params, current_user)
+
     if @order = Order.create_from_cart_for_user(current_cart,
-                                          current_user,
-                                          params[:card_number])
+                                                current_user,
+                                                params[:card_number],
+                                                shipping.id,
+                                                billing.id)
 
       UserMailer.order_confirmation(current_user, @order).deliver
       current_cart.destroy
