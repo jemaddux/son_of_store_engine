@@ -4,8 +4,7 @@ describe OrdersController do
   let(:user) {FactoryGirl.create(:user)}
   let(:product) {FactoryGirl.create(:product)}
   let(:cart) {FactoryGirl.create(:cart)}
-  let(:shipping){ FactoryGirl.create(:shipping_address) }
-  let(:billing){ FactoryGirl.create(:billing_address) }
+
 
   def valid_attributes
     { "status" => "pending", "user_id" => user.id, "total_cost" => 300, card_number: '4242424242424242' }
@@ -14,6 +13,35 @@ describe OrdersController do
    def valid_attributes1
     { "status" => "pending", "user_id" => user.id, "total_cost" => 500, card_number: '4242424242424242' }
   end
+
+
+  def checkout_with_addresses
+    { "user_email" => "email@email.test",
+      "card_number" => '4242424242424242',
+      "shipping_street_name" => "Mallory Lane", 
+      "shipping_city" => "Denver", 
+      "shipping_state" => "Colorado", 
+      "shipping_zipcode" => "80204", 
+      "billing_street_name" => "Mallory Lane", 
+      "billing_city" => "Denver", 
+      "billing_state" => "Colorado", 
+      "billing_zipcode" => "80204" 
+    }
+  end
+
+  def checkout_with_logged_in_user_addresses
+    { "card_number" => '4242424242424242',
+      "shipping_street_name" => "Mallory Lane", 
+      "shipping_city" => "Denver", 
+      "shipping_state" => "Colorado", 
+      "shipping_zipcode" => "80204", 
+      "billing_street_name" => "Mallory Lane", 
+      "billing_city" => "Denver", 
+      "billing_state" => "Colorado", 
+      "billing_zipcode" => "80204" 
+    }
+  end
+
 
   describe "a user checks out" do
 
@@ -24,7 +52,7 @@ describe OrdersController do
         o.save!
       end 
       
-      context "a user enters their billing info but does not sign up" do 
+      context "a user checks out but does not sign up" do 
 
         it "validates that the user has entered a valid email" do 
           pending
@@ -36,6 +64,17 @@ describe OrdersController do
           post :create,  card_number: '4242424242424242', user_email: "email@email.test"
           expect(Order.count).to eq 1
         end 
+      end 
+
+      context "a user that is not logged in submits their billing info" do 
+
+        it "has an order with that shipping and billing id" do 
+          post :create,  checkout_with_addresses
+          expect(Order.count).to eq 1
+          expect(Order.first.shipping_id).to_not eq nil
+          expect(Order.first.billing_id).to_not eq nil
+          expect(CustomerAddress.count).to eq 2
+        end
       end 
     end 
 
@@ -50,7 +89,18 @@ describe OrdersController do
       it "allows that person to check out" do 
         post :create,   card_number: '4242424242424242' 
         expect(Order.find_all_by_user_id(user.id).count).to eq 1
-      end 
+      end
+
+      context "a user that is logged in submits their billing info" do 
+
+        it "has an order with that shipping and billing id" do 
+          post :create,  checkout_with_logged_in_user_addresses
+          expect(Order.count).to eq 1
+          expect(Order.first.shipping_id).to_not eq nil
+          expect(Order.first.billing_id).to_not eq nil
+          expect(CustomerAddress.count).to eq 2
+        end
+      end  
     end
 
 
