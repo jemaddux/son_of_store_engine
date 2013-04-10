@@ -1,5 +1,5 @@
 class Order < ActiveRecord::Base
-  attr_accessible :status, :user_id, :total_cost, :confirmation
+  attr_accessible :status, :user_id, :total_cost, :confirmation, :shipping_id, :billing_id
   attr_accessor :stripe_card_token
 
   has_many :line_items, :dependent => :destroy

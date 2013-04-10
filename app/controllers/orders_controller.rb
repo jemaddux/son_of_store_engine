@@ -39,14 +39,15 @@ class OrdersController < ApplicationController
   end
 
   def create
+    fail
     unless current_user
       flash[:error] = 'You must log in to checkout. Please, login or signup.'
       redirect_to login_path and return
     end
 
     if @order = Order.create_from_cart_for_user(current_cart,
-                                          current_user,
-                                          params[:card_number])
+                                                current_user,
+                                                params[:card_number])
 
       UserMailer.order_confirmation(current_user, @order).deliver
       current_cart.destroy
