@@ -1,4 +1,5 @@
 <div class="well well-large">
   <h1>New order</h1>
+  <p>Have an account with us? <%= link_to "sign in", login_path(redirect: new_order_path) %></p>
   <%= render 'form' %>
 </div>
