@@ -2,8 +2,7 @@ require 'spec_helper'
 
 describe Order do
   include_context "standard test dataset"
-  let!(:new_user){User.new(full_name: "user",
-      email: "user@oregonsale.com") }
+  let!(:new_user){FactoryGirl.build(:user)}
   let!(:order){Order.create(status: "pending", user_id: 1, total_cost: 3372)}
   let!(:li){LineItem.create(product_id: 1, cart_id: nil,
   order_id: 1, quantity: 3, price: 24)}

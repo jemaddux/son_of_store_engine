@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe Product do
-  let!(:c1) {Cart.create}
-  let!(:p1) {Product.create(name: "Name", description: "Description")}
+  let!(:c1) {FactoryGirl.create(:cart)}
+  let!(:p1) {FactoryGirl.create(:product) }
   
   describe "ensure_not_referenced_by_any_line_item" do
     context "item has no line items" do
