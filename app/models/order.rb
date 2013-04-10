@@ -24,17 +24,21 @@ class Order < ActiveRecord::Base
     order.save_with_payment(credit_card)
   end
 
-  def save_with_payment(card_token)
-    if valid?
-      Stripe::Charge.create(amount: total_cost, card: card_token,
-        currency: "usd")
+  def valid_credit_card?(credit_card_number)
+    credit_card_number != nil && CreditCardValidator::Validator.valid?(credit_card_number)
+  end
+
+  def save_with_payment(credit_card_number)
+    if valid_credit_card?(credit_card_number)
+      # Stripe::Charge.create(amount: total_cost, card: card_token,
+      #   currency: "usd")
       self.status = "paid"
       self.confirmation = generate_confirmation_code; save!; self
     end
-  rescue Stripe::InvalidRequestError => e
-    logger.error "Stripe error while creating charge: #{e.message}"
-    errors.add :base, "There was a problem with your credit card."
-    false
+  # rescue Stripe::InvalidRequestError => e
+  #   logger.error "Stripe error while creating charge: #{e.message}"
+  #   errors.add :base, "There was a problem with your credit card."
+  #   false
   end
 
 end

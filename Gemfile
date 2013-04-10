@@ -39,6 +39,7 @@ end
 
 
 gem 'factory_girl_rails', '~> 4.0'
+gem 'credit_card_validator'
 
 
 

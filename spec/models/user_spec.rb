@@ -2,8 +2,7 @@ require 'spec_helper'
 
 describe User do
   describe "field: password" do
-    let(:new_user){User.new(full_name: "user",
-      email: "user@oregonsale.com") }
+    let(:new_user){FactoryGirl.build(:user) }
 
     context "when the password matches the password confirmation" do
       it "is valid" do

@@ -2,10 +2,39 @@ require 'spec_helper'
 
 describe OrdersController do
   let(:user) {User.create(email: "josh@example.com", role: "user")}
+  let(:product) {FactoryGirl.create(:product)}
+  let(:cart) {FactoryGirl.create(:cart)}
 
   def valid_attributes
     { "status" => "pending", "user_id" => user.id, "total_cost" => 300 }
   end
+
+
+  describe "a user checks out" do
+
+  describe "with valid params and logged in" do
+    before do
+      login_user(user)
+      o = cart.add_product(product)
+      puts o.inspect
+    end
+
+    it "allows that person to check out" do 
+      post :create,  order: { creditcardnumber: '4242424242424242'} 
+      expect(user.orders).to_not eq [] 
+    end 
+  end
+
+  describe "with valid params and logged out" do 
+    
+    context "a user enters their billing info but does not sign up" do 
+
+      it "allows that user to check out" do 
+
+      end 
+
+    end 
+  end 
 
 
 ### Admin
@@ -100,25 +129,7 @@ describe OrdersController do
     end
   end
 
-  describe "a user checks out" do
-    describe "with valid params and logged in" do
-      before(:each) do
-        login_user(user)
-      end
 
-      it "allows that person to check out" do 
-        #write the test that posts to create and creates a new order from the current cart. 
-      end 
-    end
-
-    describe "with valid params and logged out" do 
-      context "a user enters their billing info but does not sign up" do 
-
-        it "allows that user to check out" do 
-        end 
-        
-      end 
-    end 
 
     describe "with invalid params" do
       before(:each) do
