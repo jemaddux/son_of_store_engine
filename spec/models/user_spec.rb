@@ -71,5 +71,35 @@ describe User do
         expect(new_user).to have(1).errors_on(:email)
       end
     end
+
+    context "when a user logs in their billing info" do 
+
+      it "has an address" do 
+      end 
+
+      it "has a city" do 
+      end 
+
+      it "has a state" do 
+      end 
+
+      it "has a zipcode" do 
+      end 
+    end 
+
+    context "when a user enters their shipping info" do 
+      
+      it "has an address" do 
+      end 
+
+      it "has a city" do 
+      end 
+
+      it "has a state" do 
+      end 
+
+      it "has a zipcode" do 
+      end 
+    end 
   end
 end

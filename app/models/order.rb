@@ -15,15 +15,13 @@ class Order < ActiveRecord::Base
     (0...6).map{ ('a'..'z').to_a[rand(26)] }.join.upcase
   end
 
-  def self.create_from_cart_for_user(cart, user, card, shipping_id, billing_id)
+  def self.create_from_cart_for_user(cart, user, credit_card)
     total_cost = cart.calculate_total_cost
     order = Order.new( status:     "pending",
                        user_id:    user.id,
-                       total_cost: total_cost,
-                       shipping_id: shipping_id,
-                       billing_id:  billing_id)
+                       total_cost: total_cost )
     order.add_line_items(cart)
-    order.save_with_payment(card)
+    order.save_with_payment(credit_card)
   end
 
   def save_with_payment(card_token)

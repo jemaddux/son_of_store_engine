@@ -10,6 +10,7 @@ gem 'rspec-rails'
 gem 'sorcery'
 gem 'cancan'
 gem 'stripe'
+gem 'therubyracer'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
@@ -36,6 +37,8 @@ group :development, :test do
 end
 
 
+
+gem 'factory_girl_rails', '~> 4.0'
 
 
 
