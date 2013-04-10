@@ -5,8 +5,8 @@ class StoresController < ApplicationController
 
   def show
     @store = Store.find_by_path(params[:store_id])
-    @categories = Category.all.sort
-    @products = Category.find_by_name("Essentials").products.shuffle[0..2]
+    @categories = Category.where(store_id: @store.id)
+    @products = Product.where(store_id: @store.id).shuffle[0..2]
   end
 
   def new
