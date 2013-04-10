@@ -18,7 +18,11 @@ FactoryGirl.define do
   #   role admin 
   # end 
 
-  factory :order do 
+  factory :order do
+    status "paid"
+    total_cost 25.00 
+    user
+    confirmation_code
   end 
 
   factory :cart do 
