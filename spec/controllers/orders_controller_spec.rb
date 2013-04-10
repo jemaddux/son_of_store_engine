@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe OrdersController do
-  let(:user) {FactoryGirl.create(:user)}
+  let(:user) {User.create(email: "josh@example.com", role: "user")}
   let(:product) {FactoryGirl.create(:product)}
   let(:cart) {FactoryGirl.create(:cart)}
 
@@ -9,32 +9,38 @@ describe OrdersController do
     { "status" => "pending", "user_id" => user.id, "total_cost" => 300 }
   end
 
-
   describe "a user checks out" do
 
-  describe "with valid params and logged in" do
-    before do
-      login_user(user)
-      o = cart.add_product(product)
-      o.save!
+    describe "with valid params and logged out" do 
+
+      before do 
+        o = cart.add_product(product)
+        o.save!
+      end 
+      
+      context "a user enters their billing info but does not sign up" do 
+
+        it "allows that user to check out" do 
+          post :create,  card_number: '4242424242424242', user_email: "email@email.test"
+          expect(Order.count).to eq 1
+        end 
+      end 
+    end 
+
+
+    describe "with valid params and logged in" do
+      before do
+        login_user(user)
+        o = cart.add_product(product)
+        o.save!
+      end
+
+      it "allows that person to check out" do 
+        post :create,   card_number: '4242424242424242' 
+        expect(Order.find_by_user_id(user.id)).to eq [] 
+      end 
     end
 
-    it "allows that person to check out" do 
-      post :create,  order: { creditcardnumber: '4242424242424242'} 
-      expect(Order.find_by_user_id(user.id)).to_not eq [] 
-    end 
-  end
-
-  describe "with valid params and logged out" do 
-    
-    context "a user enters their billing info but does not sign up" do 
-
-      it "allows that user to check out" do 
-
-      end 
-
-    end 
-  end 
 
 
 ### Admin

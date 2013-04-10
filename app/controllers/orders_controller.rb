@@ -39,21 +39,22 @@ class OrdersController < ApplicationController
   end
 
   def create
-    unless current_user
-      flash[:error] = 'You must log in to checkout. Please, login or signup.'
-      redirect_to login_path and return
-    end
+
+    user_id = ( current_user.id if current_user ) || nil 
+    user_email = (current_user.email if current_user ) || params[:user_email]
+
+    puts user_email
 
     shipping = Order.find_shipping_address(params, current_user)
     billing  = Order.find_billing_address(params, current_user)
 
     if @order = Order.create_from_cart_for_user(current_cart,
-                                                current_user,
+                                                user_id,
                                                 params[:card_number],
                                                 shipping.id,
                                                 billing.id)
 
-      UserMailer.order_confirmation(current_user, @order).deliver
+      UserMailer.order_confirmation(user_email, @order).deliver
       current_cart.destroy
       session[:cart_id] = nil
       redirect_to root_path, notice: 'Thanks! Your order was submitted.'

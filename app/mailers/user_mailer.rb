@@ -1,10 +1,10 @@
 class UserMailer < ActionMailer::Base
   default from: "no-reply@oregonsale.com"
 
-  def order_confirmation(user, order)
-    @user = user
+  def order_confirmation(user_email, order)
+
     @confirmation_code = order.confirmation
 
-    mail to: user.email
+    mail to: user_email
   end
 end
