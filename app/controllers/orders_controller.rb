@@ -38,12 +38,11 @@ class OrdersController < ApplicationController
     authorize! :update, Order
   end
 
+
   def create
 
     user_id = ( current_user.id if current_user ) || nil 
     user_email = (current_user.email if current_user ) || params[:user_email]
-
-    puts user_email
 
     shipping = Order.find_shipping_address(params, current_user)
     billing  = Order.find_billing_address(params, current_user)
@@ -71,6 +70,7 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
 
     if @order.update_attributes(params[:order])
+      puts "updated"
       redirect_to @order, notice: 'Order was successfully updated.'
     else
       render action: "edit"

@@ -5,6 +5,10 @@ class Order < ActiveRecord::Base
   has_many :line_items, :dependent => :destroy
   belongs_to :user
 
+  attr_accessor :card_number
+
+  validate :validate_credit_card
+
   def add_line_items(cart)
     cart.line_items.each do |item|
       item.cart_id = nil; line_items << item
@@ -26,22 +30,18 @@ class Order < ActiveRecord::Base
                        billing_id:  billing_id )
 
     order.add_line_items(cart)
-    order.save_with_payment(card_number)
+    order.card_number = card_number
+    order.save_payment(card_number)
     order
   end
 
-  def valid_credit_card?(card_number)
-    card_number != nil && CreditCardValidator::Validator.valid?(card_number)
-  end
-
-  def save_with_payment(card_number)
-    if valid_credit_card?(card_number)
-      self.status = "paid"
-      self.confirmation = generate_confirmation_code
-      self.save! 
+  def validate_credit_card
+    if card_number == nil
+      errors.add(:card_number, "No Card Number Specified")
+    elsif !CreditCardValidator::Validator.valid?(card_number)
+      errors.add(:card_number, "Invalid Card Number, Sucka!")
     end
   end
-
 
   def self.find_shipping_address(params, current_user)
     CustomerAddress.create do |a|
@@ -64,5 +64,10 @@ class Order < ActiveRecord::Base
       a.user_id      = current_user.id
       a.address_type = 'billing'
     end
+
+  def save_payment(card_number)
+    self.status = "paid"
+    self.confirmation = generate_confirmation_code
+    self.save
   end
 end

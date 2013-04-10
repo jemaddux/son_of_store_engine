@@ -1,5 +1,9 @@
 FactoryGirl.define do 
 
+  sequence :email do |n|
+    "person#{n}@test.com"
+  end
+
   factory :product do 
     name "product_name"
     description "a_description"
@@ -9,7 +13,9 @@ FactoryGirl.define do
 
   factory :user do 
     full_name "user"
-    email "test@test.com"
+    email 
+    role "user"
+    password "password"
   end 
 
   # factory :admin, class User do 
@@ -19,6 +25,10 @@ FactoryGirl.define do
   # end 
 
   factory :order do 
+    user 
+    status 'pending'
+    total_cost 500
+    card_number '4242424242424242'
   end 
 
   factory :cart do 
