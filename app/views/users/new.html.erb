@@ -1,4 +1,4 @@
-<h1> Start your adventure now! </h1>
+<h1 style= "font-family:Arial; font-size:30px"> Start building stores today! </h1>
 
 <%= form_for @user do |f| %>
 
@@ -13,27 +13,27 @@
       </ul>
     </div>
   <% end %>
-  <div class="required field">
+  <div class="required field" style= "font-family:Arial; font-size:16px">
     <%= f.label :full_name %>
     <%= f.text_field :full_name %>
   </div>
 
-  <div class="required field">
+  <div class="required field" style= "font-family:Arial; font-size:16px">
     <%= f.label :email %>
     <%= f.text_field :email %>
   </div>
 
-  <div class="field">
+  <div class="field" style= "font-family:Arial; font-size:16px">
     <%= f.label :display_name %>
     <%= f.text_field :display_name %>
   </div>
 
-  <div class="required field">
+  <div class="required field" style= "font-family:Arial; font-size:16px">
     <%= f.label :password %>
     <%= f.password_field :password %>
   </div>
 
-  <div class="required field">
+  <div class="required field" style= "font-family:Arial; font-size:16px">
     <%= f.label :password_confirmation %>
     <%= f.password_field :password_confirmation %>
   </div>
@@ -45,6 +45,6 @@
     </div>
   <% end %>
 
-  <div class="actions"><%= f.submit "Sign Up!" %></div>
+  <div class="actions" style= "font-family:Arial; font-size:16px"><%= f.submit "Sign Up!" %></div>
 
 <% end %>

@@ -19,44 +19,11 @@
 
 <body>
 
-  <!-- Signup links -->
-  <div class="container">
-    <div class="pull-left btn-group">
-      <%= link_to " Create Your Trip", new_trip_path, :class => "btn btn-info trip-button" %>
-      <%= link_to "All Products", all_products_path, :class => "btn btn-info trip-button" %>
-    </div>
-    <div class="main_nav">
-      <% if current_user %>
-        Pioneering 
-          <% if current_user && (current_user.role?(:admin) || current_user.role?(:superuser))%>
-            <%= link_to "(admin mode)", admin_path %>
-          <% end %>
-        as <%= link_to current_user.full_name, profile_path %>.
-        <%= link_to "Log out", logout_path %>
-      <% else %>
-        <%= link_to "Sign up", signup_path %> or
-        <%= link_to "log in", login_path %>.
-      <% end %>
-    </div>
-
     <!-- Brand and main nav -->
     <div class="navbar">
       <div class="navbar-inner">
         <div class="left">
-          <%= link_to image_tag("logo.png"), root_url, :class => "brand" %>
-          <%= render :partial => 'search/search' %>
-        </div>
-        <div class="cart">
-          <% unless session[:cart_id] %>Empty<% end %> Cart
-          <ul>
-          <% if session[:cart_id] %>
-            <li><%= cart_cost %><br /><%= link_to "View", my_cart_path %></li>
-            <li><%= link_to "Checkout", new_order_path, :class => 'btn btn-small btn-success' %></li>
-            <li><%= link_to image_tag("cart.png"), my_cart_path %></li>
-          <% else %>
-            <li><%= image_tag("cart.png") %></li>
-          <% end %>
-          </ul>
+          <%= link_to image_tag("NewLogo-TMC.png"), root_url, :class => "brand" %>
         </div>
       </div>
     </div>

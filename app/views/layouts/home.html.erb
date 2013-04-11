@@ -12,23 +12,25 @@
 html {height:100%;}
 body {height:100%; margin:1; padding:2;}
 /* prepares the background image to full capacity of the viewing area */
-#bg {position:fixed; top:0; left:0; width:100%; height:100%;}
+#bg {position:fixed; top:0; left:0; width:60%; background-size: cover;}
 /* places the content ontop of the background image */
-#content {position:relative; z-index:1;}
+#content {position:relative; z-index:8;}
 </style>
 
 <title>The Market Collective</title>
 </head>
 <body>
 <div id="bg">
-   <%= image_tag'lineofshops_withtitle.jpg' %>
+   <%= image_tag'bg.jpg' %>
 </div>
 <div id="content">
-  <h1 align= "left", style= "font-family: Arial; font-size: 45px"> The Market Collective </h1>
-  <div align= "right", style= "font-family: Arial; font-size: 30px">
-        <%= link_to "Sign Up", signup_path %> 
-        <%= link_to "Log In", login_path %>
-      </div>
+  <div style = "float:left">
+        <%= image_tag 'banner.png' %> 
+  </div>
+  <div style = "float:right">
+        <%= link_to image_tag('signupbutton.png'), signup_path %> 
+        <%= link_to image_tag('loginbutton.png'), login_path %>
+  </div>
     </div>
 </body>
 </html>

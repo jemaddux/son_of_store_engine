@@ -11,7 +11,6 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-
 ActiveRecord::Schema.define(:version => 20130411152558) do
 
   create_table "carts", :force => true do |t|
@@ -85,9 +84,9 @@ ActiveRecord::Schema.define(:version => 20130411152558) do
   create_table "stores", :force => true do |t|
     t.string   "name"
     t.string   "path"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-    t.string   "status"
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.string   "status",      :default => "pending"
     t.string   "description"
     t.integer  "user_id"
   end
