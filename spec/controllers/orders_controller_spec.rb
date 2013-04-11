@@ -55,9 +55,9 @@ describe OrdersController do
       context "a user checks out but does not sign up" do 
 
         it "is invalid if the user does not submit an email" do 
-          pending
           post :create,  card_number: '4242424242424242'
           expect(Order.count).to eq 0
+          expect(response).to render_template("new")
         end
 
         it "validates that the user has entered a valid email" do 

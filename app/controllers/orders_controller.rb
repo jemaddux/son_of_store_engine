@@ -45,23 +45,28 @@ class OrdersController < ApplicationController
     shipping_id = Order.shipping_address(params, current_user).id
     billing_id  = Order.billing_address(params, current_user).id
 
-    @order = Order.create_from_cart_for_user(current_cart,
-                                                user_id,
-                                                params[:card_number],
-                                                shipping_id,
-                                                billing_id)
-    if @order.valid? 
+    if user_email != nil 
 
-      UserMailer.order_confirmation(user_email, @order).deliver
-      current_cart.destroy
-      session[:cart_id] = nil
-      redirect_to display_path(@order.confirmation_hash), notice: 'Thanks! Your order was submitted.'
+      @order = Order.create_from_cart_for_user(current_cart,
+                                                  user_id,
+                                                  params[:card_number],
+                                                  shipping_id,
+                                                  billing_id)
+      if @order.valid? 
+
+        UserMailer.order_confirmation(user_email, @order).deliver
+        current_cart.destroy
+        session[:cart_id] = nil
+        redirect_to display_path(@order.confirmation_hash), notice: 'Thanks! Your order was submitted.'
+      else
+
+        @order = Order.new
+        authorize! :create, Order
+
+        render action: "new"
+      end
     else
-
-      @order = Order.new
-      authorize! :create, Order
-
-      render action: "new"
+      render action: "new", notice: "Please enter an email or log in."
     end
   end
 
