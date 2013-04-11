@@ -102,7 +102,7 @@ User.create(full_name: "Jeff", email: "demoXX+jeff@jumpstartlab.com",
 User.create(full_name: "Steve Klabnik", email: "demoXX+steve@jumpstartlab.com",
   password: "password", role: :superuser, display_name: "SkrilleX")
 User.create(full_name: "Katrina Owen", email: "demoXX+katrina@jumpstartlab.com",
-  password: "password", role: :user, display_name: "Ree-na")
+  password: "password", role: :platform_admin, display_name: "Ree-na")
 
 #LINE ITEMS
 ##1
