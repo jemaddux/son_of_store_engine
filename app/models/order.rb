@@ -1,6 +1,7 @@
 class Order < ActiveRecord::Base
 
   attr_accessible :status, :user_id, :total_cost, :confirmation, :shipping_id, :billing_id, :card_number
+  attr_accessible :confirmation_hash
 
   has_many :line_items, :dependent => :destroy
   belongs_to :user
@@ -19,6 +20,11 @@ class Order < ActiveRecord::Base
     (0...6).map{ ('a'..'z').to_a[rand(26)] }.join.upcase
   end
 
+  def self.generate_confirmation_hash
+    a = UUID.new
+    a.generate
+  end
+
 
   def self.create_from_cart_for_user(cart, user_id, card_number, shipping_id, billing_id)
     total_cost = cart.calculate_total_cost
@@ -27,7 +33,8 @@ class Order < ActiveRecord::Base
                        user_id:    user_id,
                        total_cost: total_cost,
                        shipping_id: shipping_id,
-                       billing_id:  billing_id )
+                       billing_id:  billing_id, 
+                       confirmation_hash: generate_confirmation_hash )
 
     order.add_line_items(cart)
     order.card_number = card_number

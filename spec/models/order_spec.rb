@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Order do
   include_context "standard test dataset"
   let!(:new_user){FactoryGirl.build(:user)}
-  let!(:order){Order.create(status: "pending", user_id: 1, total_cost: 3372)}
+  let!(:order){Order.create(status: "pending", user_id: 1, total_cost: 3372, card_number: '4242424242424242')}
   let!(:li){LineItem.create(product_id: 1, cart_id: nil,
   order_id: 1, quantity: 3, price: 24)}
 
@@ -21,12 +21,4 @@ describe Order do
       (order.generate_confirmation_code).should_not eq a
     end
   end
-
-  describe "given an order has been placed" do 
-    it "generate a unique hashed url" do 
-      order = FactoryGirl.build(:order)
-      order.save!
-      expect(order.confirmation_hash).to_not eq nil 
-    end 
-  end 
 end
