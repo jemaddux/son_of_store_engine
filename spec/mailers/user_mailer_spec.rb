@@ -16,6 +16,9 @@ describe UserMailer do
     it "renders the body" do
       mail.body.encoded.should match("AAAAAA")
     end
-  end
 
+    it "has a unique confirmation url" do 
+      expect(mail.body).to include(order.confirmation_url)
+    end
+  end
 end

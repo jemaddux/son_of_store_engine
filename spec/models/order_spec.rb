@@ -22,4 +22,11 @@ describe Order do
     end
   end
 
+  describe "given an order has been placed" do 
+    it "generate a unique hashed url" do 
+      order = FactoryGirl.build(:order)
+      order.save!
+      expect(order.confirmation_url).to_not eq nil 
+    end 
+  end 
 end
