@@ -23,7 +23,7 @@ StoreEngine::Application.routes.draw do
       put :unretire
     end
   end
-  
+
   resources :categories
 
   resources :users
@@ -40,9 +40,31 @@ StoreEngine::Application.routes.draw do
   get "search" => "search#user_search", :as => "search"
   get "/stores/pending/:path" => "stores#pending", :as => "pending"
 
+  namespace :admin do
+
+    resources :products do
+      member do
+        put :retire
+        put :unretire
+      end
+    end
+
+    resources :orders do
+      member do
+        post :cancel
+        post :return
+        post :ship
+        post :paid
+        post :update_quantity
+      end
+    end
+
+    resources :categories
+  end
+
   resources :stores
 
-  scope ":store_id", as: "store" do 
+  scope ":store_id", as: "store" do
     match "/" => "stores#show", as: "home"
 
     resources :categories
