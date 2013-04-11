@@ -97,6 +97,8 @@ Product.create( name: "Peacoat", price: 3000,
 #USERS
 User.create(full_name: "Franklin Webber", email: "demoXX+franklin@jumpstartlab.com",
   password: "password", role: :user, display_name: nil)
+User.create(full_name: "John Maddux", email: "jemaddux@gmail.com",
+  password: "password", role: :user, display_name: nil)
 User.create(full_name: "Jeff", email: "demoXX+jeff@jumpstartlab.com",
   password: "password", role: :admin, display_name: "j3")
 User.create(full_name: "Steve Klabnik", email: "demoXX+steve@jumpstartlab.com",
