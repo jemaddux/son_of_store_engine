@@ -102,7 +102,7 @@ User.create(full_name: "Jeff", email: "demoXX+jeff@jumpstartlab.com",
 User.create(full_name: "Steve Klabnik", email: "demoXX+steve@jumpstartlab.com",
   password: "password", role: :superuser, display_name: "SkrilleX")
 User.create(full_name: "Katrina Owen", email: "demoXX+katrina@jumpstartlab.com",
-  password: "password", role: :user, display_name: "Ree-na")
+  password: "password", role: :platform_admin, display_name: "Ree-na")
 
 #LINE ITEMS
 ##1
@@ -161,13 +161,13 @@ LineItem.create(product_id: 23, cart_id: nil,
   order_id: 10, quantity: 6, price: 10)
 
 #ORDERS
-Order.create(status: "pending", user_id: 1, total_cost: 3372)
-Order.create(status: "pending", user_id: 4, total_cost: 7375)
-Order.create(status: "cancelled", user_id: 1, total_cost: 4205)
-Order.create(status: "cancelled", user_id: 1, total_cost: 488)
-Order.create(status: "paid", user_id: 4, total_cost: 800)
-Order.create(status: "paid", user_id: 1, total_cost: 1138)
-Order.create(status: "shipped", user_id: 4, total_cost: 8)
-Order.create(status: "shipped", user_id: 4, total_cost: 16000)
-Order.create(status: "returned", user_id: 1, total_cost: 4844)
-Order.create(status: "returned", user_id: 4, total_cost: 460)
+Order.create(status: "pending", user_id: 1, total_cost: 3372, card_number: "4242424242424242")
+Order.create(status: "pending", user_id: 4, total_cost: 7375, card_number: "4242424242424242")
+Order.create(status: "cancelled", user_id: 1, total_cost: 4205, card_number: "4242424242424242")
+Order.create(status: "cancelled", user_id: 1, total_cost: 488, card_number: "4242424242424242")
+Order.create(status: "paid", user_id: 4, total_cost: 800, card_number: "4242424242424242")
+Order.create(status: "paid", user_id: 1, total_cost: 1138, card_number: "4242424242424242")
+Order.create(status: "shipped", user_id: 4, total_cost: 8, card_number: "4242424242424242")
+Order.create(status: "shipped", user_id: 4, total_cost: 16000, card_number: "4242424242424242")
+Order.create(status: "returned", user_id: 1, total_cost: 4844, card_number: "4242424242424242")
+Order.create(status: "returned", user_id: 4, total_cost: 460, card_number: "4242424242424242")
