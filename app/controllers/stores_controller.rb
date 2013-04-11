@@ -34,20 +34,7 @@ class StoresController < ApplicationController
     end    
   end
 
-  def change_status
-    @store = Store.find(params[:id])
-    @store.status = params[:status]
-    @store.save
-    if params[:status] == "live"
-      flash[:notice] = "The store is now live."
-      #email site is live #UserMailer.order_confirmation(user_email, @order).deliver
-    elsif params[:status] == "declined"
-      flash[:notice] = "The store has been declined."
-      #email site is declined #UserMailer.order_confirmation(user_email, @order).deliver
-    end
-      
-    redirect_to '/admin/stores'
-  end
+
 
   def update
     @store = Store.find_by_path(params[:id])
