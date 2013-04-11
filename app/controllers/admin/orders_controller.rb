@@ -1,12 +1,16 @@
-class OrdersController < ApplicationController
+class Admin::OrdersController < Admin::AdminController
+  def index
+    @orders = Order.all
+    authorize! :manage, Order
 
+    render :index
+  end
 
   def show
     @order = Order.find(params[:id])
     authorize! :manage, Order
 
     render :show
-
   end
 
   def change_status
@@ -33,23 +37,22 @@ class OrdersController < ApplicationController
     authorize! :update, Order
   end
 
-
   def create
+    unless current_user
+      flash[:error] = 'You must log in to checkout. Please, login or signup.'
+      redirect_to login_path and return
+    end
 
-    user_id = ( current_user.id if current_user ) || nil 
-    user_email = (current_user.email if current_user ) || params[:user_email]
+    shipping = Order.find_shipping_address(params, current_user)
+    billing  = Order.find_billing_address(params, current_user)
 
-    shipping_id = Order.shipping_address(params, current_user).id
-    billing_id  = Order.billing_address(params, current_user).id
-
-    @order = Order.create_from_cart_for_user(current_cart,
-                                                user_id,
+    if @order = Order.create_from_cart_for_user(current_cart,
+                                                current_user,
                                                 params[:card_number],
-                                                shipping_id,
-                                                billing_id)
-    if @order.valid? 
+                                                shipping.id,
+                                                billing.id)
 
-      UserMailer.order_confirmation(user_email, @order).deliver
+      UserMailer.order_confirmation(current_user, @order).deliver
       current_cart.destroy
       session[:cart_id] = nil
       redirect_to root_path, notice: 'Thanks! Your order was submitted.'
@@ -78,4 +81,6 @@ class OrdersController < ApplicationController
 
     redirect_to orders_url
   end
+
 end
+
