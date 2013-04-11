@@ -17,21 +17,27 @@ body {height:100%; margin:1; padding:2;}
 #content {position:relative; z-index:8;}
 </style>
 
-<title>The Market Collective</title>
+  <title>The Market Collective</title>
 </head>
-<body>
-<div id="bg">
-   <%= image_tag'bg.jpg' %>
-</div>
-<div id="content">
-  <div style = "float:left">
-        <%= image_tag 'banner2.png' %> 
-  </div>
-  <div style = "float:right">
+  <body>
+    <div id="bg">
+       <%= image_tag'bg.jpg' %>
+    </div>
+    <div id="content">
+      <div style = "float:left">
+            <%= image_tag 'banner2.png' %> 
+      </div>
+      <div style = "font-family:Arial; font-size:20px; float:right">
+      <% if current_user %>
+        Hello, 
+        <%= link_to current_user.full_name, profile_path %>!
+        <%= link_to "Log out", logout_path %>
+      <% else %>
         <%= link_to image_tag('signupbutton.png'), signup_path %> 
         <%= link_to image_tag('loginbutton.png'), login_path %>
-  </div>
+      <% end %>
+      </div>
     </div>
-</body>
+  </body>
 </html>
 
