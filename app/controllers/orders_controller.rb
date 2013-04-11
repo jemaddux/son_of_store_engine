@@ -36,33 +36,27 @@ class OrdersController < ApplicationController
     authorize! :update, Order
   end
 
-
   def create
 
-    user_id = ( current_user.id if current_user ) || nil 
-    user_email = (current_user.email if current_user ) || params[:user_email]
-
-    shipping_id = Order.shipping_address(params, current_user).id
-    billing_id  = Order.billing_address(params, current_user).id
+    unless params[:user_email] || current_user
+      render action: "new", notice: "Please enter an email or log in."
+      return
+    end
 
     @order = Order.create_from_cart_for_user(current_cart,
-                                                user_id,
+                                                order_user.id,
                                                 params[:card_number],
-                                                shipping_id,
-                                                billing_id)
-    if @order.valid? 
-
-      UserMailer.order_confirmation(user_email, @order).deliver
-      current_cart.destroy
-      session[:cart_id] = nil
+                                                shipping_id(params),
+                                                billing_id(params))
+    
+    if @order.valid?
+      send_order_confirmation(order_user.email, @order)
+      destroy_shopping_cart!
       redirect_to display_path(@order.confirmation_hash), notice: 'Thanks! Your order was submitted.'
     else
-
-      @order = Order.new
-      authorize! :create, Order
-
       render action: "new"
     end
+
   end
 
   def update
@@ -80,5 +74,29 @@ class OrdersController < ApplicationController
     @order.destroy
 
     redirect_to orders_url
+  end
+
+  private 
+
+  def order_user
+    email = params[:user_email]
+    current_user || User.find_by_email(email) || User.create_guest_user(email)
+  end 
+
+  def send_order_confirmation(email,order)
+    UserMailer.order_confirmation(email, order).deliver
+  end
+
+  def destroy_shopping_cart!
+    current_cart.destroy if current_cart
+    session[:cart_id] = nil
+  end
+
+  def shipping_id(params)
+    Order.shipping_address(params, current_user).id
+  end
+
+  def billing_id(params)
+    Order.billing_address(params, current_user).id
   end
 end
