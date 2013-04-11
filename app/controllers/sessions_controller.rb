@@ -6,6 +6,8 @@ class SessionsController < ApplicationController
         redirect_to params[:redirect]
       elsif user.role? :user
         redirect_back_or_to root_url, notice: "Logged in."
+      elsif user.role?(:platform_admin)
+        redirect_to "/admin/stores/"
       elsif user.role?(:admin) || user.role?(:superuser)
         redirect_to '/admin', notice: "Logged in."
       end

@@ -41,6 +41,12 @@ StoreEngine::Application.routes.draw do
 
   namespace :admin do
 
+    resources :stores do
+      member do
+        put :change_status, :as => "change_status_on"
+      end
+    end
+
     resources :products do
       member do
         put :retire
