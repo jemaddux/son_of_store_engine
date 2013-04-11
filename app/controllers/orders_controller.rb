@@ -38,28 +38,25 @@ class OrdersController < ApplicationController
 
   def create
 
-    user_email = (current_user.email if current_user ) || params[:user_email]
-
-    if user_email != nil 
-
-      @order = Order.create_from_cart_for_user(current_cart,
-                                                  user_id,
-                                                  params[:card_number],
-                                                  shipping_id(params),
-                                                  billing_id(params))
-      if @order.valid? 
-
-        UserMailer.order_confirmation(user_email, @order).deliver
-        current_cart.destroy
-        session[:cart_id] = nil
-        redirect_to display_path(@order.confirmation_hash), notice: 'Thanks! Your order was submitted.'
-      else
-
-        render action: "new"
-      end
-    else
+    unless params[:user_email] || current_user
       render action: "new", notice: "Please enter an email or log in."
+      return
     end
+
+    @order = Order.create_from_cart_for_user(current_cart,
+                                                order_user.id,
+                                                params[:card_number],
+                                                shipping_id(params),
+                                                billing_id(params))
+    
+    if @order.valid?
+      send_order_confirmation(order_user.email, @order)
+      destroy_shopping_cart!
+      redirect_to display_path(@order.confirmation_hash), notice: 'Thanks! Your order was submitted.'
+    else
+      render action: "new"
+    end
+
   end
 
   def update
@@ -81,8 +78,18 @@ class OrdersController < ApplicationController
 
   private 
 
-  def user_id
-    ( current_user.id if current_user ) || nil 
+  def order_user
+    email = params[:user_email]
+    current_user || User.find_by_email(email) || User.create_guest_user(email)
+  end 
+
+  def send_order_confirmation(email,order)
+    UserMailer.order_confirmation(email, order).deliver
+  end
+
+  def destroy_shopping_cart!
+    current_cart.destroy if current_cart
+    session[:cart_id] = nil
   end
 
   def shipping_id(params)

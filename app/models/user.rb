@@ -5,7 +5,6 @@ class User < ActiveRecord::Base
 
   attr_accessible :full_name, :display_name, :email, :password,
                   :password_confirmation, :role
-                  # , :stripe_customer_token
 
   validates_presence_of :full_name, on: :create
   validates_confirmation_of :password
@@ -18,5 +17,13 @@ class User < ActiveRecord::Base
 
   def role?(role)
     self.role == role.to_s
+  end
+
+  def self.create_guest_user(email)
+    user = new email: email
+    user.full_name = "Jane Doe"
+    user.password = "RANDOM_PASSWORD"
+    user.save
+    user
   end
 end
