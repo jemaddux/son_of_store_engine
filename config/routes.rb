@@ -40,6 +40,8 @@ StoreEngine::Application.routes.draw do
   get "search" => "search#user_search", :as => "search"
   get "/stores/pending/:path" => "stores#pending", :as => "pending"
 
+  resources :stores
+
   namespace :admin do
 
     resources :stores do
@@ -67,8 +69,6 @@ StoreEngine::Application.routes.draw do
 
     resources :categories
   end
-
-  resources :stores
 
   scope ":store_id", as: "store" do
     match "/" => "stores#show", as: "home"
