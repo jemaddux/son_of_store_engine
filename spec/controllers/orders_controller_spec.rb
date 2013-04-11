@@ -54,6 +54,12 @@ describe OrdersController do
       
       context "a user checks out but does not sign up" do 
 
+        it "is invalid if the user does not submit an email" do 
+          pending
+          post :create,  card_number: '4242424242424242'
+          expect(Order.count).to eq 0
+        end
+
         it "validates that the user has entered a valid email" do 
           pending
           post :create,  card_number: '4242424242424242', user_email: "not_a_valid_email"
@@ -75,6 +81,28 @@ describe OrdersController do
           expect(Order.first.billing_id).to_not eq nil
           expect(CustomerAddress.count).to eq 2
         end
+      end 
+
+      describe "given an order has been placed" do 
+
+        before do 
+          post :create,  checkout_with_addresses
+        end
+
+        it "generate a unique hashed url" do 
+          expect(Order.first.confirmation_hash).to_not eq nil 
+        end 
+
+        it "allows that user to visit that url to see their order" do 
+          conf_hash = Order.first.confirmation_hash
+          get  :display, { confirmation_hash: conf_hash.to_s }
+          expect(assigns(:order)).to eq Order.first
+        end 
+
+        it "redirects to this url after their order has been placed" do 
+          order = Order.first
+          expect(response).to redirect_to(display_path(order.confirmation_hash))
+        end 
       end 
     end 
 

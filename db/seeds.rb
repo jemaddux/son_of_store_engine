@@ -1,38 +1,46 @@
 # CATEGORIES
-Category.create(name: "Grub")
-Category.create(name: "Clothing")
+Category.create(name: "Grub", store_id: 1)
+Category.create(name: "Clothing", store_id: 2)
 Category.create(name: "Weapons")
 Category.create(name: "Tools")
 Category.create(name: "Medicine")
 Category.create(name: "Essentials")
 
+#STORES
+
+Store.create(name: "Oregon Sale", description: "The Orig", path: "oregonsale", status: "live")
+Store.create(name: "store_one", description: "First Store", path: "store_one", status: "live")
+Store.create(name: "store_two", description: "First Store", path: "store_two", status: "live")
+Store.create(name: "store_three", description: "First Store", path: "store_three", status: "live")
+Store.create(name: "store_four", description: "First Store", path: "store_four", status: "live")
+
 #GRUB
 Product.create( name: "Rations", price: 24,
-  description: "Good for one 'splorer.", category_ids: ["1"])
+  description: "Good for one 'splorer.", category_ids: ["1"], store_id: 1)
 Product.create( name: "Eggs", price: 5,
-  description: "Farm fresh and ready to consume.", category_ids: ["1"])
+  description: "Farm fresh and ready to consume.", category_ids: ["1"], store_id: 1)
 Product.create( name: "Apples", price: 19,
-  description: "Great for a snack!", category_ids: ["1"])
+  description: "Great for a snack!", category_ids: ["1"], store_id: 1)
 Product.create( name: "Hardtack", price: 40,
-  description: "Simple cracker for simple folk.", category_ids: ["1"])
+  description: "Simple cracker for simple folk.", category_ids: ["1"], store_id: 1)
 Product.create( name: "Prickly Pear", price: 60,
-  description: "Prickly on the outside, scrumptious on the inside.", category_ids: ["1"])
+  description: "Prickly on the outside, scrumptious on the inside.", category_ids: ["1"], store_id: 1)
 Product.create( name: "Bacon", price: 100,
-  description: "By the slab for the whole fam!", category_ids: ["1"])
+  description: "By the slab for the whole fam!", category_ids: ["1"], store_id: 1)
 Product.create( name: "Sarsaparilla", price: 3,
-  description: "Before Coke, there was sarsaparilla.", category_ids: ["1"])
+  description: "Before Coke, there was sarsaparilla.", category_ids: ["1"], store_id: 1)
 
 #CLOTHING
 Product.create( name: "Basic Tunic", price: 75,
-  description: "Plain ol' get-up for simple folk.", category_ids: ["2"])
+  description: "Plain ol' get-up for simple folk.", category_ids: ["2"], store_id: 2)
 Product.create( name: "Leather Armor", price: 250,
-  description: "Good fer fendin' off 'coons and der sharp claws.", category_ids: ["2"])
+  description: "Good fer fendin' off 'coons and der sharp claws.", category_ids: ["2"], store_id: 2)
 Product.create( name: "Ponchos", price: 25,
-  description: "It gets rainy on the trail. Better bring a poncho.", category_ids: ["2"])
+  description: "It gets rainy on the trail. Better bring a poncho.", category_ids: ["2"], store_id: 2)
 Product.create( name: "Moccasins", price: 196,
-  description: "Made with real Apache tears!", category_ids: ["2"])
+  description: "Made with real Apache tears!", category_ids: ["2"], store_id: 2)
 Product.create( name: "Camouflage", price: 50,
-  description: "Der buffalo won't be able to see yer.", category_ids: ["2"])
+  description: "Der buffalo won't be able to see yer.", category_ids: ["2"], store_id: 2)
 
 #WEAPONS
 Product.create( name: "Blunderbuss", price: 150,

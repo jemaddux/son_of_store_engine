@@ -11,6 +11,8 @@ gem 'sorcery'
 gem 'cancan'
 gem 'stripe'
 gem 'therubyracer'
+gem 'uuid'
+gem 'uuid'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

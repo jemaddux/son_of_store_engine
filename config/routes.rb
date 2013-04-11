@@ -1,4 +1,7 @@
 StoreEngine::Application.routes.draw do
+
+  get "/orders/review/:confirmation_hash" => "orders#display", :as => "display"
+  
   resources :trips
 
   resources :orders do
