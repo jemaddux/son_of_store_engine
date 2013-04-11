@@ -21,7 +21,7 @@
     <tr>
       <td>
         <% name = Product.find_by_id(line_item.product_id).name %>
-        <%= link_to name, product_path(line_item.product_id) %>
+        <%= link_to name, admin_product_path(line_item.product_id) %>
         </td>
       <td><%= amount_in_dollars(line_item.price) %></td>
       <td><%= line_item.quantity %></td>

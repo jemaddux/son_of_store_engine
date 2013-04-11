@@ -43,7 +43,8 @@ StoreEngine::Application.routes.draw do
 
     resources :products do
       member do
-        post :retire
+        put :retire
+        put :unretire
       end
     end
 

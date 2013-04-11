@@ -60,7 +60,7 @@ class Admin::ProductsController < Admin::AdminController
     authorize! :create, @product
 
     if @product.save
-      redirect_to @product, notice: 'Product was successfully created.'
+      redirect_to admin_product_path(@product), notice: 'Product was successfully created.'
     end
   end
 
@@ -73,14 +73,14 @@ class Admin::ProductsController < Admin::AdminController
     @product = Product.find(params[:id])
 
     if @product.update_attributes(params[:product])
-      redirect_to @product, notice: 'Product was successfully updated.'
+      redirect_to admin_product_path(@product), notice: 'Product was successfully updated.'
     end
   end
 
   def destroy
     @product = Product.find(params[:id])
     authorize! :destroy, @product
-    @product.destroy
+    @product.delete
 
     redirect_to products_url
   end
