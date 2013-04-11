@@ -1,6 +1,12 @@
 class StoresController < ApplicationController
+  layout "application"
+
   def index
-    @stores = Store.all
+    if current_user.role == "platform_admin"
+      @stores = Store.all
+    else
+      redirect_to "/"
+    end
   end
 
   def show
@@ -36,8 +42,21 @@ class StoresController < ApplicationController
     end    
   end
 
-  def update
+  def change_status
     @store = Store.find(params[:id])
+    @store.status = params[:status]
+    @store.save
+    if params[:status] == "live"
+      #email site is live #UserMailer.order_confirmation(user_email, @order).deliver
+    elsif params[:status] == "declined"
+      #email site is declined #UserMailer.order_confirmation(user_email, @order).deliver
+    end
+      
+    redirect_to '/admin/stores'
+  end
+
+  def update
+    @store = Store.find_by_path(params[:id])
     if @store.update_attributes(params[:store])
       redirect_to @store, notice: 'Store was successfully updated.'
     else
@@ -50,4 +69,5 @@ class StoresController < ApplicationController
     @store.destroy
     redirect_to stores_url
   end
+
 end
