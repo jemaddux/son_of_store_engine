@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Market Collective</title>
+</head>
+  <body style= "font-family:Arial; font-size:30pt">
+    <br>
+    <br>
+    <br>
+    <center>
+    The Market Collective plays host to your online store! 
+    <br>
+    <br>
+    <div>
+      <%= link_to "Sign Up", signup_path %> 
+      <%= link_to "Log In", login_path %>
+    </div>
+
+    <div class="breaker" class="container"></div>
+
+    <div class="container">
+
+    <!-- Flash -->
+    <div class="row">
+      <div class="span12">
+        <%= bootstrap_flash %>
+      </div>
+    </div>
+
+    <%= yield %>
+  </div>
+  </body>
+</html>

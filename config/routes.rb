@@ -37,11 +37,15 @@ StoreEngine::Application.routes.draw do
   get "login" => "sessions#new", :as => "login"
   get "signup" => "users#new", :as => "signup"
   get "search" => "search#user_search", :as => "search"
+  get "/stores/pending/:path" => "stores#pending", :as => "pending"
 
   resources :stores
 
   scope ":store_id", as: "store" do 
     match "/" => "stores#show", as: "home"
+
+    resources :categories
+
   end
 
   root :to => 'home#show'
