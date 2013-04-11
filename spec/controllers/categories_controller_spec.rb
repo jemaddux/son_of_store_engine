@@ -7,6 +7,7 @@ describe CategoriesController do
 
   before (:each) do
     @ability = Object.new
+    Store.create(name: "the_newest_store", description: "a new store", path: "the_newest_store")
     @ability.extend(CanCan::Ability)
     @controller.stub(:current_ability).and_return(@ability)
   end

@@ -10,7 +10,7 @@ describe UserMailer do
     it "renders the headers" do
       mail.subject.should eq("Order confirmation")
       mail.to.should eq(["user@oregonsale.com"])
-      mail.from.should eq(["no-reply@oregonsale.com"])
+      mail.from.should eq(["no-reply@themarketcollective.herokuapp.com"])
     end
 
     it "renders the body" do
