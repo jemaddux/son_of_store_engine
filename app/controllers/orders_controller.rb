@@ -6,12 +6,15 @@ class OrdersController < ApplicationController
     render :index
   end
 
+  def display
+    @order = Order.find_by_confirmation_hash(params[:confirmation_hash])
+  end
+
   def show
     @order = Order.find(params[:id])
     authorize! :manage, Order
 
     render :show
-
   end
 
   def change_status

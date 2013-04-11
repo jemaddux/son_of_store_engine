@@ -90,11 +90,18 @@ describe OrdersController do
         end
 
         it "generate a unique hashed url" do 
-          puts Order.first.inspect
           expect(Order.first.confirmation_hash).to_not eq nil 
+        end 
+
+        it "allows that user to visit that url to see their order" do 
+          conf_hash = Order.first.confirmation_hash
+          get  :display, { confirmation_hash: conf_hash.to_s }
+          expect(assigns(:order)).to eq Order.first
         end 
       end 
     end 
+
+
 
 
     describe "with valid params and logged in" do
