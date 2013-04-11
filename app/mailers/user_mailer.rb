@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: "no-reply@oregonsale.com"
+  default from: "no-reply@themarketcollective.herokuapp.com"
 
   def order_confirmation(user_email, order)
     @confirmation_code = order.confirmation
