@@ -98,10 +98,13 @@ describe OrdersController do
           get  :display, { confirmation_hash: conf_hash.to_s }
           expect(assigns(:order)).to eq Order.first
         end 
+
+        it "redirects to this url after their order has been placed" do 
+          order = Order.first
+          expect(response).to redirect_to(display_path(order.confirmation_hash))
+        end 
       end 
     end 
-
-
 
 
     describe "with valid params and logged in" do

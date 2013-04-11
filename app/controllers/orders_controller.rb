@@ -60,7 +60,7 @@ class OrdersController < ApplicationController
       UserMailer.order_confirmation(user_email, @order).deliver
       current_cart.destroy
       session[:cart_id] = nil
-      redirect_to root_path, notice: 'Thanks! Your order was submitted.'
+      redirect_to display_path(@order.confirmation_hash), notice: 'Thanks! Your order was submitted.'
     else
 
       @order = Order.new
