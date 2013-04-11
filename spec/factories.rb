@@ -4,6 +4,20 @@ FactoryGirl.define do
     "person#{n}@test.com"
   end
 
+  # sequence :name do |n|
+  #   unique_store_#{n}
+  # end
+
+  # sequence :path do |n|
+  #   unique_store_#{n}
+  # end
+
+  # factory :store do 
+  #   name 
+  #   description "This is a description"
+  #   path
+  # end
+
   factory :product do 
     name "product_name"
     description "a_description"

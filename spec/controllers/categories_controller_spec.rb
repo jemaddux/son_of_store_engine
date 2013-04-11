@@ -26,6 +26,7 @@ describe CategoriesController do
   describe "GET show" do
     it "assigns the requested category as @category" do
       category = Category.create! valid_attributes
+      Store.create!(name: "a_store_name")
       get :show, {:id => category.to_param}, valid_session
       assigns(:category).should eq(category)
     end

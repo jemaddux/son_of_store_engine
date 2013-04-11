@@ -42,8 +42,8 @@ class OrdersController < ApplicationController
     user_id = ( current_user.id if current_user ) || nil 
     user_email = (current_user.email if current_user ) || params[:user_email]
 
-    shipping_id = Order.shipping_address(params, current_user).id
-    billing_id  = Order.billing_address(params, current_user).id
+    shipping_id = Order.shipping_address(params, user_id).id
+    billing_id  = Order.billing_address(params, user_id).id
 
     @order = Order.create_from_cart_for_user(current_cart,
                                                 user_id,
