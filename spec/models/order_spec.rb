@@ -26,7 +26,7 @@ describe Order do
     it "generate a unique hashed url" do 
       order = FactoryGirl.build(:order)
       order.save!
-      expect(order.confirmation_url).to_not eq nil 
+      expect(order.confirmation_hash).to_not eq nil 
     end 
   end 
 end
