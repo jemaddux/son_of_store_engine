@@ -36,22 +36,17 @@ class OrdersController < ApplicationController
     authorize! :update, Order
   end
 
-
   def create
 
-    user_id = ( current_user.id if current_user ) || nil 
     user_email = (current_user.email if current_user ) || params[:user_email]
-
-    shipping_id = Order.shipping_address(params, current_user).id
-    billing_id  = Order.billing_address(params, current_user).id
 
     if user_email != nil 
 
       @order = Order.create_from_cart_for_user(current_cart,
                                                   user_id,
                                                   params[:card_number],
-                                                  shipping_id,
-                                                  billing_id)
+                                                  shipping_id(params),
+                                                  billing_id(params))
       if @order.valid? 
 
         UserMailer.order_confirmation(user_email, @order).deliver
@@ -59,9 +54,6 @@ class OrdersController < ApplicationController
         session[:cart_id] = nil
         redirect_to display_path(@order.confirmation_hash), notice: 'Thanks! Your order was submitted.'
       else
-
-        @order = Order.new
-        authorize! :create, Order
 
         render action: "new"
       end
@@ -85,5 +77,19 @@ class OrdersController < ApplicationController
     @order.destroy
 
     redirect_to orders_url
+  end
+
+  private 
+
+  def user_id
+    ( current_user.id if current_user ) || nil 
+  end
+
+  def shipping_id(params)
+    Order.shipping_address(params, current_user).id
+  end
+
+  def billing_id(params)
+    Order.billing_address(params, current_user).id
   end
 end
