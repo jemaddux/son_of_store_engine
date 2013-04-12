@@ -14,7 +14,6 @@
 ActiveRecord::Schema.define(:version => 20130411225836) do
 
   create_table "carts", :force => true do |t|
-    #create a store id here
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
