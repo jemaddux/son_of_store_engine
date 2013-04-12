@@ -39,6 +39,13 @@ FactoryGirl.define do
     password "password"
   end 
 
+  factory :admin, class: User do 
+    full_name "a name"
+    email "test2@test.com"
+    role "admin"
+    password "password"
+  end
+
   factory :order do 
     user 
     status 'pending'
