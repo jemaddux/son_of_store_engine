@@ -4,19 +4,19 @@ FactoryGirl.define do
     "person#{n}@test.com"
   end
 
-  # sequence :name do |n|
-  #   unique_store_#{n}
-  # end
+  sequence :name do |n|
+    "unique_store_#{n}"
+  end
 
-  # sequence :path do |n|
-  #   unique_store_#{n}
-  # end
+  sequence :path do |n|
+    "unique_store_#{n}"
+  end
 
-  # factory :store do 
-  #   name 
-  #   description "This is a description"
-  #   path
-  # end
+  factory :store do 
+    name 
+    description "This is a description"
+    path
+  end
 
   factory :product do 
     name "product_name"
@@ -32,11 +32,12 @@ FactoryGirl.define do
     password "password"
   end 
 
-  # factory :admin, class User do 
-  #   full_name "user"
-  #   email "test@test.com"
-  #   role admin 
-  # end 
+  factory :super_admin, class: User do 
+    full_name "user"
+    email "test@test.com"
+    role "superuser"
+    password "password"
+  end 
 
   factory :order do 
     user 
