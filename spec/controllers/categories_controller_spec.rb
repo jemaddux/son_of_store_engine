@@ -102,7 +102,6 @@ describe CategoriesController do
     describe "with invalid params" do
       it "assigns the category as @category" do
         category = Category.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
         Category.any_instance.stub(:save).and_return(false)
         put :update, {:id => category.to_param, :category => { "name" => "invalid value" }}, valid_session
         assigns(:category).should eq(category)
