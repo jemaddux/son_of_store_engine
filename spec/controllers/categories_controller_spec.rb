@@ -7,6 +7,7 @@ describe CategoriesController do
 
   before (:each) do
     @ability = Object.new
+    Store.create(name: "the_newest_store", description: "a new store", path: "the_newest_store")
     @ability.extend(CanCan::Ability)
     @controller.stub(:current_ability).and_return(@ability)
   end
@@ -26,6 +27,7 @@ describe CategoriesController do
   describe "GET show" do
     it "assigns the requested category as @category" do
       category = Category.create! valid_attributes
+      Store.create!(name: "a_store_name")
       get :show, {:id => category.to_param}, valid_session
       assigns(:category).should eq(category)
     end
