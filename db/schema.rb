@@ -11,9 +11,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130411152558) do
+ActiveRecord::Schema.define(:version => 20130411225836) do
 
   create_table "carts", :force => true do |t|
+    #create a store id here
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -106,13 +107,14 @@ ActiveRecord::Schema.define(:version => 20130411152558) do
     t.string   "crypted_password"
     t.string   "salt"
     t.string   "role"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.datetime "created_at",                                         :null => false
+    t.datetime "updated_at",                                         :null => false
     t.string   "remember_me_token"
     t.datetime "remember_me_token_expires_at"
     t.string   "full_name"
     t.string   "display_name"
     t.string   "stripe_customer_token"
+    t.string   "account_type",                 :default => "active"
   end
 
   add_index "users", ["remember_me_token"], :name => "index_users_on_remember_me_token"
