@@ -8,13 +8,13 @@ class Admin::ProductsController < Admin::AdminController
     render :index
   end
 
-  def list
-    @products = Product.order("name").active
-    @categories = Category.all
-  end
+  # def list
+  #   @products = Product.order("name").active
+  #   @categories = Category.all
+  # end
 
   def show
-    @product = Product.find(params[:id])
+    @product = Product.find_by_id(params[:id])               
 
     if @product.retired == true
       redirect_to home_show_path
@@ -61,6 +61,8 @@ class Admin::ProductsController < Admin::AdminController
 
     if @product.save
       redirect_to admin_product_path(@product), notice: 'Product was successfully created.'
+    else
+      redirect_to admin_path, notice: 'Sorry, product was not created'
     end
   end
 
@@ -74,6 +76,8 @@ class Admin::ProductsController < Admin::AdminController
 
     if @product.update_attributes(params[:product])
       redirect_to admin_product_path(@product), notice: 'Product was successfully updated.'
+    else
+      redirect_to admin_path, notice: 'Sorry, product was not updated'
     end
   end
 

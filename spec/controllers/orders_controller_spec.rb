@@ -203,6 +203,7 @@ describe OrdersController do
 
   describe "when a user visits their orders index" do
     it "assigns all orders as @orders" do
+      pending "need to add validation for this index, will be specific to each user"
       order = FactoryGirl.create(:order)
       get :index, {}
       assigns(:orders).should eq([order])
