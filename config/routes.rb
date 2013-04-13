@@ -75,9 +75,12 @@ StoreEngine::Application.routes.draw do
 
   scope ":store_id", as: "store" do
     match "/" => "stores#show", as: "home"
-
     resources :categories
+  end
 
+  scope ":store_id/stock/products", as: "stock" do
+    match "/" => "products#index", as: "index"
+    resources :categories
   end
 
   root :to => 'home#show'

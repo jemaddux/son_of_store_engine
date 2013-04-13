@@ -7,7 +7,6 @@ Category.create(name: "Medicine")
 Category.create(name: "Essentials")
 
 #STORES
-
 Store.create(name: "Oregon Sale", description: "The Orig", path: "oregonsale", status: "live")
 Store.create(name: "store_one", description: "First Store", path: "store_one", status: "live")
 Store.create(name: "store_two", description: "First Store", path: "store_two", status: "live")
@@ -98,7 +97,7 @@ Product.create( name: "Peacoat", price: 3000,
 User.create(full_name: "Franklin Webber", email: "demoXX+franklin@jumpstartlab.com",
   password: "password", role: :user, display_name: nil)
 User.create(full_name: "John Maddux", email: "jemaddux@gmail.com",
-  password: "password", role: :user, display_name: nil)
+  password: "password", role: :stocker, display_name: nil, store_id: 1)
 User.create(full_name: "Jeff", email: "demoXX+jeff@jumpstartlab.com",
   password: "password", role: :admin, display_name: "j3")
 User.create(full_name: "Steve Klabnik", email: "demoXX+steve@jumpstartlab.com",

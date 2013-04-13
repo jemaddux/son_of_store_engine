@@ -9,6 +9,9 @@ class Ability
     elsif user.role? :admin
       can :manage, :all
       cannot :manage, User
+    elsif user.role? :stocker
+      can :manage, :all
+      cannot :manage, User
     elsif user.role? :user
       can :read, :all
       can :create, Order
