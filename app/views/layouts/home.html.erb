@@ -14,30 +14,41 @@ body {height:100%; margin:1; padding:2;}
 /* prepares the background image to full capacity of the viewing area */
 #bg {position:fixed; top:0; left:0; width:60%; background-size: cover;}
 /* places the content ontop of the background image */
-#content {position:relative; z-index:8;}
+#content {position:relative; z-index:4;}
 </style>
 
   <title>The Market Collective</title>
 </head>
   <body>
     <div id="bg">
-       <%= image_tag'bg.jpg' %>
+      <%= image_tag'bg.jpg' %>
     </div>
-    <div id="content">
-      <div style = "float:left">
-            <%= image_tag 'banner2.png' %> 
-      </div>
-      <div style = "font-family:Arial; font-size:20px; float:right">
-      <% if current_user %>
-        Hello, 
-        <%= link_to current_user.full_name, profile_path %>!
-        <%= link_to "Log out", logout_path %>
-      <% else %>
-        <%= link_to image_tag('signupbutton.png'), signup_path %> 
-        <%= link_to image_tag('loginbutton.png'), login_path %>
-      <% end %>
-      </div>
-    </div>
+      <div id="content">
+        <div style = "float:left">
+          <%= image_tag 'banner2.png' %> 
+        </div>
+          <div style = "font-family:Arial; font-size:20px; float:right">
+            <% if current_user %>
+              Hello, 
+              <%= link_to current_user.full_name, profile_path %>!
+              <%= link_to "Log out", logout_path %>
+            <% else %>
+              <%= link_to image_tag('signupbutton.png'), signup_path %> 
+              <%= link_to image_tag('loginbutton.png'), login_path %>
+            <% end %>
+          </div>
+            <!-- Flash -->
+            <div class="row">
+              <div class="span12">
+                <%= bootstrap_flash %>
+              </div>
+            </div>
+
+              <%= yield %>
+        </div>
+
+      <%= javascript_include_tag "https://js.stripe.com/v1/", "application" %>
+
   </body>
 </html>
 
