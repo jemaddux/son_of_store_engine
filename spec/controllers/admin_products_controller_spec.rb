@@ -1,8 +1,10 @@
 require 'spec_helper'
 
-describe ProductsController do
-  let(:p1) {Product.create! name: "Broken toy",
-    description: "Should be retired", retired: false}
+describe Admin::ProductsController do 
+
+  let(:store){ FactoryGirl.create(:store) }
+  let(:product1) { FactoryGirl.create(:product) }
+  let(:super_admin){ FactoryGirl.create(:super_admin) }
 
   def valid_attributes
     {name: "Rations", price: 24,
@@ -14,16 +16,14 @@ describe ProductsController do
   end
 
   before (:each) do
-    @ability = Object.new
-    @ability.extend(CanCan::Ability)
-    @controller.stub(:current_ability).and_return(@ability)
+    login_user(super_admin)
   end
 
   describe "GET show" do
     it "assigns the requested product as @product" do
       product = Product.create! valid_attributes
-      get :show, {:id => product.to_param}, valid_session
-      assigns(:product).should eq(product)
+      get :show, {:id => product.id}, valid_session
+      expect(assigns(:product)).to eq(product)
     end
   end
 
@@ -45,7 +45,7 @@ describe ProductsController do
   describe "POST create" do
     describe "with valid params and admin access" do
       before (:each) do
-        @ability.can :create, Product
+        login_user(super_admin)
       end
 
       it "creates a new Product" do
@@ -62,16 +62,15 @@ describe ProductsController do
 
       it "redirects to the created product" do
         post :create, {:product => valid_attributes}, valid_session
-        response.should redirect_to(Product.last)
+        response.should redirect_to(admin_product_path(Product.last))
       end
     end
 
     describe "with invalid params" do
-      it "assigns a newly created but unsaved product as @product" do
-        # Trigger the behavior that occurs when invalid params are submitted
+      it "does not create a product" do
         Product.any_instance.stub(:save).and_return(false)
         post :create, {:product => { "name" => "invalid value" }}, valid_session
-        assigns(:product).should be_a_new(Product)
+        expect(Product.count).to eq 0
       end
     end
   end
@@ -85,26 +84,23 @@ describe ProductsController do
       end
 
       it "redirects to the product" do
-        product = Product.create! valid_attributes
-        put :update, {:id => product.to_param, :product => valid_attributes}, valid_session
-        response.should redirect_to(root_path)
+        put :update, {:id => product1.to_param, :product => valid_attributes}, valid_session
+        response.should redirect_to(admin_product_path(product1))
       end
     end
 
     describe "with invalid params" do
       it "assigns the product as @product" do
-        product = Product.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
         Product.any_instance.stub(:save).and_return(false)
-        put :update, {:id => product.to_param, :product => { "name" => "invalid value" }}, valid_session
-        assigns(:product).should eq(product)
+        put :update, {:id => product1.to_param, :product => { "name" => "invalid value" }}, valid_session
+        expect(product1.name).to eq "product_name"
       end
     end
   end
 
   describe "DELETE destroy" do
     before (:each) do
-      @ability.can :destroy, Product
+      login_user(super_admin)
     end
 
     it "destroys the requested product" do
@@ -115,28 +111,27 @@ describe ProductsController do
     end
 
     it "redirects to the products list" do
-      product = Product.create! valid_attributes
-      delete :destroy, {:id => product.to_param}, valid_session
+      delete :destroy, {:id => product1.to_param}, valid_session
       response.should redirect_to(products_path)
     end
   end
   describe "retire and unretire" do
     before (:each) do
-      @ability.can :manage, Product
+      login_user(super_admin)
     end
   end
 
-  describe "GET list" do
-    it "assigns all categories as @categories" do
-      category = Category.create(name: "test")
-      get :list
-      assigns(:categories).should eq([category])
-    end
+  # describe "GET list" do
+  #   it "assigns all categories as @categories" do
+  #     category = Category.create(name: "test")
+  #     get :list
+  #     assigns(:categories).should eq([category])
+  #   end
 
-    it "assigns active products as @products" do
-      product = Product.create(name: "test", retired: false)
-      get :list
-      assigns(:products).should eq([product])
-    end
-  end
-end
+  #   it "assigns active products as @products" do
+  #     product = Product.create(name: "test", retired: false)
+  #     get :list
+  #     assigns(:products).should eq([product])
+  #   end
+  # end
+end 

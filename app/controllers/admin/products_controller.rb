@@ -8,13 +8,8 @@ class Admin::ProductsController < Admin::AdminController
     render :index
   end
 
-  def list
-    @products = Product.order("name").active
-    @categories = Category.all
-  end
-
   def show
-    @product = Product.find(params[:id])
+    @product = Product.find_by_id(params[:id])               
 
     if @product.retired == true
       redirect_to home_show_path
@@ -45,6 +40,8 @@ class Admin::ProductsController < Admin::AdminController
     @product = Product.new
     authorize! :create, @product
 
+    @categories = Category.where(store_id: current_user.store_id)
+
     render :new
   end
 
@@ -56,11 +53,14 @@ class Admin::ProductsController < Admin::AdminController
   end
 
   def create
+    params[:store_id] = current_user.store_id
     @product = Product.new(params[:product])
     authorize! :create, @product
 
     if @product.save
       redirect_to admin_product_path(@product), notice: 'Product was successfully created.'
+    else
+      redirect_to admin_path, notice: 'Sorry, product was not created'
     end
   end
 
@@ -74,6 +74,8 @@ class Admin::ProductsController < Admin::AdminController
 
     if @product.update_attributes(params[:product])
       redirect_to admin_product_path(@product), notice: 'Product was successfully updated.'
+    else
+      redirect_to admin_path, notice: 'Sorry, product was not updated'
     end
   end
 

@@ -11,6 +11,6 @@ class CategoriesController < ApplicationController
     @category = Category.find(params[:id])
     @categories = Category.where(store_id: @store.id).sort
 
-    render :show
+    # render :show
   end
 end

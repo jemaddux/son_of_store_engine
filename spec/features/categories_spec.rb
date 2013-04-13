@@ -2,39 +2,71 @@ require 'spec_helper'
 
 describe "Categories" do
   include_context "standard test dataset"
-  let!(:u1) {User.create email: 'admin@oregonsale.com',
-          password: 'password',
-          password_confirmation: 'password',
-          role: 'admin'}
+  let!(:user) {FactoryGirl.create(:user)}
+  let(:super_admin) {FactoryGirl.create(:super_admin)}
+  let(:admin) {FactoryGirl.create(:admin)}
 
-  describe "can render pages if admin" do
+
     before (:each) do
-      visit '/login'
-      fill_in 'email', with: 'admin@oregonsale.com'
-      fill_in 'password', with: 'password'
-      click_button "Log in"
+      # visit '/login'
+      # fill_in 'email', with: 'admin@oregonsale.com'
+      # fill_in 'password', with: 'password'
+      # click_button "Log in"
+    end
+
+   
+
+  describe "given a regular user visits this site" do
+
+    before (:each) do
+      # visit '/login'
+      # fill_in 'email', with: 'admin@oregonsale.com'
+      # fill_in 'password', with: 'password'
+      # click_button "Log in"
     end
 
     it "/categories" do
-      visit '/categories'
+      pending
     end
 
     it 'categories/new' do
-      visit '/categories/new'
+      pending
     end
   end
 
-  describe "cannot render pages if regular user / not logged in" do
-    it "/categories" do
-      visit '/categories'
+  describe "given a super admin visits this site" do 
 
-      page.should have_content "Access denied"
+    before (:each) do
+      # visit '/login'
+      # fill_in 'email', with: 'admin@oregonsale.com'
+      # fill_in 'password', with: 'password'
+      # click_button "Log in"
+    end
+
+    it "/categories" do
+      pending
     end
 
     it 'categories/new' do
-      visit '/categories/new'
+      pending
+    end
+  end
 
-      page.should have_content "Access denied"
+  describe "given an admin visits this site" do 
+
+    before (:each) do
+      # visit '/login'
+      # fill_in 'email', with: 'admin@oregonsale.com'
+      # fill_in 'password', with: 'password'
+      # click_button "Log in"
+    end
+
+    it "/categories" do
+      pending
+    end
+
+    it 'categories/new' do
+      pending
     end
   end
 

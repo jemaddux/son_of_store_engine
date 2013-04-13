@@ -50,9 +50,7 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def self.shipping_address(params, current_user)
-
-    user_id = (current_user.id if current_user) || nil 
+  def self.shipping_address(params, user_id)
 
     CustomerAddress.create do |a|
       a.street_name  = params[:shipping_street_name]
@@ -65,9 +63,7 @@ class Order < ActiveRecord::Base
   end
 
 
-  def self.billing_address(params, current_user)
-
-    user_id = (current_user.id if current_user) || nil 
+  def self.billing_address(params, user_id)
 
     CustomerAddress.create do |a|
       a.street_name  = params[:billing_street_name]

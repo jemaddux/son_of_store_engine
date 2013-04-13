@@ -7,6 +7,14 @@ class Admin::CategoriesController < Admin::AdminController
     render :new
   end
 
+  def show
+    @store = Store.find_by_path(params[:store_id])
+    @category = Category.find(params[:id])
+    @categories = Category.where(store_id: @store.id).sort
+
+    render :show
+  end
+
   def edit
     @category = Category.find(params[:id])
   end

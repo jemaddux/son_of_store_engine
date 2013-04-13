@@ -35,8 +35,6 @@ class StoresController < ApplicationController
     end    
   end
 
-
-
   def update
     @store = Store.find_by_path(params[:id])
     if @store.update_attributes(params[:store])
