@@ -10,6 +10,7 @@ describe "Products" do
    end
 
     it "returns 302 access denied when not logged in" do
+      pending
       get products_path
       response.status.should be(302)
     end

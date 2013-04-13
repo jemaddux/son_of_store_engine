@@ -4,7 +4,7 @@ describe Admin::ProductsController do
 
   let(:store){ FactoryGirl.create(:store) }
   let(:product1) { FactoryGirl.create(:product) }
-  let(:super_admin){ FactoryGirl.create(:super_admin) }
+  let(:admin){ FactoryGirl.create(:admin) }
 
   def valid_attributes
     {name: "Rations", price: 24,
@@ -16,7 +16,7 @@ describe Admin::ProductsController do
   end
 
   before (:each) do
-    login_user(super_admin)
+    login_user(admin)
   end
 
   describe "GET show" do
@@ -45,7 +45,7 @@ describe Admin::ProductsController do
   describe "POST create" do
     describe "with valid params and admin access" do
       before (:each) do
-        login_user(super_admin)
+        login_user(admin)
       end
 
       it "creates a new Product" do
@@ -62,7 +62,7 @@ describe Admin::ProductsController do
 
       it "redirects to the created product" do
         post :create, {:product => valid_attributes}, valid_session
-        response.should redirect_to(admin_product_path(Product.last))
+        response.should redirect_to("http://test.host/products")
       end
     end
 
@@ -85,7 +85,7 @@ describe Admin::ProductsController do
 
       it "redirects to the product" do
         put :update, {:id => product1.to_param, :product => valid_attributes}, valid_session
-        response.should redirect_to(admin_product_path(product1))
+        response.should redirect_to("http://test.host/products.1")
       end
     end
 
@@ -100,7 +100,7 @@ describe Admin::ProductsController do
 
   describe "DELETE destroy" do
     before (:each) do
-      login_user(super_admin)
+      login_user(admin)
     end
 
     it "destroys the requested product" do
@@ -117,7 +117,7 @@ describe Admin::ProductsController do
   end
   describe "retire and unretire" do
     before (:each) do
-      login_user(super_admin)
+      login_user(admin)
     end
   end
 

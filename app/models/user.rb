@@ -2,9 +2,10 @@ class User < ActiveRecord::Base
   authenticates_with_sorcery!
 
   has_many :orders
+  belongs_to :store
 
   attr_accessible :full_name, :display_name, :email, :password,
-                  :password_confirmation, :role
+                  :password_confirmation, :role, :store_id
 
   validates_presence_of :full_name, on: :create
   validates_confirmation_of :password

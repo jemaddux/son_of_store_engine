@@ -49,7 +49,7 @@ FactoryGirl.define do
   factory :super_admin, class: User do
     full_name "user"
     email "test@test.com"
-    role "superuser"
+    role "platform_admin"
     password "password"
   end
 
@@ -58,6 +58,7 @@ FactoryGirl.define do
     email "test2@test.com"
     role "admin"
     password "password"
+    store
   end
 
   factory :order do
