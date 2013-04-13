@@ -12,7 +12,9 @@ class UsersController < ApplicationController
 
     if @user.save
       auto_login(@user)
-      redirect_to root_url, :notice => "Signed up"
+      flash[:green] = "Your account has been successfully created!"
+      send_account_confirmation(@user.email)
+      redirect_to root_url
     else
       render :new
     end
@@ -25,5 +27,11 @@ class UsersController < ApplicationController
       flash[:error] = "You are not permitted to view that user."
       return
     end
+  end
+
+  private
+
+  def send_account_confirmation(email)
+    UserMailer.account_confirmation(email).deliver
   end
 end
