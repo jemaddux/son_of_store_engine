@@ -1,7 +1,7 @@
 StoreEngine::Application.routes.draw do
 
   get "/orders/review/:confirmation_hash" => "orders#display", :as => "display"
-  
+
   resources :trips
 
   resources :orders do
@@ -39,7 +39,6 @@ StoreEngine::Application.routes.draw do
   get "admin" => "products#index", :as => "admin"
   get "logout" => "sessions#destroy", :as => "logout"
   get "login" => "sessions#new", :as => "login"
-  get "signup" => "users#new", :as => "signup"
   get "search" => "search#user_search", :as => "search"
   get "/stores/pending/:path" => "stores#pending", :as => "pending"
 
