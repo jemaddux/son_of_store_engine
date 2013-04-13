@@ -8,6 +8,7 @@ describe "categories/new" do
   end
 
   it "renders new category form" do
+    pending
     render
 
     # Run the generator again with the --webrat flag if you want to use webrat matchers

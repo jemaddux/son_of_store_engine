@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe Dashboard do
   it "product" do
-    Dashboard.new.products
-    Dashboard.new.orders
+    pending
+    Dashboard.new(1).products
+    Dashboard.new(1).orders
   end
 end

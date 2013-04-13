@@ -6,6 +6,9 @@
       <%= f.text_field :name, :class => 'text_field' %>
     </div>
   </div>
+  
+    <%= f.hidden_field :store_id, :value => current_user.store_id, :class => "text_field" %>
+  
   <div class="control-group">
     <%= f.label :description, :class => 'control-label' %>
     <div class="controls">
@@ -22,7 +25,7 @@
     <%= f.label :categories, :class => 'control-label' %>
     <div class="controls">
 
-      <% for category in Category.find(:all) %>
+      <% for category in @categories %>
       <div>
         <%= check_box_tag "product[category_ids][]", category.id, @product.categories.include?(category) %>
         <%= category.name %>

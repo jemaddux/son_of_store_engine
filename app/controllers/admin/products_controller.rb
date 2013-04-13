@@ -1,17 +1,11 @@
 class Admin::ProductsController < Admin::AdminController
 
   def index
-
-    @dashboard = Dashboard.new
+    @dashboard = Dashboard.new(current_user.store_id)
     authorize! :manage, Product
 
     render :index
   end
-
-  # def list
-  #   @products = Product.order("name").active
-  #   @categories = Category.all
-  # end
 
   def show
     @product = Product.find_by_id(params[:id])               
@@ -29,7 +23,7 @@ class Admin::ProductsController < Admin::AdminController
     product.retired = true
     product.save
 
-    redirect_to admin_path
+    redirect_to admin_path, notice: 'Product was retired.'
   end
 
   def unretire
@@ -38,12 +32,14 @@ class Admin::ProductsController < Admin::AdminController
     product.retired = false
     product.save
 
-    redirect_to admin_path
+    redirect_to admin_path, notice: 'Product was unretired.'
   end
 
   def new
     @product = Product.new
     authorize! :create, @product
+
+    @categories = Category.where(store_id: current_user.store_id)
 
     render :new
   end
@@ -52,15 +48,16 @@ class Admin::ProductsController < Admin::AdminController
     @product = Product.find(params[:id])
     authorize! :update, @product
 
-    @categories = Category.all
+    @categories = Category.where(store_id: current_user.store_id)
   end
 
   def create
+    params[:store_id] = current_user.store_id
     @product = Product.new(params[:product])
     authorize! :create, @product
 
     if @product.save
-      redirect_to admin_product_path(@product), notice: 'Product was successfully created.'
+      redirect_to products_path, notice: 'Product was successfully created.'
     else
       redirect_to admin_path, notice: 'Sorry, product was not created'
     end
@@ -75,7 +72,7 @@ class Admin::ProductsController < Admin::AdminController
     @product = Product.find(params[:id])
 
     if @product.update_attributes(params[:product])
-      redirect_to admin_product_path(@product), notice: 'Product was successfully updated.'
+      redirect_to products_path(@product), notice: 'Product was successfully updated.'
     else
       redirect_to admin_path, notice: 'Sorry, product was not updated'
     end

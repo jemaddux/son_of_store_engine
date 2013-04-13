@@ -1,10 +1,16 @@
 class Dashboard
+  attr_reader :store_id
+
+  def initialize(store_id)
+    @store_id = store_id
+  end
+
   def products
-    @products ||= Product.all
+    @products ||= Product.where(store_id: store_id)
   end
 
   def orders
-    @orders ||= Order.all
+    @orders ||= Order.where(store_id: store_id).all
   end
 
   def statuses
@@ -12,11 +18,11 @@ class Dashboard
   end
 
   def categories
-    @categories ||= Category.by_name
+    @categories ||= Category.where(store_id: store_id).by_name
   end
 
   def retired_products
-    @retired_products ||= Product.retired
+    @retired_products ||= Product.where(store_id: store_id).retired
   end
 
   def orders_by_status
