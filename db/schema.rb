@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130411225836) do
+ActiveRecord::Schema.define(:version => 20130413164959) do
 
   create_table "carts", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -114,6 +114,7 @@ ActiveRecord::Schema.define(:version => 20130411225836) do
     t.string   "display_name"
     t.string   "stripe_customer_token"
     t.string   "account_type",                 :default => "active"
+    t.integer  "store_id"
   end
 
   add_index "users", ["remember_me_token"], :name => "index_users_on_remember_me_token"
