@@ -9,41 +9,48 @@ describe CartsController do
     {}
   end
 
+  def valid_attributes
+    {}
+  end
+
   #each session will have multiple carts
   #when a product buy button is clicked, it passes its own id and store id as params
   #the cart is created with the session id and store id as foreign keys
 
-  describe "a user adds a product to a cart" do 
+  # describe "a user adds a product to a cart" do 
 
-    before do 
-      post :create, (product_id: product.id, store_id: product.store_id)
-    end
+  #   before do 
+  #     post :create, {product_id: product.id, store_id: product.store_id}
+  #   end
 
-    it "creates a cart for the store that the user is shopping at" do 
-      expect(Session.count).to eq 1
-      expect(cart.session_id).to eq 1
-      expect(cart.store_id).to eq 1
-    end
+  #   it "creates a cart for the store that the user is shopping at" do 
+  #     pending
+  #     expect(Session.count).to eq 1
+  #     expect(cart.session_id).to eq 1
+  #     expect(cart.store_id).to eq 1
+  #   end
 
-    it "saves that product to the cart" do 
-      expect(cart.products.first.name).to eq product.name
-    end
-  end 
+  #   it "saves that product to the cart" do
+  #     pending 
+  #     expect(cart.products.first.name).to eq product.name
+  #   end
+  # end 
 
-  describe "a user wants to check out from a particular store" do 
+  # describe "a user wants to check out from a particular store" do 
 
-    before do 
-      post :create, (product_id: product.id, store_id: product.store_id)
-      post :create, (product_id: product_2.id, store_id: product_2.store_id)
-    end
+  #   before do 
+  #     post :create, {product_id: product.id, store_id: product.store_id}
+  #     post :create, {product_id: product_2.id, store_id: product_2.store_id}
+  #   end
 
-    it "allows the user to check out products for only that store" do 
-      expect(Session.count).to eq 1
-      expect(Cart.count).to eq 2
-      expect(Cart.first.products.count),to eq 1
-      expect(Cart.second.products.count),to eq 1
-    end 
-  end
+  #   it "allows the user to check out products for only that store" do 
+  #     pending
+  #     expect(Session.count).to eq 1
+  #     expect(Cart.count).to eq 2
+  #     expect(Cart.first.products.count).to eq 1
+  #     expect(Cart.second.products.count).to eq 1
+  #   end 
+  # end
 
   describe "GET index" do
     it "assigns all carts as @carts" do
