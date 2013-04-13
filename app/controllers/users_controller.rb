@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   def new
+    session[:return_to] = params[:return_to]
     @user = User.new
   end
 
@@ -12,7 +13,11 @@ class UsersController < ApplicationController
 
     if @user.save
       auto_login(@user)
-      redirect_to root_url, :notice => "Signed up"
+      flash[:green] = "Your account has been successfully created!"
+      send_account_confirmation(@user.email)
+
+      destination = session.delete(:return_to) || root_url
+      redirect_to destination
     else
       render :new
     end
@@ -25,5 +30,11 @@ class UsersController < ApplicationController
       flash[:error] = "You are not permitted to view that user."
       return
     end
+  end
+
+  private
+
+  def send_account_confirmation(email)
+    UserMailer.account_confirmation(email).deliver
   end
 end

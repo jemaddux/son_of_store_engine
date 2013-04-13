@@ -63,6 +63,7 @@ describe Admin::ProductsController do
       it "redirects to the created product" do
         post :create, {:product => valid_attributes}, valid_session
         response.should redirect_to(admin_product_path(Product.last))
+        response.should redirect_to("http://test.host/products")
       end
     end
 
@@ -86,6 +87,7 @@ describe Admin::ProductsController do
       it "redirects to the product" do
         put :update, {:id => product1.to_param, :product => valid_attributes}, valid_session
         response.should redirect_to(admin_product_path(product1))
+        response.should redirect_to("http://test.host/products.1")
       end
     end
 
@@ -134,4 +136,5 @@ describe Admin::ProductsController do
   #     assigns(:products).should eq([product])
   #   end
   # end
-end 
+
+

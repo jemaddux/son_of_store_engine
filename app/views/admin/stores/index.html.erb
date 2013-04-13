@@ -8,8 +8,6 @@
     <th>Description</th>
     <th></th>
     <th></th>
-    <th></th>
-    <th></th>
     
   </tr>
 
@@ -19,9 +17,6 @@
     <td><%= store.path %></td>
     <td><%= store.status %></td>
     <td><%= store.description.to_s[0..31] %></td>
-    <td><%= link_to 'Show', store %></td>
-    <td><%= link_to 'Edit', edit_store_path(store) %></td>
-    <td><%= link_to 'Destroy', store, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     <td>
       <%= link_to 'Approve', change_status_on_admin_store_path(:id => store.id, :status => 'live'), :class => 'btn btn-mini', :method => "put" if store.status == "pending" %>
       <%= link_to 'Decline', change_status_on_admin_store_path(:id => store.id, :status => 'declined'), :class => 'btn btn-mini', :method => "put" if store.status == "pending" %>
@@ -29,7 +24,10 @@
       <%= link_to 'Enable', change_status_on_admin_store_path(:id => store.id, :status => 'live'), :class => 'btn btn-mini', :method => "put" if store.status == "disabled" %>
       
     </td>
-    
+    <td>
+      <%= link_to "Administer", store_index_path(store.path),:class => "btn btn-mini" if store.status == "live" %>
+    </td>
+
   </tr>
 <% end %>
 </table>

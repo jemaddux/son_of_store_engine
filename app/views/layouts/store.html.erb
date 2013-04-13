@@ -33,7 +33,7 @@
         as <%= link_to current_user.full_name, profile_path %>.
         <%= link_to "Log out", logout_path %>
       <% else %>
-        <%= link_to "Sign up", signup_path %> or
+        <%= link_to "Sign up", new_user_path(return_to: store_home_path(@store.path)) %> or
         <%= link_to "log in", login_path %>.
       <% end %>
     </div>
@@ -75,6 +75,5 @@
     <%= yield %>
   </div>
 
-  <%= javascript_include_tag "https://js.stripe.com/v1/", "application" %>
 </body>
 </html>

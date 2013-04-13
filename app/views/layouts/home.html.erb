@@ -32,26 +32,31 @@ body {height:100%; margin:1; padding:2;}
         <div id="content">
           <div style = "font-family:Arial; font-size:20px; float:right">
             <% if current_user %>
-              Hello, 
+              Hello,
               <%= link_to current_user.full_name, profile_path %>!
               <%= link_to "Log out", logout_path %>
             <% else %>
-              <%= link_to image_tag('signupbutton.png'), signup_path %> 
+              <%= link_to image_tag('signupbutton.png'), new_user_path %>
               <%= link_to image_tag('loginbutton.png'), login_path %>
             <% end %>
           </div>
             <!-- Flash -->
-            <div class="row">
-              <div class="span12">
-                <%= bootstrap_flash %>
-              </div>
+            <div class="span12">
+              <% if flash[:red] %>
+                <div class="alert alert-danger alert-block"><%= flash[:red] %>
+                  <button type="button" class="close" data-dismiss="alert">×</button>
+                </div>
+              <% end %>
+
+              <% if flash[:green] %>
+                <div class="alert alert-success alert-block"><%= flash[:green] %>
+                  <button type="button" class="close" data-dismiss="alert">×</button>
+                </div>
+              <% end %>
             </div>
 
               <%= yield %>
         </div>
-
-      <%= javascript_include_tag "https://js.stripe.com/v1/", "application" %>
-
   </body>
 </html>
 
