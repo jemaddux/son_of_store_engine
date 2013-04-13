@@ -11,7 +11,6 @@ class Ability
       cannot :manage, User
     elsif user.role? :stocker
       can :manage, :all
-      cannot :manage, User
     elsif user.role? :user
       can :read, :all
       can :create, Order

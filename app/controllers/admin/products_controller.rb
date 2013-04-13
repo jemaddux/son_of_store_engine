@@ -8,11 +8,6 @@ class Admin::ProductsController < Admin::AdminController
     render :index
   end
 
-  # def list
-  #   @products = Product.order("name").active
-  #   @categories = Category.all
-  # end
-
   def show
     @product = Product.find_by_id(params[:id])               
 
@@ -45,6 +40,8 @@ class Admin::ProductsController < Admin::AdminController
     @product = Product.new
     authorize! :create, @product
 
+    @categories = Category.where(store_id: current_user.store_id)
+
     render :new
   end
 
@@ -56,6 +53,7 @@ class Admin::ProductsController < Admin::AdminController
   end
 
   def create
+    params[:store_id] = current_user.store_id
     @product = Product.new(params[:product])
     authorize! :create, @product
 
