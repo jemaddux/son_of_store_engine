@@ -67,7 +67,12 @@ FactoryGirl.define do
     card_number '4242424242424242'
   end
 
+  factory :session do 
+  end
+
   factory :cart do
+    store
+    session
   end
 
   factory :line_item do
