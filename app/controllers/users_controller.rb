@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   def new
+    session[:return_to] = params[:return_to]
     @user = User.new
   end
 
@@ -14,7 +15,9 @@ class UsersController < ApplicationController
       auto_login(@user)
       flash[:green] = "Your account has been successfully created!"
       send_account_confirmation(@user.email)
-      redirect_to root_url
+
+      destination = session.delete(:return_to) || root_url
+      redirect_to destination
     else
       render :new
     end
