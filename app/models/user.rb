@@ -23,6 +23,7 @@ class User < ActiveRecord::Base
     user = new email: email
     user.full_name = "Jane Doe"
     user.password = "RANDOM_PASSWORD"
+    user.account_type = "inactive"
     user.save
     user
   end

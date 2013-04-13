@@ -2,15 +2,16 @@ require 'spec_helper'
 
 describe Admin::CategoriesController do
 
+  let(:store){ FactoryGirl.create(:store) }
+  let(:product1) { FactoryGirl.create(:product) }
+  let(:super_admin){ FactoryGirl.create(:super_admin) }
+
   def valid_attributes
-    { "name" => "MyString", store_id: @first_store.id  }
+    { "name" => "MyString", store_id: store.id  }
   end
 
   before (:each) do
-    @ability = Object.new
-    Store.create(name: "the_newest_store", description: "a new store", path: "the_newest_store")
-    @ability.extend(CanCan::Ability)
-    @controller.stub(:current_ability).and_return(@ability)
+    login_user(super_admin)
   end
 
   def valid_session
@@ -36,9 +37,7 @@ describe Admin::CategoriesController do
 
   describe "POST create" do
     context "with valid params and admin access" do
-      before (:each) do
-        @ability.can :create, Category
-      end
+
 
       it "creates a new Category" do
         expect {
@@ -57,22 +56,11 @@ describe Admin::CategoriesController do
         response.should redirect_to(Category.last)
       end
     end
-
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved category as @category" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Category.any_instance.stub(:save).and_return(false)
-        post :create, {:category => { "name" => "invalid value" }}, valid_session
-        assigns(:category).should be_a_new(Category)
-      end
-    end
   end
 
   describe "PUT update" do
     context "with valid params and admin access" do
-    before (:each) do
-      @ability.can :update, Category
-    end
+
 
       it "assigns the requested category as @category" do
         category = Category.create! valid_attributes
@@ -86,22 +74,9 @@ describe Admin::CategoriesController do
         response.should redirect_to(category)
       end
     end
-
-    describe "with invalid params" do
-      it "assigns the category as @category" do
-        category = Category.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Category.any_instance.stub(:save).and_return(false)
-        put :update, {:id => category.to_param, :category => { "name" => "invalid value" }}, valid_session
-        assigns(:category).should eq(category)
-      end
-    end
   end
 
   describe "DELETE destroy" do
-    before (:each) do
-      @ability.can :destroy, Category
-    end
 
     it "destroys the requested category" do
       category = Category.create! valid_attributes
