@@ -21,7 +21,7 @@ User.create(full_name: "Katrina Owen", email: "demoXX+katrina@jumpstartlab.com",
   password: "password", role: :platform_admin, display_name: "Ree-na")
 
 #Oregon Sale********************************************************************
-Store.create(name: "Oregon Sale", description: "Oregon Sale", path: "oregonsale", status: "live")
+Store.create(name: "Oregon Sale", description: "Oregon Sale", path: "oregonsale", status: "live", user_id: 1)
 
   # CATEGORIES
   Category.create(name: "Grub", store_id: 1)
@@ -125,6 +125,69 @@ Store.create(name: "Oregon Sale", description: "Oregon Sale", path: "oregonsale"
   Order.create(status: "returned", user_id: 4, total_cost: 460, card_number: "4242424242424242")
 
 
-##Other Stores
-Store.create(name: "Cloak and Dagger", description: "Hide Yo Self", path: "cloakanddagger", status: "live")
-Store.create(name: "gSchool", description: "We build developers", path: "gschool", status: "live")
+#Cloak and Dagger***************************************************************
+Store.create(name: "Cloak and Dagger", description: "Hide Yo Self", path: "cloakanddagger", status: "live", user_id: 2)
+
+  # CATEGORIES
+  Category.create(name: "Mustaches", store_id: 2)
+  Category.create(name: "Cloaks", store_id: 2)
+  Category.create(name: "Daggers", store_id: 2)
+
+  ##Mustaches
+  Product.create( name: "Hippy Mustache", price: 240, description: "Dude", category_ids: ["7"], store_id: 2)
+  Product.create( name: "Rebel Mustache", price: 400, description: "Anaarchy", category_ids: ["7"], store_id: 2)
+  Product.create( name: "Suburban Mustache", price: 424, description: "Too lazy to shave.", category_ids: ["7"], store_id: 2)
+
+  ##GRUB
+  Product.create( name: "Theatre Cloak", price: 24, description: "Dramatic", category_ids: ["8"], store_id: 2)
+  Product.create( name: "Everyday Cloak", price: 234, description: "For casual wear", category_ids: ["8"], store_id: 2)
+  Product.create( name: "Holiday Cloak", price: 524, description: "Complete with reinder", category_ids: ["8"], store_id: 2)
+
+  ##GRUB
+  Product.create( name: "Threatening Dagger", price: 24, description: "Dramatic", category_ids: ["9"], store_id: 2)
+  Product.create( name: "Small Dagger", price: 234, description: "For casual wear", category_ids: ["9"], store_id: 2)
+  Product.create( name: "Big Dagger", price: 524, description: "Really more of a sword", category_ids: ["9"], store_id: 2)
+
+  #LINE ITEMS
+  ##11
+  LineItem.create(product_id: 34, cart_id: nil, order_id: 11, quantity: 3, price: 24)
+  LineItem.create(product_id: 35, cart_id: nil, order_id: 11, quantity: 2, price: 24)
+  LineItem.create(product_id: 36, cart_id: nil, order_id: 11, quantity: 5, price: 24)
+  LineItem.create(product_id: 37, cart_id: nil, order_id: 11, quantity: 1, price: 24)
+
+
+  #ORDERS
+  Order.create(status: "pending", user_id: 7, total_cost: 3372, card_number: "4242424242424242")
+
+
+#gSchool************************************************************************
+Store.create(name: "gSchool", description: "We build developers", path: "gschool", status: "live", user_id: 3)
+  
+  # CATEGORIES
+  Category.create(name: "Developers", store_id: 3)
+  Category.create(name: "Projects", store_id: 3)
+  Category.create(name: "Free Work", store_id: 3)
+
+  ##Developers
+  Product.create( name: "John", price: 4242, description: "Will work for money", category_ids: ["10"], store_id: 3)
+  Product.create( name: "Danny Garcia", price: 4242, description: "Danarchy", category_ids: ["10"], store_id: 3)
+  Product.create( name: "Aimee Maher", price: 4242, description: "Likes Comics, will photoshop", category_ids: ["10"], store_id: 3)
+  Product.create( name: "Chelsea Komlo", price: 4242, description: "Likes Tests", category_ids: ["10"], store_id: 3)
+
+  ##Projects
+  Product.create( name: "Jetfuel", price: 240000, description: "Link shortener", category_ids: ["11"], store_id: 3)
+  Product.create( name: "SalesEngine", price: 2340000, description: "For your dataz", category_ids: ["11"], store_id: 3)
+  Product.create( name: "StoreEngine", price: 5240000, description: "This site but version 1.0", category_ids: ["11"], store_id: 3)
+
+  #LINE ITEMS
+  ##11
+  LineItem.create(product_id: 43, cart_id: nil, order_id: 12, quantity: 5, price: 4242)
+  LineItem.create(product_id: 44, cart_id: nil, order_id: 12, quantity: 5, price: 4242)
+  LineItem.create(product_id: 45, cart_id: nil, order_id: 12, quantity: 5, price: 4242)
+  LineItem.create(product_id: 46, cart_id: nil, order_id: 12, quantity: 5, price: 4242)
+
+
+  #ORDERS
+  Order.create(status: "pending", user_id: 7, total_cost: 84840, card_number: "4242424242424242")
+
+
