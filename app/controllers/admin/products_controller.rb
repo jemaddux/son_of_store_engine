@@ -1,7 +1,6 @@
 class Admin::ProductsController < Admin::AdminController
 
   def index
-
     @dashboard = Dashboard.new(current_user.store_id)
     authorize! :manage, Product
 
