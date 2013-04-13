@@ -23,6 +23,15 @@ FactoryGirl.define do
     description "a_description"
     price 2.00
     retired false 
+    store
+  end 
+
+  factory :product_2, class: Product do 
+    name "product_name"
+    description "a_description"
+    price 2.00
+    retired false 
+    store
   end 
 
   factory :user do 
