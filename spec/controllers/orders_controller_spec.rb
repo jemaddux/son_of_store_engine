@@ -53,6 +53,7 @@ describe OrdersController do
         o = cart.add_product(product)
         o.save!
         ApplicationController.any_instance.stub(:current_session).and_return(cart.session)
+        OrdersController.any_instance.stub(:find_cart).and_return(cart)
       end 
 
       context "a user checks out but does not sign up" do 
@@ -65,12 +66,12 @@ describe OrdersController do
 
         it "validates that the user has entered a valid email" do 
           pending
-          post :create,  card_number: '4242424242424242', user_email: "not_a_valid_email", store_id: cart.store_id
+          post :create,  card_number: '4242424242424242', user_email: "not_a_valid_email"
           expect(Order.count).to eq 0
         end 
 
         it "allows that user to check out" do 
-          post :create,  card_number: '4242424242424242', user_email: "email@email.test", store_id: cart.store_id
+          post :create,  card_number: '4242424242424242', user_email: "email@email.test"
           expect(Order.count).to eq 1
         end 
       end 
@@ -91,6 +92,7 @@ describe OrdersController do
         before do 
           post :create,  checkout_with_addresses
           ApplicationController.any_instance.stub(:current_session).and_return(cart.session)
+          OrdersController.any_instance.stub(:find_cart).and_return(cart)
         end
 
         it "generate a unique hashed url" do 
@@ -117,10 +119,11 @@ describe OrdersController do
         o = cart.add_product(product)
         o.save!
         ApplicationController.any_instance.stub(:current_session).and_return(cart.session)
+        OrdersController.any_instance.stub(:find_cart).and_return(cart)
       end
 
       it "allows that person to check out" do 
-        post :create,   card_number: '4242424242424242', store_id: cart.store_id
+        post :create,   card_number: '4242424242424242'
         expect(Order.find_all_by_user_id(user.id).count).to eq 1
       end
 
@@ -182,7 +185,7 @@ describe OrdersController do
 
       it "re-renders the 'new' template" do
         Order.any_instance.stub(:valid?).and_return(false)
-        post :create, { "status" => "invalid value", store_id: cart.store_id }
+        post :create, { "status" => "invalid value"}
         response.should render_template("new")
       end
     end
