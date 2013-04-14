@@ -32,20 +32,20 @@ Store.create(name: "Oregon Sale", description: "Oregon Sale", path: "oregonsale"
   Category.create(name: "Essentials", store_id: 1)
 
   ##GRUB
-  Product.create( name: "Rations", price: 24, description: "Good for one 'splorer.", category_ids: ["1"], store_id: 1)
-  Product.create( name: "Eggs", price: 5, description: "Farm fresh and ready to consume.", category_ids: ["1"], store_id: 1)
-  Product.create( name: "Apples", price: 19, description: "Great for a snack!", category_ids: ["1"], store_id: 1)
-  Product.create( name: "Hardtack", price: 40, description: "Simple cracker for simple folk.", category_ids: ["1"], store_id: 1)
-  Product.create( name: "Prickly Pear", price: 60, description: "Prickly on the outside, scrumptious on the inside.", category_ids: ["1"], store_id: 1)
+  Product.create( name: "Rations", price: 2490, description: "Good for one 'splorer.", category_ids: ["1"], store_id: 1)
+  Product.create( name: "Eggs", price: 500, description: "Farm fresh and ready to consume.", category_ids: ["1"], store_id: 1)
+  Product.create( name: "Apples", price: 190, description: "Great for a snack!", category_ids: ["1"], store_id: 1)
+  Product.create( name: "Hardtack", price: 400, description: "Simple cracker for simple folk.", category_ids: ["1"], store_id: 1)
+  Product.create( name: "Prickly Pear", price: 600, description: "Prickly on the outside, scrumptious on the inside.", category_ids: ["1"], store_id: 1)
   Product.create( name: "Bacon", price: 100, description: "By the slab for the whole fam!", category_ids: ["1"], store_id: 1)
-  Product.create( name: "Sarsaparilla", price: 3, description: "Before Coke, there was sarsaparilla.", category_ids: ["1"], store_id: 1)
+  Product.create( name: "Sarsaparilla", price: 300, description: "Before Coke, there was sarsaparilla.", category_ids: ["1"], store_id: 1)
 
   ##CLOTHING
   Product.create( name: "Basic Tunic", price: 75, description: "Plain ol' get-up for simple folk.", category_ids: ["2"], store_id: 1)
   Product.create( name: "Leather Armor", price: 250, description: "Good fer fendin' off 'coons and der sharp claws.", category_ids: ["2"], store_id: 1)
-  Product.create( name: "Ponchos", price: 25, description: "It gets rainy on the trail. Better bring a poncho.", category_ids: ["2"], store_id: 1)
+  Product.create( name: "Ponchos", price: 250, description: "It gets rainy on the trail. Better bring a poncho.", category_ids: ["2"], store_id: 1)
   Product.create( name: "Moccasins", price: 196, description: "Made with real Apache tears!", category_ids: ["2"], store_id: 1)
-  Product.create( name: "Camouflage", price: 50, description: "Der buffalo won't be able to see yer.", category_ids: ["2"], store_id: 1)
+  Product.create( name: "Camouflage", price: 500, description: "Der buffalo won't be able to see yer.", category_ids: ["2"], store_id: 1)
 
   ##WEAPONS
   Product.create( name: "Blunderbuss", price: 150, description: "Big ol' gun, and loads of fun!", category_ids: ["3"], store_id: 1)
@@ -56,18 +56,18 @@ Store.create(name: "Oregon Sale", description: "Oregon Sale", path: "oregonsale"
 
   ##TOOLS
   Product.create( name: "Stone Hunting Knife", price: 98, description: "Good fer fur.", category_ids: ["3", "4"], store_id: 1)
-  Product.create( name: "Snake Charm", price: 25, description: "Never git bit by a slippery snake 'gin!", category_ids: ["4"], store_id: 1)
+  Product.create( name: "Snake Charm", price: 2500, description: "Never git bit by a slippery snake 'gin!", category_ids: ["4"], store_id: 1)
   Product.create( name: "Compass", price: 62, description: "West is where yer headed, so's ya know.", category_ids: ["4"], store_id: 1)
-  Product.create( name: "Sleeping Bag", price: 3, description: "Regain staminer! Warm 'n' cozy.", category_ids: ["4"], store_id: 1)
+  Product.create( name: "Sleeping Bag", price: 300, description: "Regain staminer! Warm 'n' cozy.", category_ids: ["4"], store_id: 1)
   Product.create( name: "Carpenter's Tools", price: 400, description: "Fer fixin' up der wagon in a jiff!", category_ids: ["4"], store_id: 1)
   Product.create( name: "Divining Rod", price: 500, description: "Water, water, anywhere? And lots and lots to drink!", category_ids: ["4"], store_id: 1)
 
   ##MEDICINE
   Product.create( name: "Miracle Cure", price: 3000, description: "Completely cures anything.", category_ids: ["5"], store_id: 1)
-  Product.create( name: "Antivenom", price: 15, description: "Heals yer snakebite in a jiff.", category_ids: ["5"], store_id: 1)
-  Product.create( name: "Lemon", price: 15, description: "Cures scurvy and tastes great too!", category_ids: ["1", "5"], store_id: 1)
+  Product.create( name: "Antivenom", price: 150, description: "Heals yer snakebite in a jiff.", category_ids: ["5"], store_id: 1)
+  Product.create( name: "Lemon", price: 150, description: "Cures scurvy and tastes great too!", category_ids: ["1", "5"], store_id: 1)
   Product.create( name: "Medicine bag", price: 1000, description: "All yer fixin's in one handy sack.", category_ids: ["5"], store_id: 1)
-  Product.create( name: "Cod Liver Oil", price: 10, description: "Tastes like dung. But good fer yer body.", category_ids: ["5"], store_id: 1)
+  Product.create( name: "Cod Liver Oil", price: 100, description: "Tastes like dung. But good fer yer body.", category_ids: ["5"], store_id: 1)
 
   ##ESSENTIALS
   Product.create( name: "Oxen", price: 4000, description: "Strong, durable, and more MPG than yer SUV.", category_ids: ["6"], store_id: 1)
@@ -139,12 +139,12 @@ Store.create(name: "Cloak and Dagger", description: "Hide Yo Self", path: "cloak
   Product.create( name: "Suburban Mustache", price: 424, description: "Too lazy to shave.", category_ids: ["7"], store_id: 2)
 
   ##GRUB
-  Product.create( name: "Theatre Cloak", price: 24, description: "Dramatic", category_ids: ["8"], store_id: 2)
+  Product.create( name: "Theatre Cloak", price: 240, description: "Dramatic", category_ids: ["8"], store_id: 2)
   Product.create( name: "Everyday Cloak", price: 234, description: "For casual wear", category_ids: ["8"], store_id: 2)
   Product.create( name: "Holiday Cloak", price: 524, description: "Complete with reinder", category_ids: ["8"], store_id: 2)
 
   ##GRUB
-  Product.create( name: "Threatening Dagger", price: 24, description: "Dramatic", category_ids: ["9"], store_id: 2)
+  Product.create( name: "Threatening Dagger", price: 204, description: "Dramatic", category_ids: ["9"], store_id: 2)
   Product.create( name: "Small Dagger", price: 234, description: "For casual wear", category_ids: ["9"], store_id: 2)
   Product.create( name: "Big Dagger", price: 524, description: "Really more of a sword", category_ids: ["9"], store_id: 2)
 
