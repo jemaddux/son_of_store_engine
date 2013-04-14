@@ -10,10 +10,10 @@ class ApplicationController < ActionController::Base
   helper_method :current_cart
 
   def current_session
-    Session.find(session[:session_id])
+    Session.find(session[:user_session_id])
   rescue
     user_session = Session.create
-    session[:session_id] = user_session.id
+    session[:user_session_id] = user_session.id
     user_session
   end
 end
