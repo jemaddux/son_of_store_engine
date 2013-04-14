@@ -50,7 +50,7 @@ class OrdersController < ApplicationController
       return
     end
 
-    cart = current_session.carts.find_by_store_id(flash[:store_id])
+    cart = find_cart(flash[:store_id])
 
     if cart 
       @order = Order.create_from_cart_for_user(cart,
@@ -80,6 +80,10 @@ class OrdersController < ApplicationController
   end
 
   private 
+
+  def find_cart(store_id)
+    current_session.carts.find_by_store_id(store_id)
+  end 
 
   def order_user
     email = params[:user_email]
