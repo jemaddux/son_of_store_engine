@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Admin::ProductsController do 
+describe Admin::ProductsController do
 
   let(:store){ FactoryGirl.create(:store) }
   let(:product1) { FactoryGirl.create(:product) }
@@ -115,11 +115,13 @@ describe Admin::ProductsController do
       response.should redirect_to(products_path)
     end
   end
+
   describe "retire and unretire" do
     before (:each) do
       login_user(admin)
     end
   end
+
 
   # describe "GET list" do
   #   it "assigns all categories as @categories" do

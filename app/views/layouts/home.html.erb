@@ -18,6 +18,7 @@ body {height:100%; margin:1; padding:2;}
 #navbar {position:relative; z-index:1;}
 </style>
 
+
   <title>The Market Collective</title>
 </head>
   <body>
@@ -26,7 +27,7 @@ body {height:100%; margin:1; padding:2;}
     </div>
       <div id="navbar">
         <div style = "float:left">
-          <%= image_tag 'banner6.png' %> 
+          <%= image_tag 'banner6.png' %>
         </div>
       </div>
         <div id="content">
@@ -40,20 +41,13 @@ body {height:100%; margin:1; padding:2;}
               <%= link_to image_tag('loginbutton.png'), login_path %>
             <% end %>
           </div>
-            <!-- Flash -->
-            <div class="span12">
-              <% if flash[:red] %>
-                <div class="alert alert-danger alert-block"><%= flash[:red] %>
-                  <button type="button" class="close" data-dismiss="alert">×</button>
-                </div>
-              <% end %>
-
-              <% if flash[:green] %>
-                <div class="alert alert-success alert-block"><%= flash[:green] %>
-                  <button type="button" class="close" data-dismiss="alert">×</button>
-                </div>
-              <% end %>
+         <!-- Flash -->
+          <div class="row">
+            <div class="span12 alert alert-success alert-block">
+              <%= bootstrap_flash %>
+              <button type="button" class="close" data-dismiss="alert">×</button>
             </div>
+          </div>
 
               <%= yield %>
         </div>

@@ -12,8 +12,11 @@ describe StoresController do
 
   describe "GET show" do
     it "assigns the requested store as @store" do
+      pending
       store = Store.create! valid_attributes
-      get :show, {:id => store.to_param}, valid_session
+      store.status = "live"
+      store.save
+      get :show, {:status => store.status, :id => store.id}, valid_session
       assigns(:store).should eq(store)
     end
   end
