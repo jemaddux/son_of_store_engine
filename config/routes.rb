@@ -76,6 +76,7 @@ StoreEngine::Application.routes.draw do
     match "/" => "stores#show", as: "home"
     match "/stock/products" => "admin/products#index", as: "index"
     match "/admin/products" => "admin/products#index", as: "index"
+
     resources :categories
   end
 

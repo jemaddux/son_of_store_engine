@@ -39,7 +39,11 @@ FactoryGirl.define do
   factory :super_admin, class: User do
     full_name "user"
     email "test@test.com"
+<<<<<<< HEAD
+    role "superuser"
+=======
     role "platform_admin"
+>>>>>>> ec6638d9a0b5bbf5994db0266e1597aaec66b50e
     password "password"
   end
 

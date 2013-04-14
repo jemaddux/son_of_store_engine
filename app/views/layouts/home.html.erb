@@ -14,7 +14,8 @@ body {height:100%; margin:1; padding:2;}
 /* prepares the background image to full capacity of the viewing area */
 #bg {position:fixed; top:0; left:0; width:60%; background-size: cover;}
 /* places the content ontop of the background image */
-#content {position:relative; z-index:4;}
+#content {position:relative; z-index:3;}
+#navbar {position:relative; z-index:1;}
 </style>
 
   <title>The Market Collective</title>
@@ -23,10 +24,12 @@ body {height:100%; margin:1; padding:2;}
     <div id="bg">
       <%= image_tag'bg.jpg' %>
     </div>
-      <div id="content">
+      <div id="navbar">
         <div style = "float:left">
-          <%= image_tag 'banner2.png' %>
+          <%= image_tag 'banner6.png' %> 
         </div>
+      </div>
+        <div id="content">
           <div style = "font-family:Arial; font-size:20px; float:right">
             <% if current_user %>
               Hello,
