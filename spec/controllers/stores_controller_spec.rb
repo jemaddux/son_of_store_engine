@@ -2,24 +2,21 @@ require 'spec_helper'
 
 describe StoresController do
 
-  # This should return the minimal set of attributes required to create a valid
-  # Store. As you add validations to Store, be sure to
-  # update the return value of this method accordingly.
   def valid_attributes
     { "name" => "MyString" }
   end
 
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # StoresController. Be sure to keep this updated too.
   def valid_session
     {}
   end
 
   describe "GET show" do
     it "assigns the requested store as @store" do
+      pending
       store = Store.create! valid_attributes
-      get :show, {:id => store.to_param}, valid_session
+      store.status = "live"
+      store.save
+      get :show, {:status => store.status, :id => store.id}, valid_session
       assigns(:store).should eq(store)
     end
   end
