@@ -1,10 +1,10 @@
 class CartsController < ApplicationController
   def index
-    @carts = Cart.all
+    @carts = current_session.carts
   end
 
   def show
-    @cart = current_cart
+    @cart = current_session.carts.where(store_id: params[:store_id])
   end
 
   def new
@@ -16,7 +16,7 @@ class CartsController < ApplicationController
   end
 
   def create
-    @cart = Cart.new(params[:cart])
+    @cart = Cart.new(params[:cart], session_id: current_session.id)
 
     if @cart.save
       redirect_to @cart, notice: 'Cart was successfully created.'

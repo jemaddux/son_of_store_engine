@@ -58,6 +58,7 @@ FactoryGirl.define do
     email "test2@test.com"
     role "admin"
     password "password"
+    store
   end
 
   factory :order do
@@ -67,7 +68,17 @@ FactoryGirl.define do
     card_number '4242424242424242'
   end
 
+  factory :session do 
+  end
+
   factory :cart do
+    store
+    session
+  end
+
+  factory :cart_2, class: Cart do
+    store
+    session 
   end
 
   factory :line_item do

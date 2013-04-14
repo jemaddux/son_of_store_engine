@@ -20,15 +20,20 @@ class OrdersController < ApplicationController
   end
 
   def new
-    if current_cart.calculate_total_cost <= 50
-      flash[:error] =
-        "Sorry Partner. Your cart must contain at least $0.51 worth of goods."
-      redirect_to root_path and return
-    end
-    @order = Order.new
-    authorize! :create, Order
 
-    render :new
+    cart = current_session.carts.find_by_store_id(params[:store_id])
+
+    if cart 
+      if cart.calculate_total_cost <= 50
+        flash[:error] =
+          "Sorry Partner. Your cart must contain at least $0.51 worth of goods."
+        redirect_to root_path and return
+      end
+    end
+      @order = Order.new
+      authorize! :create, Order
+
+      render :new
   end
 
   def edit
@@ -43,20 +48,23 @@ class OrdersController < ApplicationController
       return
     end
 
-    @order = Order.create_from_cart_for_user(current_cart,
+    cart = current_session.carts.find_by_store_id(params[:store_id])
+
+    if cart 
+      @order = Order.create_from_cart_for_user(cart,
                                                 order_user.id,
                                                 params[:card_number],
                                                 shipping_id(params),
                                                 billing_id(params))
     
-    if @order.valid?
-      send_order_confirmation(order_user.email, @order)
-      destroy_shopping_cart!
-      redirect_to display_path(@order.confirmation_hash), notice: 'Thanks! Your order was submitted.'
+      if @order.valid?
+        send_order_confirmation(order_user.email, @order)
+        destroy_current_session!
+        redirect_to display_path(@order.confirmation_hash), notice: 'Thanks! Your order was submitted.'
+      end
     else
       render action: "new"
     end
-
   end
 
   def update
@@ -67,13 +75,6 @@ class OrdersController < ApplicationController
     else
       render action: "edit"
     end
-  end
-
-  def destroy
-    @order = Order.find(params[:id])
-    @order.destroy
-
-    redirect_to orders_url
   end
 
   private 
@@ -87,9 +88,9 @@ class OrdersController < ApplicationController
     UserMailer.order_confirmation(email, order).deliver
   end
 
-  def destroy_shopping_cart!
-    current_cart.destroy if current_cart
-    session[:cart_id] = nil
+  def destroy_current_session!
+    current_session.destroy if current_session
+    session[:session_id] = nil
   end
 
   def shipping_id(params)

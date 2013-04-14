@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Admin::ProductsController do 
+describe Admin::ProductsController do
 
   let(:store){ FactoryGirl.create(:store) }
   let(:product1) { FactoryGirl.create(:product) }
-  let(:super_admin){ FactoryGirl.create(:super_admin) }
+  let(:admin){ FactoryGirl.create(:admin) }
 
   def valid_attributes
     {name: "Rations", price: 24,
@@ -16,7 +16,7 @@ describe Admin::ProductsController do
   end
 
   before (:each) do
-    login_user(super_admin)
+    login_user(admin)
   end
 
   describe "GET show" do
@@ -45,7 +45,7 @@ describe Admin::ProductsController do
   describe "POST create" do
     describe "with valid params and admin access" do
       before (:each) do
-        login_user(super_admin)
+        login_user(admin)
       end
 
       it "creates a new Product" do
@@ -100,7 +100,7 @@ describe Admin::ProductsController do
 
   describe "DELETE destroy" do
     before (:each) do
-      login_user(super_admin)
+      login_user(admin)
     end
 
     it "destroys the requested product" do
@@ -115,10 +115,10 @@ describe Admin::ProductsController do
       response.should redirect_to(products_path)
     end
   end
-  
+
   describe "retire and unretire" do
     before (:each) do
-      login_user(super_admin)
+      login_user(admin)
     end
   end
 
@@ -137,4 +137,5 @@ describe Admin::ProductsController do
   #   end
   # end
 end
+
 
