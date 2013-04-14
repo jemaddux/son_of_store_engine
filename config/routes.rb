@@ -1,4 +1,8 @@
+require 'resque/server'
+
 StoreEngine::Application.routes.draw do
+
+  mount Resque::Server.new, at: "/resque"
 
   get "/orders/review/:confirmation_hash" => "orders#display", :as => "display"
 
