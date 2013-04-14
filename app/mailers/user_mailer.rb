@@ -8,6 +8,10 @@ class UserMailer < ActionMailer::Base
     mail to: user_email
   end
 
+  def account_confirmation(email)
+    mail to: email
+  end
+
   def site_live(store)
     @store = store
     user = User.find(@store.user_id)
@@ -18,6 +22,6 @@ class UserMailer < ActionMailer::Base
     @store = store
     user = User.find(@store.user_id)
     mail to: user.email
-  end  
+  end
 
 end

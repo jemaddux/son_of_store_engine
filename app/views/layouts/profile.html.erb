@@ -4,13 +4,29 @@
     <h1> Your User Profile </h1>
     <title> Your User Profile</title>
   </head>
+  <style type="text/css">
+/* pushes the page to the full capacity of the viewing area */
+html {height:100%;}
+body {height:100%; margin:1; padding:2;}
+/* prepares the background image to full capacity of the viewing area */
+#bg {position:fixed; background-repeat: repeat; background-position: center;}
+/* places the content ontop of the background image */
+#content {position:relative; z-index:8;}
+</style>
+
+  <body>
+    <div id="bg">
+      <%= image_tag'EditedBg.png' %>
+    </div>
   <br>
   <br>
   <br>
   <br>
   <body>
+  <div id="content">
     <div style= "left">
-      <%= link_to image_tag("button1.png"), new_store_path %>
+      <%= link_to image_tag("New_Site_Button.png"), new_store_path %>
     </div>
+  </div>
   </body>
 </html>
