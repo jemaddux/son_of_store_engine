@@ -1,6 +1,6 @@
 <div class="well well-large">
   <h1 style= "font-family:Arial; font-size:30px">Login to your stores!</h1>
-  <p style= "font-family:Arial; font-size:18px">Not signed up? Register <%= link_to "here", signup_path %></p>
+  <p style= "font-family:Arial; font-size:18px">Not signed up? Register <%= link_to "here", new_user_path %></p>
   <%= form_tag session_path(redirect: @redirect) do %>
     <div class="field" style= "font-family:Arial; font-size:16px">
       <%= label_tag :email %>

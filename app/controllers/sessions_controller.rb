@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
         redirect_to "/"
       elsif user.role?(:platform_admin)
         redirect_to "/admin/stores/"
-      elsif user.role?(:admin) || user.role?(:superuser)
+      elsif user.role?(:admin)
         redirect_to '/admin', notice: "Logged in."
       end
     else
