@@ -13,11 +13,10 @@ class UsersController < ApplicationController
 
     if @user.save
       auto_login(@user)
-      flash[:green] = "Your account has been successfully created!"
       send_account_confirmation(@user.email)
 
       destination = session.delete(:return_to) || root_url
-      redirect_to destination
+      redirect_to destination, notice: "Your account has been successfully created!"
     else
       render :new
     end
