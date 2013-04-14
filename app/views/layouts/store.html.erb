@@ -51,7 +51,7 @@
           <% if session[:user_session_id] && Session.find(session[:user_session_id]).carts.find_by_store_id(@store.id)%>
 
             <li><%= cart_cost %><br /><%= link_to "View", my_cart_path %></li>
-            <li><%= link_to "Checkout", new_order_path, :class => 'btn btn-small btn-success' %></li>
+            <li><%= link_to "Checkout", new_order_path(store_id: @store.id), :class => 'btn btn-small btn-success' %></li>
             <li><%= link_to image_tag("new_cart_sm3.png"), my_cart_path(@store.id) %></li>
           <% else %>
             <li><%= image_tag("new_cart_sm3.png") %></li>
