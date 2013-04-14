@@ -61,7 +61,7 @@ class OrdersController < ApplicationController
     
       if @order.valid?
         send_order_confirmation(order_user.email, @order)
-        destroy_current_session!
+        destroy_current_session!(cart.id)
         redirect_to display_path(@order.confirmation_hash), notice: 'Thanks! Your order was submitted.'
       end
     else
@@ -90,9 +90,8 @@ class OrdersController < ApplicationController
     UserMailer.order_confirmation(email, order).deliver
   end
 
-  def destroy_current_session!
-    current_session.destroy if current_session
-    session[:session_id] = nil
+  def destroy_current_session!(cart_id)
+    current_session.carts.find_by_id(cart_id).destroy if current_session.carts.find_by_id(cart_id)
   end
 
   def shipping_id(params)
