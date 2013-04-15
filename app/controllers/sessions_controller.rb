@@ -10,8 +10,10 @@ class SessionsController < ApplicationController
         redirect_to "/"
       elsif user.role?(:platform_admin)
         redirect_to "/admin/stores/"
-      elsif user.role?(:admin) || user.role?(:superuser)
+      elsif user.role?(:admin)
         redirect_to '/admin', notice: "Logged in."
+      elsif user.role?(:pending_admin)
+        redirect_to '/signup_admin', notice: "Please update your password."
       end
     else
       flash.now.alert = "Email or password was invalid."

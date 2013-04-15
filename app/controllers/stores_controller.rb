@@ -3,10 +3,12 @@ class StoresController < ApplicationController
 
   def show
     @store = Store.find_by_path(params[:store_id])
-    if @store.status != "live"
+
+    if @store && @store.status != "live"
       render :text => '404 - Store Not Found', :status => '404'
       return
     end
+
     @categories = Category.where(store_id: @store.id)
     @products = Product.where(store_id: @store.id).shuffle[0..2]
     render layout: "store"
@@ -32,7 +34,7 @@ class StoresController < ApplicationController
       redirect_to "/stores/pending/#{@store.path}", notice: 'Store was successfully created.'
     else
       render action: "new"
-    end    
+    end
   end
 
   def update

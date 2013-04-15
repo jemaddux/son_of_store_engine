@@ -22,8 +22,18 @@ FactoryGirl.define do
     name "product_name"
     description "a_description"
     price 2.00
-    retired false
-  end
+    retired false 
+    store
+  end 
+
+  factory :product_2, class: Product do 
+    name "product_name"
+    description "a_description"
+    price 2.00
+    retired false 
+    store
+  end 
+
 
   factory :category do
     name "new category"
@@ -48,6 +58,7 @@ FactoryGirl.define do
     email "test2@test.com"
     role "admin"
     password "password"
+    store
   end
 
   factory :order do
@@ -57,7 +68,17 @@ FactoryGirl.define do
     card_number '4242424242424242'
   end
 
+  factory :session do 
+  end
+
   factory :cart do
+    store
+    session
+  end
+
+  factory :cart_2, class: Cart do
+    store
+    session 
   end
 
   factory :line_item do

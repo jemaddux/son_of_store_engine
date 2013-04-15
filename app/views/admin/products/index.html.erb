@@ -3,9 +3,47 @@
   <div class="row">
 
     <div class="span11">
+      <%= @params.inspect %>
       <% if current_user.role == "stocker" %>
 
       <% else %>
+
+        <div id="admins">
+          <h3>Admins & Stockers</h3>
+            <!-- Table bodies by status -->
+            <div class="tab-content">
+              <table class="white_table table table-striped">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Change Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+              <% @dashboard.admins.each do |admin| %>
+                <div class="tab-pane" id="admin">
+                  <tr>  
+                    <td><%= admin.full_name %></td>
+                    <td><%= admin.email %></td>
+                    <td><%= admin.role %></td>
+                    <td>
+                      <%= link_to 'Remove Admin', user_path(:id => admin.id, :role => "user"), :class => 'btn btn-mini', :method => "put" %>
+                    </td>
+                  </tr>
+                </div>
+              <% end %>
+              </tbody>
+              </table>
+            </div>
+            <%= form_tag new_admin_path, :method => "put" do %>  
+              <input type="email", name="email"> 
+              <input type="hidden", name="store_id", value="<%= current_user.store_id %>"> 
+              <%= submit_tag "Create New Admin", :class => 'btn btn-primary'%>
+            <% end %>
+
+        </div>
         <div id="orders">
           <h3>Orders:</h3>
           <!-- Tabs by status -->

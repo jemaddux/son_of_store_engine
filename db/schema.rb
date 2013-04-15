@@ -16,7 +16,12 @@ ActiveRecord::Schema.define(:version => 20130413210410) do
   create_table "carts", :force => true do |t|
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "session_id"
+    t.integer  "store_id"
   end
+
+  add_index "carts", ["session_id"], :name => "index_carts_on_session_id"
+  add_index "carts", ["store_id"], :name => "index_carts_on_store_id"
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -79,6 +84,11 @@ ActiveRecord::Schema.define(:version => 20130413210410) do
     t.datetime "image_updated_at"
     t.boolean  "retired",            :default => false
     t.integer  "store_id"
+  end
+
+  create_table "sessions", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "stores", :force => true do |t|

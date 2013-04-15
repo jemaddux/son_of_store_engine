@@ -25,6 +25,11 @@ class Dashboard
     @retired_products ||= Product.where(store_id: store_id).retired
   end
 
+  def admins
+    admins ||= User.where(store_id: store_id)
+    @admins = admins.reject{|a| a.role == "user" || a.role == "platform_admin"}
+  end
+
   def orders_by_status
     orders_with_status = {}
     Order.all.each do |order|
