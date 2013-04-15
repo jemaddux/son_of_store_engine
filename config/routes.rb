@@ -41,6 +41,9 @@ StoreEngine::Application.routes.draw do
   get "login" => "sessions#new", :as => "login"
   get "search" => "search#user_search", :as => "search"
   get "/stores/pending/:path" => "stores#pending", :as => "pending"
+  put "new/admin" => "admin/admin#new_admin"
+  get "signup_admin" => "admin/admin#signup_admin"
+  put "create_admin" => "admin/admin#create_admin"
 
   resources :stores
 
@@ -76,6 +79,7 @@ StoreEngine::Application.routes.draw do
     match "/" => "stores#show", as: "home"
     match "/stock/products" => "admin/products#index", as: "index"
     match "/admin/products" => "admin/products#index", as: "index"
+    match "/admin" => "admin/products#index", as: "index"
 
     resources :categories
   end

@@ -33,6 +33,8 @@ class OrdersController < ApplicationController
       @order = Order.new
       authorize! :create, Order
 
+      flash[:store_id] = params[:store_id]
+
       render :new
   end
 
@@ -48,7 +50,7 @@ class OrdersController < ApplicationController
       return
     end
 
-    cart = current_session.carts.find_by_store_id(params[:store_id])
+    cart = find_cart(flash[:store_id])
 
     if cart 
       @order = Order.create_from_cart_for_user(cart,
@@ -59,7 +61,7 @@ class OrdersController < ApplicationController
     
       if @order.valid?
         send_order_confirmation(order_user.email, @order)
-        destroy_current_session!
+        destroy_current_session!(cart.id)
         redirect_to display_path(@order.confirmation_hash), notice: 'Thanks! Your order was submitted.'
       end
     else
@@ -79,6 +81,10 @@ class OrdersController < ApplicationController
 
   private 
 
+  def find_cart(store_id)
+    current_session.carts.find_by_store_id(store_id)
+  end 
+
   def order_user
     email = params[:user_email]
     current_user || User.find_by_email(email) || User.create_guest_user(email)
@@ -88,9 +94,8 @@ class OrdersController < ApplicationController
     UserMailer.order_confirmation(email, order).deliver
   end
 
-  def destroy_current_session!
-    current_session.destroy if current_session
-    session[:session_id] = nil
+  def destroy_current_session!(cart_id)
+    current_session.carts.find_by_id(cart_id).destroy if current_session.carts.find_by_id(cart_id)
   end
 
   def shipping_id(params)
