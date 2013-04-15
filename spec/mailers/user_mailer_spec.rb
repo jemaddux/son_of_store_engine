@@ -7,7 +7,7 @@ describe UserMailer do
                 confirmation_hash: UUID.new.generate,
                 card_number: '4242424242424242')
               }
-  let(:mail) { UserMailer.order_confirmation(user_email, order) }
+  let(:mail) { UserMailer.order_confirmation(user_email, order.confirmation, order.confirmation_hash) }
 
   describe "order_confirmation" do
 
