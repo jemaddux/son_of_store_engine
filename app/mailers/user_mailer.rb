@@ -24,4 +24,16 @@ class UserMailer < ActionMailer::Base
     mail to: user.email
   end
 
+  def new_admin(email, store, temp_password)
+    @store = store
+    @email = email
+    @temp_password = temp_password
+    mail to: email
+  end
+
+  def add_admin(email, store)
+    @store = store
+    mail to: email
+  end
+
 end
