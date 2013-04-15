@@ -122,6 +122,7 @@ GEM
     mono_logger (1.0.0)
     multi_json (1.7.1)
     multipart-post (1.2.0)
+    newrelic_rpm (3.6.0.83)
     nokogiri (1.5.9)
     oauth (0.4.7)
     oauth2 (0.8.1)
@@ -295,6 +296,7 @@ DEPENDENCIES
   jquery-rails
   launchy
   less-rails
+  newrelic_rpm
   paperclip
   pg
   rails (= 3.2.13)

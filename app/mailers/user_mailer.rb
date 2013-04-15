@@ -1,10 +1,10 @@
 class UserMailer < ActionMailer::Base
   default from: "no-reply@themarketcollective.herokuapp.com"
 
-  def order_confirmation(user_email, order)
+  def order_confirmation(user_email, order_code, order_hash)
 
-    @confirmation_code = order.confirmation
-    @confirmation_hash = order.confirmation_hash
+    @confirmation_code = order_code
+    @confirmation_hash = order_hash
     mail to: user_email
   end
 
