@@ -15,13 +15,13 @@ class Admin::AdminController < ActionController::Base
       temp_password = create_random_password(10)
       User.create(full_name: "Pending", store_id: params[:store_id], email: params[:email], role: "pending_#{role}", password: temp_password)
       store_name = Store.find(params[:store_id]).name
-      UserMailer.new_admin(params[:email], store_name, temp_password).deliver
+      Resque.enqueue(SendNewAdminEmail, params[:email], store_name, temp_password)
     else
       user.role = role
       user.store_id = params[:store_id] #something
       user.save
       store_name = Store.find(params[:store_id]).name
-      UserMailer.add_admin(params[:email], store_name).deliver
+      Resque.enqueue(MakeUserNewAdmin, params[:email], store_name)
     end
     redirect_to :back, :notice => params.inspect
   end
