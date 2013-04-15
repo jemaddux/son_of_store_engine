@@ -1,0 +1,9 @@
+<%= form_tag(create_admin_path, :method => "put") do %>
+  <%= label_tag :full_name %>
+  <%= text_field_tag :full_name %>
+  <%= label_tag :new_password %>
+  <%= password_field_tag :password %>
+  <%= label_tag :password_confirmation %>
+  <%= password_field_tag :password_confirmation %><br/>
+  <%= submit_tag "Submit", :class => "btn btn-primary" %>
+<% end %>

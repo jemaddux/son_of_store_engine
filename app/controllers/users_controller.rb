@@ -31,6 +31,13 @@ class UsersController < ApplicationController
     end
   end
 
+  def update
+    @user = User.find(params[:id])
+    @user.role = params[:role]
+    @user.save
+    redirect_to :back
+  end
+
   private
 
   def send_account_confirmation(email)
