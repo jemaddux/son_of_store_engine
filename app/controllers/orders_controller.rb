@@ -52,7 +52,8 @@ class OrdersController < ApplicationController
 
     cart = find_cart(flash[:store_id])
 
-    if cart 
+
+    if cart
       @order = Order.create_from_cart_for_user(cart,
                                                 order_user.id,
                                                 params[:card_number],
@@ -60,7 +61,7 @@ class OrdersController < ApplicationController
                                                 billing_id(params))
     
       if @order.valid?
-        send_order_confirmation(order_user.email, @order)
+        Resque.enqueue(SendConfirmationEmail, order_user.email, @order.confirmation, @order.confirmation_hash)
         destroy_current_session!(cart.id)
         redirect_to display_path(@order.confirmation_hash), notice: 'Thanks! Your order was submitted.'
       end

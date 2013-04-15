@@ -74,6 +74,11 @@ describe OrdersController do
           post :create,  card_number: '4242424242424242', user_email: "email@email.test"
           expect(Order.count).to eq 1
         end 
+
+        it "starts the background worker to send the email as a background process" do 
+          (Resque).should_receive(:enqueue)
+          post :create,  card_number: '4242424242424242', user_email: "email@email.test"
+        end
       end 
 
       context "a user that is not logged in submits their billing info" do 
