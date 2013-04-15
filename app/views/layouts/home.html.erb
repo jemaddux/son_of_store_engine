@@ -6,27 +6,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta http-equiv="Imagetoolbar" content="no">
-
-<style type="text/css">
-/* pushes the page to the full capacity of the viewing area */
-html {height:100%;}
-body {height:100%; margin:1; padding:2;}
-/* prepares the background image to full capacity of the viewing area */
-#bg {position:fixed; top:0; left:0; width:60%; background-size: cover;}
-/* places the content ontop of the background image */
-#content {position:relative; z-index:3;}
-#navbar {position:relative; z-index:1;}
-</style>
+<%= stylesheet_link_tag "application", :media => "all" %>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
 
   <title>The Market Collective</title>
 </head>
   <body>
-    <div id="bg">
-      <%= image_tag'bg.jpg' %>
-    </div>
       <div id="navbar">
         <div style = "float:left">
-          <%= image_tag 'banner6.png' %>
+          <%= image_tag 'banner.png' %>
         </div>
       </div>
         <div id="content">
@@ -36,8 +24,9 @@ body {height:100%; margin:1; padding:2;}
               <%= link_to current_user.full_name, profile_path %>!
               <%= link_to "Log out", logout_path %>
             <% else %>
-              <%= link_to image_tag('signupbutton.png'), new_user_path %>
-              <%= link_to image_tag('loginbutton.png'), login_path %>
+              <%= link_to "Sign-Up",new_user_path %>
+
+              <%= link_to "Log In", login_path %>
             <% end %>
           </div>
          <!-- Flash -->
@@ -49,6 +38,7 @@ body {height:100%; margin:1; padding:2;}
 
               <%= yield %>
         </div>
+     </div>
   </body>
 </html>
 
