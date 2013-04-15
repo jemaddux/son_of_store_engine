@@ -27,7 +27,7 @@ class Admin::AdminController < ActionController::Base
     admin.full_name = params[:full_name]
     admin.password = params[:password]
     admin.save
-    redirect_to "/", :notice => params.inspect
+    redirect_to "/"
   end
 
   def signup_admin
