@@ -23,7 +23,7 @@ class Admin::AdminController < ActionController::Base
       store_name = Store.find(params[:store_id]).name
       UserMailer.add_admin(params[:email], store_name).deliver
     end
-    redirect_to :back, :notice => params.inspect
+    redirect_to :back
   end
 
   def create_admin
