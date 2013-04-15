@@ -52,7 +52,8 @@ class OrdersController < ApplicationController
 
     cart = find_cart(flash[:store_id])
 
-    if cart 
+
+    if cart
       @order = Order.create_from_cart_for_user(cart,
                                                 order_user.id,
                                                 params[:card_number],
