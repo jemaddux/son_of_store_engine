@@ -9,11 +9,11 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_cart
 
-  def current_cart
-    Cart.find(session[:cart_id])
+  def current_session
+    Session.find(session[:user_session_id])
   rescue
-    cart = Cart.create
-    session[:cart_id] = cart.id
-    cart
+    user_session = Session.create
+    session[:user_session_id] = user_session.id
+    user_session
   end
 end

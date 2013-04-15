@@ -1,10 +1,14 @@
 module ApplicationHelper
   def cart_cost
-    cart = current_cart
-    subtotals = cart.line_items.map do |item|
-      item.total
+    if Session.find(session[:user_session_id]) && Session.find(session[:user_session_id]).carts.find_by_store_id(@store.id)
+      cart = Session.find(session[:user_session_id]).carts.find_by_store_id(@store.id)
+      subtotals = cart.line_items.map do |item|
+        item.total
+      end
+      amount_in_dollars(add_all(subtotals))
+    else
+      0
     end
-    amount_in_dollars(add_all(subtotals))
   end
 
   def amount_in_dollars(cents)

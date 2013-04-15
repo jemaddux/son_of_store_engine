@@ -20,15 +20,22 @@ class OrdersController < ApplicationController
   end
 
   def new
-    if current_cart.calculate_total_cost <= 50
-      flash[:error] =
-        "Sorry Partner. Your cart must contain at least $0.51 worth of goods."
-      redirect_to root_path and return
-    end
-    @order = Order.new
-    authorize! :create, Order
 
-    render :new
+    cart = current_session.carts.find_by_store_id(params[:store_id])
+
+    if cart 
+      if cart.calculate_total_cost <= 50
+        flash[:error] =
+          "Sorry Partner. Your cart must contain at least $0.51 worth of goods."
+        redirect_to root_path and return
+      end
+    end
+      @order = Order.new
+      authorize! :create, Order
+
+      flash[:store_id] = params[:store_id]
+
+      render :new
   end
 
   def edit
@@ -43,20 +50,23 @@ class OrdersController < ApplicationController
       return
     end
 
-    @order = Order.create_from_cart_for_user(current_cart,
+    cart = find_cart(flash[:store_id])
+
+    if cart 
+      @order = Order.create_from_cart_for_user(cart,
                                                 order_user.id,
                                                 params[:card_number],
                                                 shipping_id(params),
                                                 billing_id(params))
     
-    if @order.valid?
-      send_order_confirmation(order_user.email, @order)
-      destroy_shopping_cart!
-      redirect_to display_path(@order.confirmation_hash), notice: 'Thanks! Your order was submitted.'
+      if @order.valid?
+        send_order_confirmation(order_user.email, @order)
+        destroy_current_session!(cart.id)
+        redirect_to display_path(@order.confirmation_hash), notice: 'Thanks! Your order was submitted.'
+      end
     else
       render action: "new"
     end
-
   end
 
   def update
@@ -69,14 +79,11 @@ class OrdersController < ApplicationController
     end
   end
 
-  def destroy
-    @order = Order.find(params[:id])
-    @order.destroy
-
-    redirect_to orders_url
-  end
-
   private 
+
+  def find_cart(store_id)
+    current_session.carts.find_by_store_id(store_id)
+  end 
 
   def order_user
     email = params[:user_email]
@@ -87,9 +94,8 @@ class OrdersController < ApplicationController
     UserMailer.order_confirmation(email, order).deliver
   end
 
-  def destroy_shopping_cart!
-    current_cart.destroy if current_cart
-    session[:cart_id] = nil
+  def destroy_current_session!(cart_id)
+    current_session.carts.find_by_id(cart_id).destroy if current_session.carts.find_by_id(cart_id)
   end
 
   def shipping_id(params)

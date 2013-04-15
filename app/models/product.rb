@@ -3,6 +3,7 @@ class Product < ActiveRecord::Base
 
   has_many :line_items
   before_destroy :ensure_not_referenced_by_any_line_item
+  belongs_to :store
   scope :active, where(:retired => false)
   scope :retired, where(:retired => true)
 

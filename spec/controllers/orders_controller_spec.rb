@@ -25,7 +25,8 @@ describe OrdersController do
       "billing_street_name" => "Mallory Lane", 
       "billing_city" => "Denver", 
       "billing_state" => "Colorado", 
-      "billing_zipcode" => "80204" 
+      "billing_zipcode" => "80204",
+      "store_id" => cart.store_id
     }
   end
 
@@ -38,7 +39,8 @@ describe OrdersController do
       "billing_street_name" => "Mallory Lane", 
       "billing_city" => "Denver", 
       "billing_state" => "Colorado", 
-      "billing_zipcode" => "80204" 
+      "billing_zipcode" => "80204",
+      "store_id" => cart.store_id
     }
   end
 
@@ -50,12 +52,14 @@ describe OrdersController do
       before do 
         o = cart.add_product(product)
         o.save!
+        ApplicationController.any_instance.stub(:current_session).and_return(cart.session)
+        OrdersController.any_instance.stub(:find_cart).and_return(cart)
       end 
-      
+
       context "a user checks out but does not sign up" do 
 
         it "is invalid if the user does not submit an email" do 
-          post :create,  card_number: '4242424242424242'
+          post :create,  card_number: '4242424242424242', store_id: cart.store_id
           expect(Order.count).to eq 0
           expect(response).to render_template("new")
         end
@@ -87,6 +91,8 @@ describe OrdersController do
 
         before do 
           post :create,  checkout_with_addresses
+          ApplicationController.any_instance.stub(:current_session).and_return(cart.session)
+          OrdersController.any_instance.stub(:find_cart).and_return(cart)
         end
 
         it "generate a unique hashed url" do 
@@ -112,10 +118,12 @@ describe OrdersController do
         login_user(user)
         o = cart.add_product(product)
         o.save!
+        ApplicationController.any_instance.stub(:current_session).and_return(cart.session)
+        OrdersController.any_instance.stub(:find_cart).and_return(cart)
       end
 
       it "allows that person to check out" do 
-        post :create,   card_number: '4242424242424242' 
+        post :create,   card_number: '4242424242424242'
         expect(Order.find_all_by_user_id(user.id).count).to eq 1
       end
 
@@ -132,76 +140,14 @@ describe OrdersController do
     end
 
 
-
-### Admin
-
-  describe "when an admin goes to edit an order" do
-    it "assigns the requested order as @order" do
-      order = FactoryGirl.create(:order)
-      get :edit, {:id => order.to_param}
-      assigns(:order).should eq(order)
-    end
-  end
-
-  describe "an admin updates an order" do
-    describe "with valid params" do
-      it "updates the requested order" do
-        order = FactoryGirl.create(:order)
-        Order.any_instance.should_receive(:update_attributes).with({ "status" => "MyString" })
-        put :update, {:id => order.to_param, :order => { "status" => "MyString" }}
-      end
-
-      it "assigns the requested order as @order" do
-        order = FactoryGirl.create(:order)
-        put :update, {:id => order.to_param, :order => valid_attributes1 }
-        assigns(:order).should eq(order)
-      end
-
-      it "redirects to the order" do
-        order = Order.create!(valid_attributes)
-        put :update, {:id => order.to_param, :order => valid_attributes1 }
-        response.should redirect_to(order)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns the order as @order" do
-        order = FactoryGirl.create(:order)
-        Order.any_instance.stub(:save).and_return(false)
-        put :update, {:id => order.to_param, :order => { "status" => "invalid value" }}
-        assigns(:order).should eq(order)
-      end
-
-      it "re-renders the 'edit' template" do
-        order = FactoryGirl.create(:order)
-        Order.any_instance.stub(:save).and_return(false)
-        put :update, {:id => order.to_param, :order => { "status" => "invalid value" }}
-        response.should render_template("edit")
-      end
-    end
-  end  
-
-  describe "DELETE destroy" do
-    it "destroys the requested order" do
-      order = FactoryGirl.create(:order)
-      expect {
-        delete :destroy, {:id => order.to_param}
-      }.to change(Order, :count).by(-1)
-    end
-
-    it "redirects to the orders list" do
-      order = FactoryGirl.create(:order)
-      delete :destroy, {:id => order.to_param}
-      response.should redirect_to(orders_path)
-    end
-  end
-
-
-
-
 ### User 
 
   describe "when a user visits their orders index" do
+
+    before (:each) do 
+      ApplicationController.any_instance.stub(:current_session).and_return(cart.session)
+    end
+
     it "assigns all orders as @orders" do
       pending "need to add validation for this index, will be specific to each user"
       order = FactoryGirl.create(:order)
@@ -220,12 +166,16 @@ describe OrdersController do
 
 
   describe "GET new" do
+
+    before (:each) do 
+      ApplicationController.any_instance.stub(:current_session).and_return(cart.session)
+    end
+
     it "new order without items redirects" do
-      get :new, {}, {}
+      get :new, store_id: cart.store_id
       response.should redirect_to(root_path)
     end
   end
-
 
 
     describe "with invalid params" do
@@ -234,11 +184,10 @@ describe OrdersController do
       end
 
       it "re-renders the 'new' template" do
-        Order.any_instance.stub(:save).and_return(false)
-        post :create, { "status" => "invalid value" }
+        Order.any_instance.stub(:valid?).and_return(false)
+        post :create, { "status" => "invalid value"}
         response.should render_template("new")
       end
     end
   end
-
 end

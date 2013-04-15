@@ -1,10 +1,16 @@
 class LineItemsController < ApplicationController
   def create
-    @cart = current_cart
+    @user_session = current_session
     product = Product.find(params[:product_id])
-    @line_item = @cart.add_product(product)
-    @line_item.quantity = params[:quantity] if params[:quantity]
-
+    if @user_session.carts.find_by_store_id(product.store_id)
+      @cart = @user_session.carts.find_by_store_id(product.store_id)
+      @line_item = @cart.add_product(product)
+      @line_item.quantity = params[:quantity] if params[:quantity]
+    else
+      @cart = Cart.create(session_id: @user_session.id, store_id: product.store_id)
+      @line_item = @cart.add_product(product)
+      @line_item.quantity = params[:quantity] if params[:quantity]
+    end
     if @line_item.save
       redirect_to :back, notice: 'Product successfully added to your cart.'
     else
@@ -15,7 +21,6 @@ class LineItemsController < ApplicationController
   def destroy
     @line_item = LineItem.find(params[:id])
     @line_item.destroy
-
     redirect_to @line_item.cart
   end
 
