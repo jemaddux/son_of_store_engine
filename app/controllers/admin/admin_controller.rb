@@ -8,7 +8,7 @@ class Admin::AdminController < ActionController::Base
     user = User.find_by_email(params[:email])
     if user.nil?
       temp_password = create_random_password(10)
-      User.create(full_name: "Pending Admin", store_id: params[:store_id], email: params[:email], role: "pending_admin", password: "1234")
+      User.create(full_name: "Pending Admin", store_id: params[:store_id], email: params[:email], role: "pending_admin", password: temp_password)
       store_name = Store.find(params[:store_id]).name
       UserMailer.new_admin(params[:email], store_name, temp_password).deliver
     else
@@ -18,16 +18,16 @@ class Admin::AdminController < ActionController::Base
       store_name = Store.find(params[:store_id]).name
       UserMailer.add_admin(params[:email], store_name).deliver
     end
-    redirect_to :back, :notice => params.inspect
+    redirect_to :back
   end
 
   def create_admin
     admin = User.find_by_email(current_user.email)
-    admin.full_name = params[:full_name]
-    admin.password = params[:password] #hashed and salted
     admin.role = "admin"
+    admin.full_name = params[:full_name]
+    admin.password = params[:password]
     admin.save
-    redirect_to "/"
+    redirect_to "/", :notice => params.inspect
   end
 
   def signup_admin
