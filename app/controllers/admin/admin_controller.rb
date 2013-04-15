@@ -23,12 +23,10 @@ class Admin::AdminController < ActionController::Base
 
   def create_admin
     admin = User.find_by_email(current_user.email)
-    if params[:password] == params[:password_confirmation]
-      admin.full_name = params[:full_name]
-      admin.password = params[:password] #hashed and salted
-      admin.role = "admin"
-      admin.save
-    end
+    admin.full_name = params[:full_name]
+    admin.password = params[:password] #hashed and salted
+    admin.role = "admin"
+    admin.save
     redirect_to "/"
   end
 
