@@ -58,17 +58,4 @@ class StoresController < ApplicationController
     @store.destroy
     redirect_to stores_url
   end
-
-  private
-
-  # def find_store_id
-  #   store_id = 0
-  #   if current_user.role == "platform_admin"
-  #     store_id = Store.find_by_path(params[:store_id])
-  #   elsif current_user.role == "stocker" || current_user.role == "admin"
-  #     store_id = current_user.store_id
-  #   end
-  #   store_id
-  # end
-
 end
