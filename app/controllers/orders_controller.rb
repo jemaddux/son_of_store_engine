@@ -15,25 +15,25 @@ class OrdersController < ApplicationController
   def change_status
     order = Order.find(params[:id])
     order.status = params[:status]
-    order.save
-    redirect_to "/admin"
+    order.card_number = order.card_number || "4242424242424242"
+    order.save!
+    redirect_to :back
   end
 
   def new
+    @store_id = params[:store_id]
 
-    cart = current_session.carts.find_by_store_id(params[:store_id])
+    cart = current_session.carts.find_by_store_id(@store_id)
 
     if cart 
       if cart.calculate_total_cost <= 50
         flash[:error] =
-          "Sorry Partner. Your cart must contain at least $0.51 worth of goods."
+          "Sorry. Your cart must contain at least $0.51 worth of goods."
         redirect_to root_path and return
       end
     end
       @order = Order.new
       authorize! :create, Order
-
-      flash[:store_id] = params[:store_id]
 
       render :new
   end
@@ -50,9 +50,10 @@ class OrdersController < ApplicationController
       return
     end
 
-    cart = find_cart(flash[:store_id])
+    cart = find_cart(params[:order][:store_id])
 
-    if cart 
+
+    if cart
       @order = Order.create_from_cart_for_user(cart,
                                                 order_user.id,
                                                 params[:card_number],
@@ -60,7 +61,7 @@ class OrdersController < ApplicationController
                                                 billing_id(params))
     
       if @order.valid?
-        send_order_confirmation(order_user.email, @order)
+        Resque.enqueue(SendConfirmationEmail, order_user.email, @order.confirmation, @order.confirmation_hash)
         destroy_current_session!(cart.id)
         redirect_to display_path(@order.confirmation_hash), notice: 'Thanks! Your order was submitted.'
       end

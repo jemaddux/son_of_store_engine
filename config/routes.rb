@@ -1,4 +1,8 @@
+require 'resque/server'
+
 StoreEngine::Application.routes.draw do
+
+  mount Resque::Server.new, at: "/resque"
 
   get "/orders/review/:confirmation_hash" => "orders#display", :as => "display"
 
@@ -20,12 +24,13 @@ StoreEngine::Application.routes.draw do
   end
 
   resources :carts
-  resources :products do
-    member do
-      put :retire
-      put :unretire
-    end
-  end
+  
+  # resources :products do
+  #   member do
+  #     put :retire
+  #     put :unretire
+  #   end
+  # end
 
   resources :categories
 
@@ -34,9 +39,9 @@ StoreEngine::Application.routes.draw do
 
   get "all_products" => "products#list"
   get "user_profile" => "users#show"
-  get "profile" => "home#profile"
+  get "profile" => "users#profile"
   get "my_cart" => "carts#show"
-  get "admin" => "products#index", :as => "admin"
+  #get "admin" => "products#index", :as => "admin"
   get "logout" => "sessions#destroy", :as => "logout"
   get "login" => "sessions#new", :as => "login"
   get "search" => "search#user_search", :as => "search"
@@ -48,6 +53,7 @@ StoreEngine::Application.routes.draw do
   resources :stores
 
   namespace :admin do
+    put "/administer" => "admin#administer"
 
     resources :stores do
       member do
@@ -74,6 +80,10 @@ StoreEngine::Application.routes.draw do
 
     resources :categories
   end
+
+  resources :products, :only => [:show]
+
+  resources :photos, :only => [:index, :show]
 
   scope ":store_id", as: "store" do
     match "/" => "stores#show", as: "home"

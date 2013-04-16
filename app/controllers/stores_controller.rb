@@ -2,15 +2,22 @@ class StoresController < ApplicationController
   layout "application"
 
   def show
-    @store = Store.find_by_path(params[:store_id])
+
+    @user = current_user
+
+    @admin = @user && (@user.role?(:admin) || @user.role?(:platform_admin))
+
+    @store = Store.includes(:categories, :products).find_by_path(params[:store_id])
+
+    @user_cart = Cart.find_current_cart(session[:user_session_id], @store)
 
     if @store && @store.status != "live"
-      render :text => '404 - Store Not Found', :status => '404'
+      render :text => 'This store is closed for maintenance. Please check back soon.', :status => '404'
       return
     end
 
-    @categories = Category.where(store_id: @store.id)
-    @products = Product.where(store_id: @store.id).shuffle[0..2]
+    @categories ||= @store.categories
+    @products ||= @store.products.shuffle[0..2]
     render layout: "store"
   end
 
@@ -23,7 +30,7 @@ class StoresController < ApplicationController
   end
 
   def pending
-    @store = Store.find_by_path(params[:path])
+    @store ||= Store.find_by_path(params[:path])
     render :pending
   end
 
@@ -51,5 +58,4 @@ class StoresController < ApplicationController
     @store.destroy
     redirect_to stores_url
   end
-
 end

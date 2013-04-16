@@ -13,6 +13,7 @@ gem 'stripe'
 gem 'therubyracer'
 gem 'uuid'
 gem 'resque', '~>1.24.0'
+gem 'newrelic_rpm'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

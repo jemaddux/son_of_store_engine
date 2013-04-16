@@ -21,4 +21,8 @@ class Cart < ActiveRecord::Base
     line_items.map { |item| item.total }.inject(0, :+)
   end
 
+
+  def self.find_current_cart(session, store)
+    @cart ||= session && Session.find(session).carts.find_by_store_id(store.id)
+  end
 end

@@ -1,13 +1,14 @@
 <div class="well well-large">
 
   <div class="row">
-
     <div class="span11">
       <% if current_user.role == "stocker" %>
 
       <% else %>
 
         <div id="admins">
+           <%= link_to "Edit Store Details", 
+          edit_store_path(current_user.store_id) %>
           <h3>Admins & Stockers</h3>
             <!-- Table bodies by status -->
             <div class="tab-content">
@@ -40,6 +41,7 @@
               <input type="email", name="email"> 
               <input type="hidden", name="store_id", value="<%= current_user.store_id %>"> 
               <%= submit_tag "Create New Admin", :class => 'btn btn-primary'%>
+              <%= submit_tag "Create New Stocker", :class => 'btn btn-primary'%>
             <% end %>
 
         </div>
