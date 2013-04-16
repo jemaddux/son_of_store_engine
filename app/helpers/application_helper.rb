@@ -11,6 +11,16 @@ module ApplicationHelper
     end
   end
 
+  def find_store_id_helper
+    store_id = 0
+    if current_user.role == "platform_admin"
+      store_id = Store.find_by_path(params[:store_id]).id
+    elsif current_user.role == "stocker" || current_user.role == "admin"
+      store_id = current_user.store_id
+    end
+    store_id
+  end
+
   def amount_in_dollars(cents)
     number_to_currency(cents.to_f / 100)
   end

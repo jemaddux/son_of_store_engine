@@ -6,29 +6,36 @@ class Admin::AdminController < ActionController::Base
 
   def new_admin
     user = User.find_by_email(params[:email])
+    if params["commit"] == "Create New Admin"
+      role = "admin"
+    else
+      role = "stocker"
+    end
     if user.nil?
       temp_password = create_random_password(10)
-      User.create(full_name: "Pending Admin", store_id: params[:store_id], email: params[:email], role: "pending_admin", password: "1234")
+      User.create(full_name: "Pending", store_id: params[:store_id], email: params[:email], role: "pending_#{role}", password: temp_password)
       store_name = Store.find(params[:store_id]).name
-      UserMailer.new_admin(params[:email], store_name, temp_password).deliver
+      Resque.enqueue(SendNewAdminEmail, params[:email], store_name, temp_password)
     else
-      user.role = "admin"
+      user.role = role
       user.store_id = params[:store_id] #something
       user.save
       store_name = Store.find(params[:store_id]).name
-      UserMailer.add_admin(params[:email], store_name).deliver
+      Resque.enqueue(MakeUserNewAdmin, params[:email], store_name)
     end
-    redirect_to :back, :notice => params.inspect
+    redirect_to :back
   end
 
   def create_admin
     admin = User.find_by_email(current_user.email)
-    if params[:password] == params[:password_confirmation]
-      admin.full_name = params[:full_name]
-      admin.password = params[:password] #hashed and salted
+    if admin.role == "pending_admin"
       admin.role = "admin"
-      admin.save
+    else
+      admin.role = "stocker"
     end
+    admin.full_name = params[:full_name]
+    admin.password = params[:password]
+    admin.save
     redirect_to "/"
   end
 

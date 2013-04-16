@@ -2,15 +2,15 @@ class StoresController < ApplicationController
   layout "application"
 
   def show
-    @store = Store.find_by_path(params[:store_id])
+    @store = Store.find_by_path(find_store_id)
 
     if @store && @store.status != "live"
       render :text => '404 - Store Not Found', :status => '404'
       return
     end
 
-    @categories = Category.where(store_id: @store.id)
-    @products = Product.where(store_id: @store.id).shuffle[0..2]
+    @categories = Category.where(store_id: find_store_id)
+    @products = Product.where(store_id: find_store_id).shuffle[0..2]
     render layout: "store"
   end
 
@@ -52,4 +52,17 @@ class StoresController < ApplicationController
     @store.destroy
     redirect_to stores_url
   end
+
+  private
+
+  def find_store_id
+    store_id = 0
+    if current_user.role == "platform_admin"
+      store_id = Store.find_by_path(params[:store_id])
+    elsif current_user.role == "stocker" || current_user.role == "admin"
+      store_id = current_user.store_id
+    end
+    store_id
+  end
+
 end
