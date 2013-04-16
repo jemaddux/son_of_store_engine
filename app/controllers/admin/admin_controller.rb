@@ -9,7 +9,7 @@ class Admin::AdminController < ActionController::Base
     user = User.find(current_user.id)
     user.store_id = params[:store_id]
     user.save!
-    redirect_to store_index_path(params[:path]), :notice => params.inspect
+    redirect_to store_index_path(params[:path])
   end
 
   def new_admin
