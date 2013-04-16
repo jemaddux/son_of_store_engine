@@ -25,12 +25,12 @@
       <%= link_to "All Products", all_products_path, :class => "btn btn-info trip-button" %>
     </div>
     <div class="main_nav">
-      <% if current_user %>
+      <% if @user %>
         Logged in as,
-          <% if current_user && (current_user.role?(:admin) || current_user.role?(:superuser))%>
+          <% if @admin %>
             <%= link_to "(admin mode)", admin_path %>
           <% end %>
-        as <%= link_to current_user.full_name, profile_path %>.
+        as <%= link_to @user.full_name, profile_path %>.
         <%= link_to "Log out", logout_path %>
       <% else %>
         <%= link_to "Sign up", new_user_path(return_to: store_home_path(@store.path)) %> or
@@ -46,9 +46,9 @@
           <%= render :partial => 'search/search' %>
         </div>
         <div class="cart">
-          <% unless session[:user_session_id]&& Session.find(session[:user_session_id]).carts.find_by_store_id(@store.id) %>Empty<% end %> Cart
+          <% unless @user_cart %>Empty<% end %> Cart
           <ul>
-          <% if session[:user_session_id] && Session.find(session[:user_session_id]).carts.find_by_store_id(@store.id)%>
+          <% if @user_cart %>
 
             <li><%= cart_cost %><br /><%= link_to "View", my_cart_path %></li>
             <li><%= link_to "Checkout", new_order_path(store_id: @store.id), :class => 'btn btn-small btn-success' %></li>

@@ -19,8 +19,7 @@ class Admin::StoresController < ApplicationController
     elsif params[:status] == "declined"
       flash[:notice] = "The store has been declined."
       UserMailer.site_declined(@store).deliver
-    end
-      
+    end     
     redirect_to '/admin/stores'
   end
 
