@@ -14,7 +14,4 @@ describe SessionsController do
     post :create
     expect(response).to render_template("new")
   end
-
-  it "can create with a user" do
-
 end
