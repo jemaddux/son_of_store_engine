@@ -34,8 +34,6 @@ class OrdersController < ApplicationController
       @order = Order.new
       authorize! :create, Order
 
-      flash[:store_id] = params[:store_id]
-
       render :new
   end
 
@@ -51,7 +49,7 @@ class OrdersController < ApplicationController
       return
     end
 
-    cart = find_cart(flash[:store_id])
+    cart = find_cart(params[:order][:store_id])
 
 
     if cart
