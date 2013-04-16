@@ -42,6 +42,5 @@ class UsersController < ApplicationController
 
   def send_account_confirmation(email)
     Resque.enqueue(NewUserConfirmation, email)
-    # UserMailer.account_confirmation(email).deliver
   end
 end
