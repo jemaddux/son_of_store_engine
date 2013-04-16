@@ -4,6 +4,14 @@ class Admin::AdminController < ActionController::Base
 
   before_filter :require_admin_login
 
+  def administer
+    current_user.store_id = params[:store_id]
+    user = User.find(current_user.id)
+    user.store_id = params[:store_id]
+    user.save!
+    redirect_to store_index_path(params[:path]), :notice => params.inspect
+  end
+
   def new_admin
     user = User.find_by_email(params[:email])
     if params["commit"] == "Create New Admin"

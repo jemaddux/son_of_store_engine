@@ -25,7 +25,7 @@
       
     </td>
     <td>
-      <%= link_to "Administer", store_index_path(store.path),:class => "btn btn-mini" if store.status == "live" %>
+      <%= link_to "Administer", admin_administer_path(:store_id => store.id, :path => store.path), :class => "btn btn-mini", :method => "put" if store.status == "live" %>
     </td>
 
   </tr>
