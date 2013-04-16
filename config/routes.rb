@@ -24,6 +24,7 @@ StoreEngine::Application.routes.draw do
   end
 
   resources :carts
+  
   # resources :products do
   #   member do
   #     put :retire
@@ -52,6 +53,7 @@ StoreEngine::Application.routes.draw do
   resources :stores
 
   namespace :admin do
+    put "/administer" => "admin#administer"
 
     resources :stores do
       member do

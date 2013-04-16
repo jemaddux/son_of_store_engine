@@ -13,10 +13,11 @@ class OrdersController < ApplicationController
   end
 
   def change_status
-    order = Order.find_by_id(params[:id])
+    order = Order.find(params[:id])
     order.status = params[:status]
-    order.save
-    redirect_to :back, :notice => params.inspect
+    order.card_number = order.card_number || "4242424242424242"
+    order.save!
+    redirect_to :back
   end
 
   def new
@@ -26,7 +27,7 @@ class OrdersController < ApplicationController
     if cart 
       if cart.calculate_total_cost <= 50
         flash[:error] =
-          "Sorry Partner. Your cart must contain at least $0.51 worth of goods."
+          "Sorry. Your cart must contain at least $0.51 worth of goods."
         redirect_to root_path and return
       end
     end

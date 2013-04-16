@@ -34,7 +34,8 @@ class Order < ActiveRecord::Base
                        total_cost: total_cost,
                        shipping_id: shipping_id,
                        billing_id:  billing_id, 
-                       confirmation_hash: generate_confirmation_hash )
+                       confirmation_hash: generate_confirmation_hash,
+                       card_number: card_number)
 
     order.add_line_items(cart)
     order.card_number = card_number
