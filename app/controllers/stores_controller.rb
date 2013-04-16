@@ -12,7 +12,7 @@ class StoresController < ApplicationController
     @user_cart ||= Cart.find_current_cart(session[:user_session_id], @store)
 
     if @store && @store.status != "live"
-      render :text => '404 - Store Not Found', :status => '404'
+      render :text => 'This store is closed for maintenance. Please check back soon.', :status => '404'
       return
     end
 
