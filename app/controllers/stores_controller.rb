@@ -7,7 +7,7 @@ class StoresController < ApplicationController
 
     @admin ||= @user && (@user.role?(:admin) || @user.role?(:platform_admin))
 
-    @store ||= Store.includes(:categories).find_by_path(params[:store_id])
+    @store ||= Store.includes(:categories, :products).find_by_path(params[:store_id])
 
     @user_cart ||= Cart.find_current_cart(session[:user_session_id], @store)
 
@@ -17,7 +17,7 @@ class StoresController < ApplicationController
     end
 
     @categories ||= @store.categories
-    @products ||= Product.where(store_id: @store.id).shuffle[0..2]
+    @products ||= @store.products.shuffle[0..2]
     render layout: "store"
   end
 
