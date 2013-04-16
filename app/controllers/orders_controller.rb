@@ -21,8 +21,9 @@ class OrdersController < ApplicationController
   end
 
   def new
+    @store_id = params[:store_id]
 
-    cart = current_session.carts.find_by_store_id(params[:store_id])
+    cart = current_session.carts.find_by_store_id(@store_id)
 
     if cart 
       if cart.calculate_total_cost <= 50
@@ -33,8 +34,6 @@ class OrdersController < ApplicationController
     end
       @order = Order.new
       authorize! :create, Order
-
-      flash[:store_id] = params[:store_id]
 
       render :new
   end
@@ -51,7 +50,7 @@ class OrdersController < ApplicationController
       return
     end
 
-    cart = find_cart(flash[:store_id])
+    cart = find_cart(params[:order][:store_id])
 
 
     if cart
