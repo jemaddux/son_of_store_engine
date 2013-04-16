@@ -27,6 +27,11 @@ describe UsersController do
       }.to change(User, :count).by(1)
     end
 
+    it "sends the user a confirmation email" do 
+      (Resque).should_receive(:enqueue)
+      post :create, valid_attributes
+    end
+
     it "redirects user to root url" do
       post :create, valid_attributes
       # expect(response).to redirect_back_or_to root_url
