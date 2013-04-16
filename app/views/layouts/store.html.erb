@@ -45,7 +45,7 @@
           <%= link_to @store.name, root_url, :class => "brand" %>
           <%= render :partial => 'search/search' %>
         </div>
-        <div class="cart">
+        <div class="cart pull-right">
           <% unless @user_cart %>Empty<% end %> Cart
           <ul>
           <% if @user_cart %>
