@@ -20,8 +20,9 @@ class OrdersController < ApplicationController
   end
 
   def new
+    @store_id = params[:store_id]
 
-    cart = current_session.carts.find_by_store_id(params[:store_id])
+    cart = current_session.carts.find_by_store_id(@store_id)
 
     if cart 
       if cart.calculate_total_cost <= 50

@@ -30,7 +30,7 @@ class StoresController < ApplicationController
   end
 
   def pending
-    @store = Store.find_by_path(params[:path])
+    @store ||= Store.find_by_path(params[:path])
     render :pending
   end
 
