@@ -31,11 +31,13 @@
             <% end %>
           </div>
          <!-- Flash -->
-          <div class="row">
-            <div class="span12 alert alert-success alert-block">
-              <%= bootstrap_flash %>
+          <% if bootstrap_flash %>
+            <div class="row">
+              <div class="span12 alert alert-success alert-block">
+                <%= bootstrap_flash %>
+              </div>
             </div>
-          </div>
+          <% end %>
 
               <%= yield %>
         </div>
