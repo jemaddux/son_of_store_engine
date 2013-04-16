@@ -16,5 +16,5 @@ describe SessionsController do
   end
 
   it "can create with a user" do
-
+  end
 end
