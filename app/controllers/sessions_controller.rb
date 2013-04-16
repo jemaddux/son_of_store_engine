@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       elsif user.role?(:platform_admin)
         redirect_to "/admin/stores/"
       elsif user.role?(:admin)
-        redirect_to '/admin', notice: "Logged in."
+        redirect_to profile_path, notice: "Logged in."
       elsif user.role?(:pending_admin)
         redirect_to '/signup_admin', notice: "Please update your password."
       end

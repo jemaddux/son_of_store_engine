@@ -3,7 +3,7 @@
 User.create(full_name: "Chelsea Komlo", email: "chelsea.komlo@gmail.com",
   password: "password", role: :admin, display_name: "Chelsea Komlo", store_id: 1)
 User.create(full_name: "Aimee Maher", email: "aimeegirl723@gmail.com",
-  password: "password", role: :admin, display_name: "Aimee Maher", store_id: 2)
+  password: "password", role: :admin, display_name: "Aimee Maher", 2store_id: )
 User.create(full_name: "Jeff", email: "demoXX+jeff@jumpstartlab.com",
   password: "password", role: :admin, display_name: "j3", store_id: 3)
 ##Store Stockers
