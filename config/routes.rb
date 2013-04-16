@@ -52,9 +52,7 @@ StoreEngine::Application.routes.draw do
 
     resources :stores do
       member do
-        put :change_status, :as => "change_status_on"
-        put :edit_store, :as => "edit_store"
-        put :show_store, :as => "show_store"      
+        put :change_status, :as => "change_status_on"  
       end
     end
 

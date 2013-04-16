@@ -24,17 +24,20 @@
 
     <div style= "left; font-family:Arial; font-size:30px;">
       <h2>My Store</h2>
+    <% if current_user.store_id != nil %>
+        <br>
+      <div style= "left; font-family:Arial; font-size:25px;"
+        <br>
+        <% store_path = Store.find(current_user.store_id).path%>
+        <%= link_to "View My Store", store_home_path(store_path) %>
+        <%= link_to "Edit My Store", 
+          edit_store_path(current_user.store_id) %>
+      </div>
       <br>
-    <div style= "left; font-family:Arial; font-size:25px;"
-      <br>
-      <% store_path = Store.find(current_user.store_id).path%>
-      <%= link_to "View My Store", store_home_path(store_path) %>
-      <%= link_to "Edit My Store", 
-        edit_store_path(current_user.store_id) %>
-    </div>
-    <br>
-    <div style= "left; font-family:Arial; font-size:20px; ">
-     <i> <%= link_to "Don't have a store? Make one now!", new_store_path %></i>
+    <% else %>
+      <div style= "left; font-family:Arial; font-size:20px; ">
+       <%= link_to "You don't have a store. Click to create a store!", new_store_path %>
+    <% end %>
     </div>
 
   </body>
