@@ -23,7 +23,7 @@ class Admin::ProductsController < Admin::AdminController
     product.retired = true
     product.save
 
-    redirect_to admin_path, notice: 'Product was retired.'
+    redirect_to admin_products_path, notice: 'Product was retired.'
   end
 
   def unretire
@@ -32,7 +32,7 @@ class Admin::ProductsController < Admin::AdminController
     product.retired = false
     product.save
 
-    redirect_to admin_path, notice: 'Product was unretired.'
+    redirect_to admin_products_path, notice: 'Product was unretired.'
   end
 
   def new
@@ -57,9 +57,9 @@ class Admin::ProductsController < Admin::AdminController
     authorize! :create, @product
 
     if @product.save
-      redirect_to products_path, notice: 'Product was successfully created.'
+      redirect_to admin_products_path, notice: 'Product was successfully created.'
     else
-      redirect_to admin_path, notice: 'Sorry, product was not created'
+      redirect_to admin_products_path, notice: 'Sorry, product was not created'
     end
   end
 
@@ -72,9 +72,9 @@ class Admin::ProductsController < Admin::AdminController
     @product = Product.find(params[:id])
 
     if @product.update_attributes(params[:product])
-      redirect_to products_path(@product), notice: 'Product was successfully updated.'
+      redirect_to admin_products_path(@product), notice: 'Product was successfully updated.'
     else
-      redirect_to admin_path, notice: 'Sorry, product was not updated'
+      redirect_to admin_products_path, notice: 'Sorry, product was not updated'
     end
   end
 
@@ -83,7 +83,7 @@ class Admin::ProductsController < Admin::AdminController
     authorize! :destroy, @product
     @product.delete
 
-    redirect_to products_url
+    redirect_to admin_products_path
   end
 
   private
