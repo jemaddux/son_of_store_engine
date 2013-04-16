@@ -41,6 +41,6 @@ class UsersController < ApplicationController
   private
 
   def send_account_confirmation(email)
-    UserMailer.account_confirmation(email).deliver
+    Resque.enqueue(NewUserConfirmation, email)
   end
 end
