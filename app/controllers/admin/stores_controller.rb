@@ -15,10 +15,10 @@ class Admin::StoresController < ApplicationController
     @store.save
     if params[:status] == "live"
       flash[:notice] = "The store is now live."
-      Resque.enqueue(NotifySiteLive, @store)
+      Resque.enqueue(NotifySiteLive, @store.path, @store.id)
     elsif params[:status] == "declined"
       flash[:notice] = "The store has been declined."
-      Resque.enqueue(NotifySiteDeclined, @store)
+      Resque.enqueue(NotifySiteDeclined, @store.name, @store.id)
     end
       
     redirect_to '/admin/stores'
