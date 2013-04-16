@@ -20,6 +20,7 @@ class StoresController < ApplicationController
 
   def edit
     @store = Store.find(params[:id])
+    authorize! :update, @product
   end
 
   def pending
@@ -51,5 +52,4 @@ class StoresController < ApplicationController
     @store.destroy
     redirect_to stores_url
   end
-
 end

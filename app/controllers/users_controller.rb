@@ -38,6 +38,10 @@ class UsersController < ApplicationController
     redirect_to :back
   end
 
+  def profile
+    @user = current_user
+  end
+
   private
 
   def send_account_confirmation(email)
