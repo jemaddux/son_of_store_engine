@@ -11,14 +11,15 @@ User.create(full_name: "John Maddux", email: "jemaddux@gmail.com",
   password: "password", role: :stocker, display_name: "John Maddux", store_id: 1)
 User.create(full_name: "Danny Garcia", email: "dannygarcia.me@gmail.com",
   password: "password", role: :stocker, display_name: "Danny Garcia", store_id: 2)
-User.create(full_name: "Steve Klabnik", email: "demoXX+steve@jumpstartlab.com",
-  password: "password", role: :stocker, display_name: "SkrilleX", store_id: 3)
+User.create(full_name: "Katrina Owen", email: "demoXX+katrina@jumpstartlab.com",
+  password: "password", role: :stocker, display_name: "Ree-na", store_id: 3)
 ##Shoppers
 User.create(full_name: "Franklin Webber", email: "demoXX+franklin@jumpstartlab.com",
   password: "password", role: :user, display_name: "Franklin Webber")
 ##Platform Admin
-User.create(full_name: "Katrina Owen", email: "demoXX+katrina@jumpstartlab.com",
-  password: "password", role: :platform_admin, display_name: "Ree-na")
+User.create(full_name: "Steve Klabnik", email: "demoXX+steve@jumpstartlab.com",
+  password: "password", role: :platform_admin, display_name: "SkrilleX")
+
 
 #Oregon Sale********************************************************************
 Store.create(name: "Oregon Sale", description: "Oregon Sale", path: "oregonsale", status: "live", user_id: 1)

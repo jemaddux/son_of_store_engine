@@ -1,7 +1,7 @@
 class Admin::ProductsController < Admin::AdminController
 
   def index
-    @dashboard = Dashboard.new(find_store_id)
+    @dashboard = Dashboard.new(current_user.store_id)
     authorize! :manage, Product
 
     render :index, :notice => params.inspect

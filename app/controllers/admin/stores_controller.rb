@@ -19,6 +19,8 @@ class Admin::StoresController < ApplicationController
     elsif params[:status] == "declined"
       flash[:notice] = "The store has been declined."
       Resque.enqueue(NotifySiteDeclined, @store.name, @store.id)
+    elsif params[:status] == "disabled"
+      flash[:notice] = "The store has been disabled."
     end
       
     redirect_to '/admin/stores'

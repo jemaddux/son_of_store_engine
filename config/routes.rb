@@ -39,7 +39,7 @@ StoreEngine::Application.routes.draw do
 
   get "all_products" => "products#list"
   get "user_profile" => "users#show"
-  get "profile" => "home#profile"
+  get "profile" => "users#profile"
   get "my_cart" => "carts#show"
   #get "admin" => "products#index", :as => "admin"
   get "logout" => "sessions#destroy", :as => "logout"

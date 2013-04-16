@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <h1 style= "font-family:Arial; font-size: 40px;"> <%= current_user.full_name%>'s User Profile </h1>
+    <title> Your User Profile</title>
+  </head>
+  <br>
+  <body>
+    <div style= "float:left; font-family:Arial; font-size:25px; color:#08C">
+      <h2 style= "color:black;">Account Information</h2>
+      <br>
+        <div><b>Name:</b> <%= current_user.full_name %></div>
+        <br>
+        <div><b>Email:</b> <%= current_user.email %></div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div style= "left; font-family:Arial; font-size:30px;">
+      <h2>My Store</h2>
+    <% if current_user.store_id != nil %>
+        <br>
+      <div style= "left; font-family:Arial; font-size:25px;"
+        <br>
+        <% store_path = Store.find(current_user.store_id).path%>
+        <%= link_to "View My Store", store_home_path(store_path) %>
+        <%= link_to "Edit My Store", 
+          edit_store_path(current_user.store_id) %>
+      </div>
+      <br>
+    <% else %>
+      <div style= "left; font-family:Arial; font-size:20px; ">
+       <%= link_to "You don't have a store. Click to create a store", new_store_path %>
+    <% end %>
+    </div>
+
+  </body>
+</html>
