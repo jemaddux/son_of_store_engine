@@ -13,10 +13,10 @@ class OrdersController < ApplicationController
   end
 
   def change_status
-    order = Order.find(params[:id])
+    order = Order.find_by_id(params[:id].to_i)
     order.status = params[:status]
     order.save
-    redirect_to "/admin"
+    redirect_to :back, :notice => params.inspect
   end
 
   def new

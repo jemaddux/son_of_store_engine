@@ -24,12 +24,12 @@ StoreEngine::Application.routes.draw do
   end
 
   resources :carts
-  resources :products do
-    member do
-      put :retire
-      put :unretire
-    end
-  end
+  # resources :products do
+  #   member do
+  #     put :retire
+  #     put :unretire
+  #   end
+  # end
 
   resources :categories
 
@@ -40,7 +40,7 @@ StoreEngine::Application.routes.draw do
   get "user_profile" => "users#show"
   get "profile" => "home#profile"
   get "my_cart" => "carts#show"
-  get "admin" => "products#index", :as => "admin"
+  #get "admin" => "products#index", :as => "admin"
   get "logout" => "sessions#destroy", :as => "logout"
   get "login" => "sessions#new", :as => "login"
   get "search" => "search#user_search", :as => "search"

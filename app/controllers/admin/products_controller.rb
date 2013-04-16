@@ -1,10 +1,10 @@
 class Admin::ProductsController < Admin::AdminController
 
   def index
-    @dashboard = Dashboard.new(current_user.store_id)
+    @dashboard = Dashboard.new(find_store_id)
     authorize! :manage, Product
 
-    render :index
+    render :index, :notice => params.inspect
   end
 
   def show
@@ -39,7 +39,7 @@ class Admin::ProductsController < Admin::AdminController
     @product = Product.new
     authorize! :create, @product
 
-    @categories = Category.where(store_id: current_user.store_id)
+    @categories = Category.where(store_id: find_store_id)
 
     render :new
   end
@@ -48,11 +48,11 @@ class Admin::ProductsController < Admin::AdminController
     @product = Product.find(params[:id])
     authorize! :update, @product
 
-    @categories = Category.where(store_id: current_user.store_id)
+    @categories = Category.where(store_id: find_store_id)
   end
 
   def create
-    params[:store_id] = current_user.store_id
+    params[:store_id] = find_store_id
     @product = Product.new(params[:product])
     authorize! :create, @product
 
@@ -84,5 +84,17 @@ class Admin::ProductsController < Admin::AdminController
     @product.delete
 
     redirect_to products_url
+  end
+
+  private
+
+  def find_store_id
+    store_id = 0
+    if current_user.role == "platform_admin"
+      store_id = Store.find_by_path(params[:store_id])
+    elsif current_user.role == "stocker" || current_user.role == "admin"
+      store_id = current_user.store_id
+    end
+    store_id
   end
 end
