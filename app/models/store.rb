@@ -7,6 +7,8 @@ class Store < ActiveRecord::Base
 
   has_many :users
 
+  has_many :orders
+
   validates :name, :uniqueness => {:case_sensitive => false}
   validates :path, :uniqueness => {:case_sensitive => false}
 

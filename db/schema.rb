@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130416042505) do
+ActiveRecord::Schema.define(:version => 20130417161327) do
 
   create_table "carts", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -64,7 +64,10 @@ ActiveRecord::Schema.define(:version => 20130416042505) do
     t.integer  "billing_id"
     t.string   "confirmation_hash"
     t.string   "card_number"
+    t.integer  "store_id"
   end
+
+  add_index "orders", ["store_id"], :name => "index_orders_on_store_id"
 
   create_table "product_categories", :id => false, :force => true do |t|
     t.integer  "product_id"

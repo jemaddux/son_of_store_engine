@@ -1,10 +1,11 @@
 class Order < ActiveRecord::Base
 
   attr_accessible :status, :user_id, :total_cost, :confirmation, :shipping_id, :billing_id, :card_number
-  attr_accessible :confirmation_hash
+  attr_accessible :confirmation_hash, :store_id
 
   has_many :line_items, :dependent => :destroy
   belongs_to :user
+  belongs_to :store
 
   attr_accessor :card_number
 
@@ -32,7 +33,7 @@ class Order < ActiveRecord::Base
   end
 
 
-  def self.create_from_cart_for_user(cart, user_id, card_number, shipping_id, billing_id)
+  def self.create_from_cart_for_user(cart, user_id, card_number, shipping_id, billing_id, store_id)
     total_cost = cart.calculate_total_cost
 
     order = Order.new( status:     "pending",
@@ -41,7 +42,8 @@ class Order < ActiveRecord::Base
                        shipping_id: shipping_id,
                        billing_id:  billing_id, 
                        confirmation_hash: generate_confirmation_hash,
-                       card_number: card_number)
+                       card_number: card_number,
+                       store_id: store_id)
 
     order.add_line_items(cart)
     order.card_number = card_number

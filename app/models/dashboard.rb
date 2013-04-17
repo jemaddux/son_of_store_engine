@@ -5,12 +5,16 @@ class Dashboard
     @store_id = store_id
   end
 
+  def store 
+    Store.includes(:categories, :products, :orders).find_by_id(@store_id)
+  end 
+
   def products
-    @products ||= Product.where(store_id: store_id)
+    @products ||= store.products
   end
 
   def orders
-    @orders ||= Order.where(store_id: store_id).all
+    @orders ||= store.orders
   end
 
   def statuses
@@ -18,11 +22,11 @@ class Dashboard
   end
 
   def categories
-    @categories ||= Category.where(store_id: store_id).by_name
+    @categories ||= store.categories.by_name
   end
 
   def retired_products
-    @retired_products ||= Product.where(store_id: store_id).retired
+    @retired_products ||= products.retired
   end
 
   def admins
@@ -32,7 +36,7 @@ class Dashboard
 
   def orders_by_status
     orders_with_status = {}
-    Order.all.each do |order|
+    orders.each do |order|
       if orders_with_status[order.status] == nil
         orders_with_status[order.status] = [order]
       else
