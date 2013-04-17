@@ -5,9 +5,9 @@ class Dashboard
     @store_id = store_id
   end
 
-  def store 
+  def store
     @store ||= Store.find_by_id(@store_id)
-  end 
+  end
 
   def products
     @products ||= store.products

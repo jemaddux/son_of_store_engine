@@ -1,7 +1,7 @@
 module ApplicationHelper
 
-  def find_session    
-    @session ||= Session.find(session[:user_session_id]) 
+  def find_session
+    @session ||= Session.find(session[:user_session_id])
   end
 
   def find_session_cart

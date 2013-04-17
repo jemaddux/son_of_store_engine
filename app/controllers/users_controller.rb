@@ -14,9 +14,10 @@ class UsersController < ApplicationController
     if @user.save
       auto_login(@user)
       send_account_confirmation(@user.email)
-
       destination = session.delete(:return_to) || root_url
-      redirect_to destination, notice: %Q[Hi #{@user.full_name}, your account has been successfully created! You can update your account <a href="/users/#{@user.id}/edit?redirect=/">here</a>]
+      redirect_to destination, notice: %Q[Hi #{@user.full_name}, your account
+        has been successfully created! You can update your account
+        <a href="/users/#{@user.id}/edit?redirect=/">here</a>]
     else
       render :new
     end
@@ -35,7 +36,10 @@ class UsersController < ApplicationController
     @user.update_user(params[:user])
     @user.save
     destination = session.delete(:return_to) || :back
-    redirect_to destination, notice: "Your account has been updated! Name: #{@user.full_name}, Email: #{@user.email}, Display name: #{@user.display_name}."
+    redirect_notice = "Your account has been updated! Name: \
+      #{@user.full_name}, Email: #{@user.email}, Display name: \
+      #{@user.display_name}."
+    redirect_to destination, notice: redirect_notice
   end
 
   def edit

@@ -5,4 +5,4 @@ class SendNewAdminEmail
   def self.perform(email, store_name, temp_password)
     UserMailer.new_admin(email, store_name, temp_password).deliver
   end
-end 
+end

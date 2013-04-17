@@ -21,7 +21,7 @@ class OrdersController < ApplicationController
 
     cart = current_session.carts.find_by_store_id(@store_id)
 
-    if cart 
+    if cart
       if cart.calculate_total_cost <= 50
         flash[:error] =
           "Sorry. Your cart must contain at least $0.51 worth of goods."
@@ -56,11 +56,12 @@ class OrdersController < ApplicationController
                                                 shipping_id(params),
                                                 billing_id(params),
                                                 cart.store_id)
-    
       if @order.valid?
-        Resque.enqueue(SendConfirmationEmail, new_order_user.email, @order.confirmation, @order.confirmation_hash)
+        Resque.enqueue(SendConfirmationEmail, new_order_user.email,
+                  @order.confirmation, @order.confirmation_hash)
         destroy_current_session!(cart.id)
-        redirect_to display_path(@order.confirmation_hash), notice: 'Thanks! Your order was submitted.'
+        redirect_to display_path(@order.confirmation_hash),
+              notice: 'Thanks! Your order was submitted.'
       end
     else
       render action: "new"
@@ -77,22 +78,24 @@ class OrdersController < ApplicationController
     end
   end
 
-  private 
+  private
 
   def find_cart(store_id)
     current_session.carts.find_by_store_id(store_id)
-  end 
+  end
 
   def order_user(email)
     current_user || User.find_by_email(email) || User.create_guest_user(email)
-  end 
+  end
 
   def send_order_confirmation(email,order)
     UserMailer.order_confirmation(email, order).deliver
   end
 
   def destroy_current_session!(cart_id)
-    current_session.carts.find_by_id(cart_id).destroy if current_session.carts.find_by_id(cart_id)
+    if current_session.carts.find_by_id(cart_id)
+      current_session.carts.find_by_id(cart_id).destroy
+    end
   end
 
   def shipping_id(params)

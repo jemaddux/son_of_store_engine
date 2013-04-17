@@ -1,21 +1,17 @@
 class LineItemsController < ApplicationController
   def create
-    @user_session = current_session
     product = Product.find(params[:product_id])
-    if @user_session.carts.find_by_store_id(product.store_id)
-      @cart = @user_session.carts.find_by_store_id(product.store_id)
+    if current_session.carts.find_by_store_id(product.store_id)
+      @cart = current_session.carts.find_by_store_id(product.store_id)
       @line_item = @cart.add_product(product)
       @line_item.quantity = params[:quantity] if params[:quantity]
     else
-      @cart = Cart.create(session_id: @user_session.id, store_id: product.store_id)
+      @cart = Cart.create(session_id: current_session.id,
+                          store_id: product.store_id)
       @line_item = @cart.add_product(product)
       @line_item.quantity = params[:quantity] if params[:quantity]
     end
-    if @line_item.save
-      redirect_to :back, notice: 'Product successfully added to your cart.'
-    else
-      render action: "new"
-    end
+    redirect_after_create
   end
 
   def destroy
@@ -44,6 +40,16 @@ class LineItemsController < ApplicationController
         redirect_to @line_item.cart,
                     notice: 'Product quantity has been updated.'
       end
+    end
+  end
+
+  private
+
+  def redirect_after_create
+    if @line_item.save
+      redirect_to :back, notice: 'Product successfully added to your cart.'
+    else
+      render action: "new"
     end
   end
 end

@@ -1,2 +1,2 @@
-class OrderProcessor 
+class OrderProcessor
 end

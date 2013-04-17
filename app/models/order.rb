@@ -1,6 +1,7 @@
 class Order < ActiveRecord::Base
 
-  attr_accessible :status, :user_id, :total_cost, :confirmation, :shipping_id, :billing_id, :card_number
+  attr_accessible :status, :user_id, :total_cost, :confirmation,
+                  :shipping_id, :billing_id, :card_number
   attr_accessible :confirmation_hash, :store_id
 
   has_many :line_items, :dependent => :destroy
@@ -33,14 +34,15 @@ class Order < ActiveRecord::Base
   end
 
 
-  def self.create_from_cart_for_user(cart, user_id, card_number, shipping_id, billing_id, store_id)
+  def self.create_from_cart_for_user(cart, user_id, card_number,
+                                     shipping_id, billing_id, store_id)
     total_cost = cart.calculate_total_cost
 
     order = Order.new( status:     "pending",
                        user_id:    user_id,
                        total_cost: total_cost,
                        shipping_id: shipping_id,
-                       billing_id:  billing_id, 
+                       billing_id:  billing_id,
                        confirmation_hash: generate_confirmation_hash,
                        card_number: card_number,
                        store_id: store_id)

@@ -21,7 +21,7 @@ class Admin::StoresController < ApplicationController
       flash[:notice] = "The store, #{@store.name}, is now live."
       Resque.enqueue(NotifySiteLive, @store.name, @store.id)
     elsif params[:status] == "declined"
-      flash[:notice] = "I'm sorry but the store, #{@store.name}, store has been declined."
+      flash[:notice] = "#{@store.name}, store has been declined."
       Resque.enqueue(NotifySiteDeclined, @store.name, @store.id)
     elsif params[:status] == "disabled"
       flash[:notice] = "The store, #{@store.name}, has been disabled."
