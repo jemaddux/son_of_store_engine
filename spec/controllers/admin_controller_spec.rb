@@ -10,17 +10,16 @@ describe Admin::AdminController do
   describe "minimum admin" do 
 
   before (:each) do
+
+    admin.store_id = store.id
+    admin.role = "admin"
+    admin.save!
+
     login_user(admin)
     @request.env['HTTP_REFERER'] = 'http://localhost:3000/'
   end
 
     context "given there is only one admin for a store" do 
-
-      before do 
-        admin.store_id = store.id
-        admin.role = "admin"
-        admin.save!
-      end
 
       it "the superuser cannot remove the stores final admin" do 
         put :remove, { :id => admin.id, :role => "user" }
