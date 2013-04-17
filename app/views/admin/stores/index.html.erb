@@ -1,37 +1,9 @@
-<h1>Listing stores</h1>
+<% @title = "Active Stores" %>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Path</th>
-    <th>Status</th>
-    <th>Description</th>
-    <th></th>
-    <th></th>
-    
-  </tr>
+<%= render :partial => 'store_list', :locals => { :store_list => @active_stores } %>
 
-<% @stores.each do |store| %>
-  <tr>
-    <td><%= store.name %></td>
-    <td><%= store.path %></td>
-    <td><%= store.status %></td>
-    <td><%= store.description.to_s[0..31] %></td>
-    <td>
-      <%= link_to 'Approve', change_status_on_admin_store_path(:id => store.id, :status => 'live'), :class => 'btn btn-mini', :method => "put" if store.status == "pending" %>
-      <%= link_to 'Decline', change_status_on_admin_store_path(:id => store.id, :status => 'declined'), :class => 'btn btn-mini', :method => "put" if store.status == "pending" %>
-      <%= link_to 'Disable', change_status_on_admin_store_path(:id => store.id, :status => 'disabled'), :class => 'btn btn-mini', :method => "put" if store.status == "live" %>
-      <%= link_to 'Enable', change_status_on_admin_store_path(:id => store.id, :status => 'live'), :class => 'btn btn-mini', :method => "put" if store.status == "disabled" %>
-      
-    </td>
-    <td>
-      <%= link_to "Administer", admin_administer_path(:store_id => store.id, :path => store.path), :class => "btn btn-mini", :method => "put" if store.status == "live" %>
-    </td>
+<% @title = "Inactive Stores" %>
 
-  </tr>
-<% end %>
-</table>
+<%= render :partial => 'store_list', :locals => { :store_list => @inactive_stores } %>
 
-<br />
-
-<%= link_to 'New Store', new_store_path %>
+<%= link_to 'New Store', new_store_path, :class => "btn btn-primary" %>

@@ -5,3 +5,4 @@ task 'resque:setup' => :environment do
 end
 
 task "jobs:work" => "resque:work"
+
