@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
     user
   end
 
-  def update_user(updated_role, store)
+  def update_user_role(updated_role, store)
     if updated_role == "user"
       if Store.find_store_users(store).size > 1
         self.role = updated_role 
@@ -39,5 +39,15 @@ class User < ActiveRecord::Base
       self.role = updated_role 
       self.save!
     end
+  end
+
+  def update_user(params)
+    self.full_name             = params[:full_name]
+    self.email                 = params[:email]
+    self.display_name          = params[:display_name]
+    self.password              = params[:password]
+    self.password_confirmation = params[:password_confirmation]
+    self.role                  = params[:role]
+    self.role ||= 'user'
   end
 end

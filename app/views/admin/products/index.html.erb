@@ -30,7 +30,7 @@
                     <td><%= admin.role %></td>
                     <td>
                       
-                      <%= link_to 'Remove Admin', user_path(:id => admin.id, :role => "user"), :class => 'btn btn-mini', :method => "put", :confirm => "Are you sure?" %>
+                      <%= link_to 'Remove Admin', admin_remove_admin_path(:id => admin.id, :role => "user"), :class => 'btn btn-mini', :method => "put", :confirm => "Are you sure?" %>
                     </td>
                   </tr>
                 </div>

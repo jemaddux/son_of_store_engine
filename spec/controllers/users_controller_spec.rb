@@ -2,33 +2,6 @@ require 'spec_helper'
 
 describe UsersController do
 
-  let(:store){ FactoryGirl.create(:store) }
-  let(:product1) { FactoryGirl.create(:product) }
-  let(:admin){ User.create(full_name: "full_name", email:"email@email.com", password: "password") }
-
-  describe "minimum admin" do 
-
-  before (:each) do
-    login_user(admin)
-    @request.env['HTTP_REFERER'] = 'http://localhost:3000/'
-  end
-
-    context "given there is only one admin for a store" do 
-
-      before do 
-        admin.store_id = store.id
-        admin.role = "admin"
-        admin.save!
-      end
-
-      it "the superuser cannot remove the stores final admin" do 
-        put :update, { :id => admin.id, :role => "user", :store_id => store.id  }
-        # expect(assigns(:user).id).to_not eq store.id
-        expect(assigns(:user).role).to eq "admin"
-      end
-    end
-  end
-
   describe "GET 'new'" do
     it "renders new view" do
       get :new
