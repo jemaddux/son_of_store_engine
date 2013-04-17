@@ -1,6 +1,6 @@
 <div class="row">
 
-  <% cache "categories", expires_in: 5.minutes do %>
+  
     <div class="span3">
       <div class="main_col with_ribbon">
         <h2 class="ribbon"><%= image_tag("categories.png") %></h2>
@@ -11,7 +11,7 @@
         </ul>
       </div>
     </div>
-  <% end %>
+  
   
 
   <div class="span9">
@@ -37,7 +37,7 @@
       </div>
     <% end %>
 
-    <% cache "products", expires_in: 5.minutes do %>
+    
       <ul class="thumbnails">
         <% @products.each do |product| %>
           <%= render :partial => 'products/sm_product', :locals => { :p => product} %>
@@ -49,7 +49,7 @@
          <%= render :partial => 'products/big_product', :locals => { :product => product } %>
         </div>
       <% end %>
-    <% end %>
+    
 
   </div>
 </div>
