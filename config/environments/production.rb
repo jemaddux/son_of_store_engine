@@ -1,4 +1,7 @@
 StoreEngine::Application.configure do
+
+  ENV["REDISTOGO_URL"] = 'redis://redistogo:80a9ac66e91326a842964316bdf3d945@squawfish.redistogo.com:9316/'
+
   # Settings specified here will take precedence over those in config/application.rb
 
   # Code is not reloaded between requests
