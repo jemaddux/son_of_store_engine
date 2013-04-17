@@ -4,6 +4,13 @@ class Admin::AdminController < ActionController::Base
 
   before_filter :require_admin_login
 
+  def remove 
+    @user = User.find(params[:id])
+    @user.update_user_role(params[:role], @user.store_id) 
+    notice =  ("Admin removed" if @user.role == "user") || "Store must have at least one Admin" 
+    redirect_to :back, notice: notice
+  end
+
   def administer
     current_user.store_id = params[:store_id]
     user = User.find(current_user.id)
