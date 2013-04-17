@@ -41,7 +41,6 @@ StoreEngine::Application.routes.draw do
   get "user_profile" => "users#show"
   get "profile" => "users#profile"
   get "my_cart" => "carts#show"
-  #get "admin" => "products#index", :as => "admin"
   get "logout" => "sessions#destroy", :as => "logout"
   get "login" => "sessions#new", :as => "login"
   get "search" => "search#user_search", :as => "search"
@@ -50,7 +49,7 @@ StoreEngine::Application.routes.draw do
   get "signup_admin" => "admin/admin#signup_admin"
   put "create_admin" => "admin/admin#create_admin"
 
-  resources :stores
+  resources :stores 
 
   namespace :admin do
     put "/administer" => "admin#administer"
