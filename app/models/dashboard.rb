@@ -6,14 +6,14 @@ class Dashboard
   end
 
   def store 
-    Store.includes(:categories, :products, :orders).find_by_id(@store_id)
+    @store ||= Store.includes(:categories, :products, :orders, :users).find_by_id(@store_id)
   end 
 
   def products
     @products ||= store.products
   end
 
-  def orders
+  def store_orders
     @orders ||= store.orders
   end
 
@@ -30,13 +30,13 @@ class Dashboard
   end
 
   def admins
-    admins ||= User.where(store_id: store_id)
+    admins ||= store.users
     @admins = admins.reject{|a| a.role == "user" || a.role == "platform_admin"}
   end
 
   def orders_by_status
     orders_with_status = {}
-    orders.each do |order|
+    store_orders.each do |order|
       if orders_with_status[order.status] == nil
         orders_with_status[order.status] = [order]
       else
