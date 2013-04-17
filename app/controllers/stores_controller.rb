@@ -47,7 +47,7 @@ class StoresController < ApplicationController
   def update
     @store = Store.find_by_path(params[:id])
     if @store.update_attributes(params[:store])
-      redirect_to @store, notice: 'Store was successfully updated.'
+      redirect_to @store, notice: "The store #{@store.name} was successfully updated. Your store path is #{@store.path}, and your description is #{@store.description}."
     else
       render action: "edit"
     end
