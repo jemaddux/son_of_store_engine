@@ -50,12 +50,13 @@ class OrdersController < ApplicationController
     new_order_user = order_user(params[:user_email])
 
     if cart
-      @order = Order.create_from_cart_for_user(cart,
-                                                new_order_user.id,
-                                                params[:card_number],
-                                                shipping_id(params),
-                                                billing_id(params),
-                                                cart.store_id)
+      @order = OrderProcessor.process_order(params, cart, new_order_user, current_user)
+      # @order = Order.create_from_cart_for_user(cart,
+      #                                           new_order_user.id,
+      #                                           params[:card_number],
+      #                                           shipping_id(params),
+      #                                           billing_id(params),
+      #                                           cart.store_id)
     
       if @order.valid?
         Resque.enqueue(SendConfirmationEmail, new_order_user.email, @order.confirmation, @order.confirmation_hash)
@@ -93,13 +94,5 @@ class OrdersController < ApplicationController
 
   def destroy_current_session!(cart_id)
     current_session.carts.find_by_id(cart_id).destroy if current_session.carts.find_by_id(cart_id)
-  end
-
-  def shipping_id(params)
-    Order.shipping_address(params, current_user).id
-  end
-
-  def billing_id(params)
-    Order.billing_address(params, current_user).id
   end
 end
