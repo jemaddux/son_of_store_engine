@@ -12,7 +12,7 @@ class StoresController < ApplicationController
     end
 
     @categories ||= @store.categories
-    @products ||= @store.products[0..2]
+    @products ||= @store.products.shuffle[0..2]
     render layout: "store"
   end
 

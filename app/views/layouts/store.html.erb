@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= content_for?(:title) ? yield(:title) : "Son of Store Engine" %></title>
-  <%= csrf_meta_tags %>
+  <% cache "head", expires_in: 5.minutes do %>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= content_for?(:title) ? yield(:title) : "Son of Store Engine" %></title>
+    <%= csrf_meta_tags %>
+  <% end %>
   <%= tag :meta, :name => "stripe-key", :content => STRIPE_PUBLIC_KEY %>
 
   <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -21,9 +23,6 @@
 
   <!-- Signup links -->
   <div class="container">
-    <div class="pull-left btn-group">
-      <%= link_to "All Products", all_products_path, :class => "btn btn-info trip-button" %>
-    </div>
     <div class="main_nav">
       <% if @user %>
         Logged in as,
@@ -41,10 +40,12 @@
     <!-- Brand and main nav -->
     <div class="navbar">
       <div class="navbar-inner">
-        <div class="left", style= "font-family:Arial; color:black">
-          <%= link_to @store.name, root_url, :class => "brand" %>
-          <%= render :partial => 'search/search' %>
-        </div>
+        <% cache "nav_left", expires_in: 5.minutes do %>
+          <div class="left", style= "font-family:Arial; color:black">
+            <%= link_to @store.name, root_url, :class => "brand" %>
+            <%= render :partial => 'search/search' %>
+          </div>
+        <% end %>
         <div class="cart pull-right">
           <% unless @user_cart %>Empty<% end %> Cart
           <ul>

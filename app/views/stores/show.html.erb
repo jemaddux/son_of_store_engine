@@ -12,6 +12,7 @@
       </div>
     </div>
   <% end %>
+  
 
   <div class="span9">
 
@@ -36,19 +37,23 @@
       </div>
     <% end %>
 
-    <ul class="thumbnails">
+    <% cache "products", expires_in: 5.minutes do %>
+      <ul class="thumbnails">
+        <% @products.each do |product| %>
+          <%= render :partial => 'products/sm_product', :locals => { :p => product} %>
+        <% end %>
+      </ul>
+
       <% @products.each do |product| %>
-        <%= render :partial => 'products/sm_product', :locals => { :p => product} %>
+        <div class="big_product" id="big_product_<%= product.id %>" >
+         <%= render :partial => 'products/big_product', :locals => { :product => product } %>
+        </div>
       <% end %>
-    </ul>
+    <% end %>
 
   </div>
 </div>
 
 
-<% @products.each do |product| %>
-  <div class="big_product" id="big_product_<%= product.id %>" >
-   <%= render :partial => 'products/big_product', :locals => { :product => product } %>
-  </div>
-<% end %>
+
 
