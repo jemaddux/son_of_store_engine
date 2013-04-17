@@ -24,12 +24,12 @@
   <!-- Signup links -->
   <div class="container">
     <div class="main_nav">
-      <% if @user %>
+      <% if current_user %>
         Logged in as,
           <% if @admin %>
             <%= link_to "(Admin)", profile_path %>
           <% end %>
-        as <%= link_to @user.full_name, profile_path %>.
+        as <%= link_to current_user.full_name, profile_path %>.
         <%= link_to "Log out", logout_path %>
       <% else %>
         <%= link_to "Sign up", new_user_path(return_to: store_home_path(@store.path)) %> or
@@ -40,12 +40,10 @@
     <!-- Brand and main nav -->
     <div class="navbar">
       <div class="navbar-inner">
-        <% cache "nav_left", expires_in: 5.minutes do %>
           <div class="left", style= "font-family:Arial; color:black">
             <%= link_to @store.name, root_url, :class => "brand" %>
             <%= render :partial => 'search/search' %>
           </div>
-        <% end %>
         <div class="cart pull-right">
           <% unless @user_cart %>Empty<% end %> Cart
           <ul>
