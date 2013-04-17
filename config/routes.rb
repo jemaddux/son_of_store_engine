@@ -96,4 +96,5 @@ StoreEngine::Application.routes.draw do
   end
 
   root :to => 'home#show'
+  match "/suggested" => "stores#suggested", as: "suggested"
 end

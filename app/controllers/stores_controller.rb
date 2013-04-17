@@ -13,8 +13,13 @@ class StoresController < ApplicationController
              :status => '404'
       return
     else
-      raise ActionController::RoutingError.new('Not Found')
+      suggested
     end
+  end
+
+  def suggested
+    @stores = Store.all.shuffle[0..3]
+    render :suggested
   end
 
   def store_listing
