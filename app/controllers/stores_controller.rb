@@ -46,8 +46,6 @@ class StoresController < ApplicationController
 
   def update
     @store = Store.find_by_path(params[:store][:path])
-    # raise params[:id]
-    #raise params[:store][:path].inspect
     if @store.update_attributes(params[:store])
       redirect_to store_home_path(@store.path), notice: "The store #{@store.name} was successfully updated. Your store path is #{@store.path}, and your description is #{@store.description}."
     else
