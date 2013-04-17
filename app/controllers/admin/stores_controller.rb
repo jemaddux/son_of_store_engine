@@ -2,9 +2,12 @@ class Admin::StoresController < ApplicationController
   layout "application"
 
   def index
-    if current_user && current_user.role == "platform_admin"
-      @active_stores = Store.where(status: "live")
-      @inactive_stores = Store.all.reject{ |s| s.status == "live" }
+    user ||= current_user
+    stores = Store.all
+
+    if user && user.role == "platform_admin"
+      @active_stores = stores.reject{ |s| s.status != "live" }
+      @inactive_stores = stores.reject{ |s| s.status == "live" }
     else
       redirect_to "/"
     end
