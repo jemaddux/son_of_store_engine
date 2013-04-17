@@ -33,7 +33,8 @@ class Admin::AdminController < ActionController::Base
       Resque.enqueue(SendNewAdminEmail, params[:email], store_name, temp_password)
     else
       user.role = role
-      user.store_id = params[:store_id] #something
+      puts "hello"
+      user.store_id = params[:store_id] 
       user.save
       store_name = Store.find(params[:store_id]).name
       Resque.enqueue(MakeUserNewAdmin, params[:email], store_name)
