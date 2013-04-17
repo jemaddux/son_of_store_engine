@@ -24,6 +24,7 @@ class StoresController < ApplicationController
 
   def store_listing
     @stores = Store.all
+    render :store_listing
   end
 
   def new

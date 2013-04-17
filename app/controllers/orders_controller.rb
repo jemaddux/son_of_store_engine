@@ -50,16 +50,10 @@ class OrdersController < ApplicationController
     new_order_user = order_user(params[:user_email])
 
     if cart
-      @order = Order.create_from_cart_for_user(cart,
-                                                new_order_user.id,
-                                                params[:card_number],
-                                                shipping_id(params),
-                                                billing_id(params),
-                                                cart.store_id)
+      @order = OrderProcessor.process_order(params, cart, new_order_user, current_user)
     
       if @order.valid?
-        Resque.enqueue(SendConfirmationEmail, new_order_user.email, @order.confirmation, @order.confirmation_hash)
-        destroy_current_session!(cart.id)
+        OrderProcessor.finalize_order_process(cart, new_order_user, @order, current_session)
         redirect_to display_path(@order.confirmation_hash), notice: 'Thanks! Your order was submitted.'
       end
     else
@@ -86,20 +80,4 @@ class OrdersController < ApplicationController
   def order_user(email)
     current_user || User.find_by_email(email) || User.create_guest_user(email)
   end 
-
-  def send_order_confirmation(email,order)
-    UserMailer.order_confirmation(email, order).deliver
-  end
-
-  def destroy_current_session!(cart_id)
-    current_session.carts.find_by_id(cart_id).destroy if current_session.carts.find_by_id(cart_id)
-  end
-
-  def shipping_id(params)
-    Order.shipping_address(params, current_user).id
-  end
-
-  def billing_id(params)
-    Order.billing_address(params, current_user).id
-  end
 end
