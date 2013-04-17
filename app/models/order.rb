@@ -40,7 +40,7 @@ class Order < ActiveRecord::Base
                        user_id:    user_id,
                        total_cost: total_cost,
                        shipping_id: shipping_id,
-                       billing_id:  billing_id, 
+                       billing_id:  billing_id,
                        confirmation_hash: generate_confirmation_hash,
                        card_number: card_number,
                        store_id: store_id)

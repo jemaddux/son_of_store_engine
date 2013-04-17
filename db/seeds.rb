@@ -1,194 +1,171 @@
-#USERS
-##Store Admins
-User.create(full_name: "Chelsea Komlo", email: "chelsea.komlo@gmail.com",
-  password: "password", role: :admin, display_name: "Chelsea Komlo", store_id: 1)
-User.create(full_name: "Aimee Maher", email: "aimeegirl723@gmail.com",
-  password: "password", role: :admin, display_name: "Aimee Maher", store_id: 2)
-User.create(full_name: "Jeff", email: "demoXX+jeff@jumpstartlab.com",
-  password: "password", role: :admin, display_name: "j3", store_id: 3)
-##Store Stockers
-User.create(full_name: "John Maddux", email: "jemaddux@gmail.com",
-  password: "password", role: :stocker, display_name: "John Maddux", store_id: 1)
-User.create(full_name: "Danny Garcia", email: "dannygarcia.me@gmail.com",
-  password: "password", role: :stocker, display_name: "Danny Garcia", store_id: 2)
-User.create(full_name: "Katrina Owen", email: "demoXX+katrina@jumpstartlab.com",
-  password: "password", role: :stocker, display_name: "Ree-na", store_id: 3)
-##Shoppers
-User.create(full_name: "Franklin Webber", email: "demoXX+franklin@jumpstartlab.com",
-  password: "password", role: :user, display_name: "Franklin Webber")
-##Platform Admin
-User.create(full_name: "Steve Klabnik", email: "demoXX+steve@jumpstartlab.com",
-  password: "password", role: :platform_admin, display_name: "SkrilleX")
+def seed_products(store, count)
+  count.times do |x|
+    begin
+      puts "Creating product #{x + 1} for store #{store.id}."
+      name = Andrey::Word.generate(length: 10).to_s + rand(10000).to_s
+      desc = Faker::Lorem.sentence(word_count = 6)
+      store.products.create!(name:         name,
+                             description:  desc,
+                             price:        rand(2000) + 1,
+                             category_ids: store.categories.sample.id,
+                             retired:      false)
+    rescue
+      puts "Product name is taken. Retrying."
+      retry
+    end
+  end
+end
+
+def seed_categories(store, count)
+  count.times do |x|
+    begin
+      name = Andrey::Word.generate(length: 7)
+      store.categories.create!(name: name)
+      puts "Category #{name} created for store #{store.id}."
+    rescue
+      puts "Category name taken dude! I is retrying."
+      retry
+    end
+  end
+end
+
+def seed_users(count)
+  count.times do |x|
+    puts "Creating user #{x + 1}"
+    User.create!(full_name:             "full_name#{x + 1}",
+                 email:                 "user#{x + 1}@email.com",
+                 display_name:          "display_name#{x + 1}",
+                 password:              "password",
+                 password_confirmation: "password")
+  end
+end
+
+def seed_store_admins(store, count)
+  count.times do |x|
+    User.create!(full_name:    "store admin #{x + 1}",
+                email:        "storeadmin#{x + 1}@email.com",
+                password:     "password",
+                role:         :admin,
+                display_name: "storeadmin#{x + 1}",
+                store_id:     store.id)
+  end
+end
+
+def seed_store_stockers(store, count)
+  count.times do |x|
+    User.create!(full_name:    "store stocker#{x + 1}",
+                email:        "storestocker#{x + 1}@email.com",
+                password:     "password",
+                role:         :stocker,
+                display_name: "storestocker#{x + 1}",
+                store_id:     store.id)
+  end
+end
+
+def seed_store_orders(store, count)
+  statuses = %w[pending shipped cancelled returned paid]
+  count.times do |x|
+    begin
+      puts "creating order #{x +1} for store #{store.id}."
+      shipping = CustomerAddress.create!(street_name:  "shippingstreet#{x+1}",
+                                         city:         "shippingcity#{x+1}",
+                                         state:        "shippingstate#{x+1}",
+                                         zipcode:      "shippingzipcode#{x+1}",
+                                         address_type: "shipping",
+                                         user_id:      rand(10_000))
+      billing = CustomerAddress.create!(street_name:   "billingstreet#{x+1}",
+                                         city:         "billingcity#{x+1}",
+                                         state:        "billingstate#{x+1}",
+                                         zipcode:      "billingzipcode#{x+1}",
+                                         address_type: "billing",
+                                         user_id:      shipping.user_id)
 
 
-#Oregon Sale********************************************************************
-Store.create(name: "Oregon Sale", description: "Oregon Sale", path: "oregonsale", status: "live", user_id: 1)
-
-  # CATEGORIES
-  Category.create(name: "Grub", store_id: 1)
-  Category.create(name: "Clothing", store_id: 1)
-  Category.create(name: "Weapons", store_id: 1)
-  Category.create(name: "Tools", store_id: 1)
-  Category.create(name: "Medicine", store_id: 1)
-  Category.create(name: "Essentials", store_id: 1)
-
-  ##GRUB
-  Product.create( name: "Rations", price: 2490, description: "Good for one 'splorer.", category_ids: ["1"], store_id: 1)
-  Product.create( name: "Eggs", price: 500, description: "Farm fresh and ready to consume.", category_ids: ["1"], store_id: 1)
-  Product.create( name: "Apples", price: 190, description: "Great for a snack!", category_ids: ["1"], store_id: 1)
-  Product.create( name: "Hardtack", price: 400, description: "Simple cracker for simple folk.", category_ids: ["1"], store_id: 1)
-  Product.create( name: "Prickly Pear", price: 600, description: "Prickly on the outside, scrumptious on the inside.", category_ids: ["1"], store_id: 1)
-  Product.create( name: "Bacon", price: 100, description: "By the slab for the whole fam!", category_ids: ["1"], store_id: 1)
-  Product.create( name: "Sarsaparilla", price: 300, description: "Before Coke, there was sarsaparilla.", category_ids: ["1"], store_id: 1)
-
-  ##CLOTHING
-  Product.create( name: "Basic Tunic", price: 75, description: "Plain ol' get-up for simple folk.", category_ids: ["2"], store_id: 1)
-  Product.create( name: "Leather Armor", price: 250, description: "Good fer fendin' off 'coons and der sharp claws.", category_ids: ["2"], store_id: 1)
-  Product.create( name: "Ponchos", price: 250, description: "It gets rainy on the trail. Better bring a poncho.", category_ids: ["2"], store_id: 1)
-  Product.create( name: "Moccasins", price: 196, description: "Made with real Apache tears!", category_ids: ["2"], store_id: 1)
-  Product.create( name: "Camouflage", price: 500, description: "Der buffalo won't be able to see yer.", category_ids: ["2"], store_id: 1)
-
-  ##WEAPONS
-  Product.create( name: "Blunderbuss", price: 150, description: "Big ol' gun, and loads of fun!", category_ids: ["3"], store_id: 1)
-  Product.create( name: "Navy Revolver", price: 500, description: "Great for fightin' off vermits!", category_ids: ["3"], store_id: 1)
-  Product.create( name: "Volcano Pistol", price: 891, description: "Bandits ain't gonna be stealin' none of you'ns rations.", category_ids: ["3"], store_id: 1)
-  Product.create( name: "Kentucky Rifle", price: 250, description: "Good fer huntin' squirrels 'n' such.", category_ids: ["3"], store_id: 1)
-  Product.create( name: "Buffalo Rifle", price: 1000, description: "Dis here's a one-shot K.O. Big gun fer big game.", category_ids: ["3"], store_id: 1)
-
-  ##TOOLS
-  Product.create( name: "Stone Hunting Knife", price: 98, description: "Good fer fur.", category_ids: ["3", "4"], store_id: 1)
-  Product.create( name: "Snake Charm", price: 2500, description: "Never git bit by a slippery snake 'gin!", category_ids: ["4"], store_id: 1)
-  Product.create( name: "Compass", price: 62, description: "West is where yer headed, so's ya know.", category_ids: ["4"], store_id: 1)
-  Product.create( name: "Sleeping Bag", price: 300, description: "Regain staminer! Warm 'n' cozy.", category_ids: ["4"], store_id: 1)
-  Product.create( name: "Carpenter's Tools", price: 400, description: "Fer fixin' up der wagon in a jiff!", category_ids: ["4"], store_id: 1)
-  Product.create( name: "Divining Rod", price: 500, description: "Water, water, anywhere? And lots and lots to drink!", category_ids: ["4"], store_id: 1)
-
-  ##MEDICINE
-  Product.create( name: "Miracle Cure", price: 3000, description: "Completely cures anything.", category_ids: ["5"], store_id: 1)
-  Product.create( name: "Antivenom", price: 150, description: "Heals yer snakebite in a jiff.", category_ids: ["5"], store_id: 1)
-  Product.create( name: "Lemon", price: 150, description: "Cures scurvy and tastes great too!", category_ids: ["1", "5"], store_id: 1)
-  Product.create( name: "Medicine bag", price: 1000, description: "All yer fixin's in one handy sack.", category_ids: ["5"], store_id: 1)
-  Product.create( name: "Cod Liver Oil", price: 100, description: "Tastes like dung. But good fer yer body.", category_ids: ["5"], store_id: 1)
-
-  ##ESSENTIALS
-  Product.create( name: "Oxen", price: 4000, description: "Strong, durable, and more MPG than yer SUV.", category_ids: ["6"], store_id: 1)
-  Product.create( name: "Guide", price: 15000, description: "Well hey there, partner! I'm here to help.", category_ids: ["6"], store_id: 1)
-  Product.create( name: "Wagon", price: 15000, description: "Made of wood, so you know it's good.", category_ids: ["6"], store_id: 1)
-  Product.create( name: "Tombstone", price: 1000, description: "Cause one person always gets off'd on the Oregon Trail. Always.", category_ids: ["6"], store_id: 1)
-
-  ##RETIRED
-  Product.create( name: "Peacoat", price: 3000, description: "Classy coat for the classy gent.", category_ids: ["1"], retired: true, store_id: 1)
-
-  #LINE ITEMS
-  ##1
-  LineItem.create(product_id: 1, cart_id: nil, order_id: 1, quantity: 3, price: 24)
-  LineItem.create(product_id: 2, cart_id: nil, order_id: 1, quantity: 4, price: 200)
-  LineItem.create(product_id: 3, cart_id: nil, order_id: 1, quantity: 5, price: 500)
-  ##2
-  LineItem.create(product_id: 25, cart_id: nil, order_id: 2, quantity: 1, price: 300)
-  LineItem.create(product_id: 26, cart_id: nil, order_id: 2, quantity: 15, price: 205)
-  LineItem.create(product_id: 6, cart_id: nil, order_id: 2, quantity: 4, price: 1000)
-  ##3
-  LineItem.create(product_id: 7, cart_id: nil, order_id: 3, quantity: 7, price: 600)
-  LineItem.create(product_id: 10, cart_id: nil, order_id: 3, quantity: 1, price: 5)
-  ##4
-  LineItem.create(product_id: 1, cart_id: nil, order_id: 4, quantity: 1, price: 377)
-  LineItem.create(product_id: 15, cart_id: nil, order_id: 4, quantity: 1, price: 111)
-  ##5
-  LineItem.create(product_id: 13, cart_id: nil, order_id: 5, quantity: 1, price: 800)
-  ##6
-  LineItem.create(product_id: 12, cart_id: nil, order_id: 6, quantity: 6, price: 123)
-  LineItem.create(product_id: 11, cart_id: nil, order_id: 6, quantity: 2, price: 111)
-  LineItem.create(product_id: 17, cart_id: nil, order_id: 6, quantity: 2, price: 89)
-  ##7
-  LineItem.create(product_id: 9, cart_id: nil, order_id: 7, quantity: 2, price: 4)
-  ##8
-  LineItem.create(product_id: 8, cart_id: nil, order_id: 8, quantity: 20, price: 800)
-  ##9
-  LineItem.create(product_id: 31, cart_id: nil, order_id: 9, quantity: 1, price: 444)
-  LineItem.create(product_id: 32, cart_id: nil, order_id: 9, quantity: 2, price: 1230)
-  LineItem.create(product_id: 33, cart_id: nil, order_id: 9, quantity: 3, price: 500)
-  LineItem.create(product_id: 10, cart_id: nil, order_id: 9, quantity: 4, price: 110)
-  ##10
-  LineItem.create(product_id: 24, cart_id: nil, order_id: 10, quantity: 5, price: 80)
-  LineItem.create(product_id: 23, cart_id: nil, order_id: 10, quantity: 6, price: 10)
-
-  #ORDERS
-  Order.create(status: "pending", user_id: 1, total_cost: 3372, card_number: "4242424242424242", store_id: 1)
-  Order.create(status: "pending", user_id: 4, total_cost: 7375, card_number: "4242424242424242", store_id: 1)
-  Order.create(status: "cancelled", user_id: 1, total_cost: 4205, card_number: "4242424242424242", store_id: 1)
-  Order.create(status: "cancelled", user_id: 1, total_cost: 488, card_number: "4242424242424242", store_id: 2)
-  Order.create(status: "paid", user_id: 4, total_cost: 800, card_number: "4242424242424242", store_id: 2)
-  Order.create(status: "paid", user_id: 1, total_cost: 1138, card_number: "4242424242424242", store_id: 2)
-  Order.create(status: "shipped", user_id: 4, total_cost: 8, card_number: "4242424242424242", store_id: 3)
-  Order.create(status: "shipped", user_id: 4, total_cost: 16000, card_number: "4242424242424242", store_id: 3)
-  Order.create(status: "returned", user_id: 1, total_cost: 4844, card_number: "4242424242424242", store_id: 3)
-  Order.create(status: "returned", user_id: 4, total_cost: 460, card_number: "4242424242424242", store_id: 3)
+      order = Order.create!(status:              statuses.sample,
+                            user_id:             shipping.user_id,
+                            store_id:            store.id,
+                            card_number:         '4242 4242 4242 4242',
+                            confirmation_hash:   self.generate_confirmation_hash,
+                            shipping_id:         shipping.id,
+                            billing_id:          billing.id
+                            )
+      product = store.products.sample
+      order.line_items.create(product_id: product.id,
+                              quantity:   1,
+                              price:      product.price)
+    rescue
+      puts "Oh snap! Something went wrong. Retrying."
+      retry
+    end
+  end
+end
 
 
-#Cloak and Dagger***************************************************************
-Store.create(name: "Cloak and Dagger", description: "Hide Yo Self", path: "cloakanddagger", status: "live", user_id: 2)
 
-  # CATEGORIES
-  Category.create(name: "Mustaches", store_id: 2)
-  Category.create(name: "Cloaks", store_id: 2)
-  Category.create(name: "Daggers", store_id: 2)
+### Crete Stores ###
+store1 = Store.create!(name: "Oregon Sale", description: "Oregon Sale", path: "oregonsale", status: "live")
+store2 = Store.create!(name: "Cloak and Dagger", description: "Hide Yo Self", path: "cloakanddagger", status: "live")
+store3 = Store.create!(name: "gSchool", description: "We build developers", path: "gschool", status: "live")
+store4 = Store.create!(name: "Blair's Juices", description: "Kale, muthatrucka!", path: "kale", status: "live")
+store5 = Store.create!(name: "James' Survial Store", description: "We provide what you need to escape this wretched 'Merica", path: "hideyokids", status: "live")
+store6 = Store.create!(name: "Jorge's goat farm", description: "Come have fun at the expense of fainting goats!", path: "goats", status: "live")
+store7 = Store.create!(name: "Shane's Irish Pub", description: "Come get wasted with mates that are good craic!", path: "stpatrick", status: "live")
+store8 = Store.create!(name: "Kareem's Magic Pill", description: "Work, work, work. You'll never need to sleep again!", path: "robot", status: "live")
+store9 = Store.create!(name: "Raphael's Answers", description: "Need answers to your questions, ask me. I know everything!", path: "genius", status: "pending")
+store10 = Store.create!(name: "Daniels Extreme Sports", description: "Got adrenaline? We can help with that.", path: "skis", status: "pending")
 
-  ##Mustaches
-  Product.create( name: "Hippy Mustache", price: 240, description: "Dude", category_ids: ["7"], store_id: 2)
-  Product.create( name: "Rebel Mustache", price: 400, description: "Anaarchy", category_ids: ["7"], store_id: 2)
-  Product.create( name: "Suburban Mustache", price: 424, description: "Too lazy to shave.", category_ids: ["7"], store_id: 2)
+stores = [store1, store2, store3, store4, store5, store6, store7, store8, store9, store10]
 
-  ##GRUB
-  Product.create( name: "Theatre Cloak", price: 240, description: "Dramatic", category_ids: ["8"], store_id: 2)
-  Product.create( name: "Everyday Cloak", price: 234, description: "For casual wear", category_ids: ["8"], store_id: 2)
-  Product.create( name: "Holiday Cloak", price: 524, description: "Complete with reinder", category_ids: ["8"], store_id: 2)
-
-  ##GRUB
-  Product.create( name: "Threatening Dagger", price: 204, description: "Dramatic", category_ids: ["9"], store_id: 2)
-  Product.create( name: "Small Dagger", price: 234, description: "For casual wear", category_ids: ["9"], store_id: 2)
-  Product.create( name: "Big Dagger", price: 524, description: "Really more of a sword", category_ids: ["9"], store_id: 2)
-
-  #LINE ITEMS
-  ##11
-  LineItem.create(product_id: 34, cart_id: nil, order_id: 11, quantity: 3, price: 24)
-  LineItem.create(product_id: 35, cart_id: nil, order_id: 11, quantity: 2, price: 24)
-  LineItem.create(product_id: 36, cart_id: nil, order_id: 11, quantity: 5, price: 24)
-  LineItem.create(product_id: 37, cart_id: nil, order_id: 11, quantity: 1, price: 24)
-
-
-  #ORDERS
-  Order.create(status: "pending", user_id: 7, total_cost: 3372, card_number: "4242424242424242")
-
-
-#gSchool************************************************************************
-Store.create(name: "gSchool", description: "We build developers", path: "gschool", status: "live", user_id: 3)
-  
-  # CATEGORIES
-  Category.create(name: "Developers", store_id: 3)
-  Category.create(name: "Projects", store_id: 3)
-  Category.create(name: "Free Work", store_id: 3)
-
-  ##Developers
-  Product.create( name: "John", price: 4242, description: "Will work for money", category_ids: ["10"], store_id: 3)
-  Product.create( name: "Danny Garcia", price: 4242, description: "Danarchy", category_ids: ["10"], store_id: 3)
-  Product.create( name: "Aimee Maher", price: 4242, description: "Likes Comics, will photoshop", category_ids: ["10"], store_id: 3)
-  Product.create( name: "Chelsea Komlo", price: 4242, description: "Likes Tests", category_ids: ["10"], store_id: 3)
-
-  ##Projects
-  Product.create( name: "Jetfuel", price: 240000, description: "Link shortener", category_ids: ["11"], store_id: 3)
-  Product.create( name: "SalesEngine", price: 2340000, description: "For your dataz", category_ids: ["11"], store_id: 3)
-  Product.create( name: "StoreEngine", price: 5240000, description: "This site but version 1.0", category_ids: ["11"], store_id: 3)
-
-  #LINE ITEMS
-  ##11
-  LineItem.create(product_id: 43, cart_id: nil, order_id: 12, quantity: 5, price: 4242)
-  LineItem.create(product_id: 44, cart_id: nil, order_id: 12, quantity: 5, price: 4242)
-  LineItem.create(product_id: 45, cart_id: nil, order_id: 12, quantity: 5, price: 4242)
-  LineItem.create(product_id: 46, cart_id: nil, order_id: 12, quantity: 5, price: 4242)
+### Required Store Admin ###
+User.create(full_name: "Jeff",
+            email: "demoXX+jeff@jumpstartlab.com",
+            password: "password",
+            role: :admin,
+            display_name: "j3",
+            store_id: 3)
+### Required Store Stocker ###
+User.create(full_name: "Katrina Owen",
+            email: "demoXX+katrina@jumpstartlab.com",
+            password: "password",
+            role: :stocker,
+            display_name: "Ree-na",
+            store_id: 3)
+### Required Platform Admin ###
+User.create(full_name: "Steve Klabnik",
+            email: "demoXX+steve@jumpstartlab.com",
+            password: "password",
+            role: :platform_admin,
+            display_name: "SkrilleX")
+User.create(full_name: "Danny Garcia",
+            email: "demoXX+danny@jumpstartlab.com",
+            password: "password",
+            role: :platform_admin,
+            display_name: "dannygarcia")
 
 
-  #ORDERS
-  Order.create(status: "pending", user_id: 7, total_cost: 84840, card_number: "4242424242424242")
+### Create Categories ###
+stores.each { |store| seed_categories(store, 10) }
+
+### Create Products ###
+stores.each { |store| seed_products(store, 10_000) }
+
+### Create Shoppers ###
+seed_users(10_000)
+
+### Create Store Admins ###
+stores.each {|store| seed_store_admins(store, 2)}
+
+### Create Store Stockers ###
+stores.each {|store| seed_store_stockers(store, 2)}
+
+### Create Store Orders ###
+stores.each {|store| seed_store_orders(store, 20)}
+
+
+
+
+
+
+
 
 
