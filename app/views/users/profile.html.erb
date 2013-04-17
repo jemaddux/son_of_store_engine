@@ -21,6 +21,9 @@
     <br>
     <br>
     <br>
+    <div>
+      <h5><%= link_to "Edit your account", edit_user_path(current_user.id) %></h5>
+    </div>
 
     <div style= "left; font-family:Arial; font-size:30px;">
       <h2>My Store</h2>
@@ -30,7 +33,7 @@
         <br>
         <% store_path = Store.find(current_user.store_id).path%>
         <%= link_to "View My Store", store_home_path(store_path) %>
-        <%= link_to "Edit My Store", 
+        <%= link_to "Edit My Store",
           edit_store_path(current_user.store_id) %>
       </div>
       <br>
