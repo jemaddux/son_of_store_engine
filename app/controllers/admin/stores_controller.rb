@@ -3,7 +3,8 @@ class Admin::StoresController < ApplicationController
 
   def index
     if current_user && current_user.role == "platform_admin"
-      @stores = Store.all
+      @active_stores = Store.where(status: "live")
+      @inactive_stores = Store.all.reject{ |s| s.status == "live" }
     else
       redirect_to "/"
     end

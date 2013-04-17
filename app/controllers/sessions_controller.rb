@@ -5,6 +5,8 @@ class SessionsController < ApplicationController
       if params[:redirect]
         redirect_to params[:redirect]
       elsif user.role? :user
+        # redirect_to :back
+        logger.debug ">>> #{session[:return_to_url].inspect}"
         redirect_back_or_to root_url, notice: "Logged in."
       elsif user.role?(:stocker)
         redirect_to "/"
@@ -29,5 +31,6 @@ class SessionsController < ApplicationController
   def destroy
     logout
     redirect_to root_url, notice: "Logged out."
+    session[:user_session_id] = nil 
   end
 end
