@@ -84,7 +84,6 @@ FactoryGirl.define do
   factory :line_item do
     product
     cart
-    user
   end
 
   factory :billing_address, class: CustomerAddress do

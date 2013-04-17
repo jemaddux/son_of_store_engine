@@ -50,8 +50,8 @@ class OrdersController < ApplicationController
     new_order_user = order_user(params[:user_email])
 
     if cart
-      @order = OrderProcessor.process_order(params, cart,
-                                    new_order_user, current_user)
+      @order = OrderProcessor.process_order(params, cart, new_order_user)
+    
       if @order.valid?
         OrderProcessor.finalize_order_process(cart, new_order_user,
                                             @order, current_session)
