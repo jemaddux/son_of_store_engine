@@ -44,7 +44,6 @@ describe OrdersController do
     }
   end
 
-
   describe "a user checks out" do
 
     describe "with valid params and logged out" do 
@@ -88,6 +87,11 @@ describe OrdersController do
           expect(Order.first.shipping_id).to_not eq nil
           expect(Order.first.billing_id).to_not eq nil
           expect(CustomerAddress.count).to eq 2
+        end
+
+        it "has an order associated with the store of purchase" do 
+          post :create,  checkout_with_addresses
+          expect(Order.first.store_id).to eq cart.store_id
         end
       end 
 

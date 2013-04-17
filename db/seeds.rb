@@ -114,16 +114,16 @@ Store.create(name: "Oregon Sale", description: "Oregon Sale", path: "oregonsale"
   LineItem.create(product_id: 23, cart_id: nil, order_id: 10, quantity: 6, price: 10)
 
   #ORDERS
-  Order.create(status: "pending", user_id: 1, total_cost: 3372, card_number: "4242424242424242")
-  Order.create(status: "pending", user_id: 4, total_cost: 7375, card_number: "4242424242424242")
-  Order.create(status: "cancelled", user_id: 1, total_cost: 4205, card_number: "4242424242424242")
-  Order.create(status: "cancelled", user_id: 1, total_cost: 488, card_number: "4242424242424242")
-  Order.create(status: "paid", user_id: 4, total_cost: 800, card_number: "4242424242424242")
-  Order.create(status: "paid", user_id: 1, total_cost: 1138, card_number: "4242424242424242")
-  Order.create(status: "shipped", user_id: 4, total_cost: 8, card_number: "4242424242424242")
-  Order.create(status: "shipped", user_id: 4, total_cost: 16000, card_number: "4242424242424242")
-  Order.create(status: "returned", user_id: 1, total_cost: 4844, card_number: "4242424242424242")
-  Order.create(status: "returned", user_id: 4, total_cost: 460, card_number: "4242424242424242")
+  Order.create(status: "pending", user_id: 1, total_cost: 3372, card_number: "4242424242424242", store_id: 1)
+  Order.create(status: "pending", user_id: 4, total_cost: 7375, card_number: "4242424242424242", store_id: 1)
+  Order.create(status: "cancelled", user_id: 1, total_cost: 4205, card_number: "4242424242424242", store_id: 1)
+  Order.create(status: "cancelled", user_id: 1, total_cost: 488, card_number: "4242424242424242", store_id: 2)
+  Order.create(status: "paid", user_id: 4, total_cost: 800, card_number: "4242424242424242", store_id: 2)
+  Order.create(status: "paid", user_id: 1, total_cost: 1138, card_number: "4242424242424242", store_id: 2)
+  Order.create(status: "shipped", user_id: 4, total_cost: 8, card_number: "4242424242424242", store_id: 3)
+  Order.create(status: "shipped", user_id: 4, total_cost: 16000, card_number: "4242424242424242", store_id: 3)
+  Order.create(status: "returned", user_id: 1, total_cost: 4844, card_number: "4242424242424242", store_id: 3)
+  Order.create(status: "returned", user_id: 4, total_cost: 460, card_number: "4242424242424242", store_id: 3)
 
 
 #Cloak and Dagger***************************************************************
