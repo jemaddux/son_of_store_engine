@@ -24,14 +24,8 @@ class OrderProcessor
   end
 
   def self.destroy_current_session!(cart_id, current_session)
-<<<<<<< HEAD
     if current_session.carts.find_by_id(cart_id)
       current_session.carts.find_by_id(cart_id).destroy
     end
-=======
-     puts current_session.carts.find_by_id(cart_id).inspect
-    current_session.carts.find_by_id(cart_id).destroy if current_session.carts.find_by_id(cart_id)
-    puts current_session.carts.find_by_id(cart_id).inspect
->>>>>>> 9e6d763ea40dd5ecb24c6c82a3b67b4b34619500
   end
 end
