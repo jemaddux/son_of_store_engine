@@ -11,6 +11,7 @@ describe SessionsController do
 
   describe "create" do
     it "redirects back if role is user" do
+      request.env["HTTP_REFERER"] = 'http://example.com/'
       session[:return_to_url] = 'http://example.com/'
       @controller.should_receive(:login).with('email', 'password', nil) do
         user = double
