@@ -8,8 +8,4 @@ task "resque:setup" => :environment do
   end
 end
 
-<<<<<<< HEAD
-task "jobs:work" => "resque:work"
-=======
->>>>>>> master
 
