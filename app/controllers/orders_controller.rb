@@ -15,9 +15,6 @@ class OrdersController < ApplicationController
   def change_status
     order = Order.find(params[:id])
     order.update_status(params[:status])
-    # order.status = params[:status]
-    # order.card_number = order.card_number || "4242424242424242"
-    # order.save!
     redirect_to :back
   end
 
