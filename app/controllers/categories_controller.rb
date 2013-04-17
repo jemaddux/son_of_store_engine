@@ -1,4 +1,4 @@
-class CategoriesController < ApplicationController
+class CategoriesController < ApplicationController  
   def index
     @categories = Category.all
     authorize! :manage, @category

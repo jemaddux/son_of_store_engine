@@ -1,6 +1,4 @@
 class OrdersController < ApplicationController
-
-
   def display
     @order = Order.find_by_confirmation_hash(params[:confirmation_hash])
   end

@@ -13,3 +13,4 @@ ActionMailer::Base.smtp_settings = {
   user_name: "oregontrailsale@gmail.com",
   password: "dysent4ry"
 }
+
