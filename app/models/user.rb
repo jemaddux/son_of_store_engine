@@ -35,7 +35,6 @@ class User < ActiveRecord::Base
     self.display_name          = params[:display_name]
     self.password              = params[:password]
     self.password_confirmation = params[:password_confirmation]
-    self.role                  = params[:role]
-    self.role ||= 'user'
+    self.role                  = 'user'
   end
 end
