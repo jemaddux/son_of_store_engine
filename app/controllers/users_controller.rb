@@ -33,7 +33,7 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    @user.update_user(params[:role], params[:store_id])
+    @user.update_user(params[:role], params[:store_id]) 
     redirect_to :back
   end
 
