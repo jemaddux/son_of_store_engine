@@ -2,11 +2,11 @@ class StoresController < ApplicationController
   layout "application"
 
   def show
-    @store ||= Store.includes(:categories, :products).find_by_path(params[:store_id])
+    @store ||= Store.includes(:categories).find_by_path(params[:store_id])
     if @store && @store.status == "live"
       @user_cart ||= Cart.find_current_cart(session[:user_session_id], @store)
       @categories ||= @store.categories
-      @products ||= @store.products.shuffle[0..2]
+      @products ||= @store.categories.first.products[0..2]
       render layout: "store"
     elsif @store && @store.status != "live"
       render :text => 'This store is closed for maintenance.', 
