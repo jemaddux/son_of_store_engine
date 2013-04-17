@@ -17,6 +17,10 @@ class StoresController < ApplicationController
     end
   end
 
+  def store_listing
+    @stores = Store.all
+  end
+
   def new
     @store = Store.new
   end
