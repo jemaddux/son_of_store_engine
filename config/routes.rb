@@ -43,6 +43,7 @@ StoreEngine::Application.routes.draw do
   get "my_cart" => "carts#show"
   get "logout" => "sessions#destroy", :as => "logout"
   get "login" => "sessions#new", :as => "login"
+  get "store_listing" => "stores#store_listing", :as => "store_listing"
   get "search" => "search#user_search", :as => "search"
   get "/stores/pending/:path" => "stores#pending", :as => "pending"
   put "new/admin" => "admin/admin#new_admin"
