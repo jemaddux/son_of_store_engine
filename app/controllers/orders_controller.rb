@@ -54,9 +54,6 @@ class OrdersController < ApplicationController
     
       if @order.valid?
         OrderProcessor.finalize_order_process(cart, new_order_user, @order, current_session)
-
-        # Resque.enqueue(SendConfirmationEmail, new_order_user.email, @order.confirmation, @order.confirmation_hash)
-        # destroy_current_session!(cart.id)
         redirect_to display_path(@order.confirmation_hash), notice: 'Thanks! Your order was submitted.'
       end
     else

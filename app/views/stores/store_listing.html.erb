@@ -11,7 +11,7 @@
   <tr style="background-color:#eeedc8">
     <td><%= store.name %></td>
     <td><%= store.description.to_s[0..31] %></td>
-    <td><%= link_to 'Go', store %></td>
+    <td><%= link_to 'Go', store_home_path(store.path) %></td>
     </tr>
 <% end %>
 </table>
