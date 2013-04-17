@@ -45,11 +45,15 @@ class Order < ActiveRecord::Base
                        card_number: card_number,
                        store_id: store_id)
 
-    order.add_line_items(cart)
-    order.card_number = card_number
-    order.save_payment(card_number)
-    order
+    order.process(cart, card_number)
   end
+
+  def process(cart, card_number)
+    self.add_line_items(cart)
+    self.card_number = card_number
+    self.save_payment(card_number)  
+    self
+  end 
 
   def validate_credit_card
     if card_number == nil
