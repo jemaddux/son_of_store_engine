@@ -10,6 +10,21 @@ describe StoresController do
     {}
   end
 
+  describe "get suggested stores" do 
+    let!(:store_1){ FactoryGirl.create(:store)}
+    let!(:store_2){ FactoryGirl.create(:store)}
+    let!(:store_3){ FactoryGirl.create(:store)}
+    let!(:store_4){ FactoryGirl.create(:store)}
+
+    context "given a user goes to visit a a store that does not exist" do 
+      it "redirects to a list of suggested stores" do 
+        get :show, {:status => "live", :id => 400}, valid_session
+        expect(response).to render_template("suggested")
+        expect(assigns(:stores)).to_not be_nil 
+      end
+    end
+  end
+
   describe "GET show" do
     it "assigns the requested store as @store" do
       pending
