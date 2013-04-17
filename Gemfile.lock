@@ -67,6 +67,7 @@ GEM
     coffee-script-source (1.6.2)
     commonjs (0.2.6)
     credit_card_validator (1.1.0)
+    dalli (2.6.2)
     database_cleaner (0.9.1)
     diff-lcs (1.2.1)
     erubis (2.7.0)
@@ -289,6 +290,7 @@ DEPENDENCIES
   capybara
   coffee-rails (~> 3.2.1)
   credit_card_validator
+  dalli
   database_cleaner
   fabrication
   factory_girl_rails (~> 4.0)
