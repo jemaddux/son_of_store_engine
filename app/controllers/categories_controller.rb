@@ -1,4 +1,4 @@
-class CategoriesController < ApplicationController
+class CategoriesController < ApplicationController  
   def index
     @categories = Category.all
     authorize! :manage, @category
@@ -7,9 +7,9 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @store = Store.find_by_path(params[:store_id])
+    @store = Store.includes(:categories).find_by_path(params[:store_id])
     @category = Category.find(params[:id])
-    @categories = Category.where(store_id: @store.id).sort
+    @categories = @store.categories.sort
 
     # render :show
   end

@@ -5,12 +5,16 @@ class Dashboard
     @store_id = store_id
   end
 
+  def store 
+    @store ||= Store.find_by_id(@store_id)
+  end 
+
   def products
-    @products ||= Product.where(store_id: store_id)
+    @products ||= store.products
   end
 
-  def orders
-    @orders ||= Order.where(store_id: store_id).all
+  def store_orders
+    @orders ||= store.orders
   end
 
   def statuses
@@ -18,21 +22,21 @@ class Dashboard
   end
 
   def categories
-    @categories ||= Category.where(store_id: store_id).by_name
+    @categories ||= store.categories.by_name
   end
 
   def retired_products
-    @retired_products ||= Product.where(store_id: store_id).retired
+    @retired_products ||= products.retired
   end
 
   def admins
-    admins ||= User.where(store_id: store_id)
+    admins ||= store.users
     @admins = admins.reject{|a| a.role == "user" || a.role == "platform_admin"}
   end
 
   def orders_by_status
     orders_with_status = {}
-    Order.all.each do |order|
+    store_orders.each do |order|
       if orders_with_status[order.status] == nil
         orders_with_status[order.status] = [order]
       else

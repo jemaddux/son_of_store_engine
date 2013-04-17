@@ -55,6 +55,7 @@ StoreEngine::Application.routes.draw do
 
   namespace :admin do
     put "/administer" => "admin#administer"
+    put "/remove_admin" => "admin#remove"
 
     resources :stores do
       member do

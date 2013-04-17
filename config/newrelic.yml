@@ -42,7 +42,7 @@ common: &default_settings
   #       - Ajax Service
   #       - All Services
   #
-  app_name: My Application
+  app_name: Mr Blonde Son Of Store Engine
 
   # When "true", the agent collects performance data about your
   # application and reports this data to the New Relic service at
@@ -73,7 +73,7 @@ common: &default_settings
   # The encryption required by SSL introduces a nominal amount of CPU overhead,
   # which is performed asynchronously in a background thread.  If you'd prefer
   # to send your metrics over http uncomment the following line.
-  # ssl: false
+  ssl: false
 
   #============================== Browser Monitoring ===============================
   # New Relic Real User Monitoring gives you insight into the performance real users are
