@@ -1,4 +1,9 @@
 StoreEngine::Application.configure do
+  
+
+
+  ENV["REDISTOGO_URL"] = 'redis://redistogo:80a9ac66e91326a842964316bdf3d945@squawfish.redistogo.com:9316/'
+
   # Settings specified here will take precedence over those in config/application.rb
 
   # Code is not reloaded between requests
@@ -7,6 +12,7 @@ StoreEngine::Application.configure do
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
+  config.cache_store = :dalli_store
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = true

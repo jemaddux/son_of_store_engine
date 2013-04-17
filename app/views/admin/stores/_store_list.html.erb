@@ -7,8 +7,6 @@
     <th>Status</th>
     <th>Description</th>
     <th></th>
-    <th></th>
-
   </tr>
 
 <% store_list.each do |store| %>
@@ -22,8 +20,6 @@
       <%= link_to 'Decline', change_status_on_admin_store_path(:id => store.id, :status => 'declined'), :class => 'btn btn-big', :method => "put" if store.status == "pending" %>
       <%= link_to 'Disable', change_status_on_admin_store_path(:id => store.id, :status => 'disabled'), :class => 'btn btn-big', :method => "put" if store.status == "live" %>
       <%= link_to 'Enable', change_status_on_admin_store_path(:id => store.id, :status => 'live'), :class => 'btn btn-big', :method => "put" if store.status == "disabled" %>
-    </td>
-    <td>
       <%= link_to "Administer", admin_administer_path(:store_id => store.id, :path => store.path), :class => "btn btn-big", :method => "put" if store.status == "live" %>
     </td>
   </tr>

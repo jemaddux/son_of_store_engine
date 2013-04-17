@@ -1,6 +1,4 @@
 class OrdersController < ApplicationController
-
-
   def display
     @order = Order.find_by_confirmation_hash(params[:confirmation_hash])
   end
@@ -14,9 +12,7 @@ class OrdersController < ApplicationController
 
   def change_status
     order = Order.find(params[:id])
-    order.status = params[:status]
-    order.card_number = order.card_number || "4242424242424242"
-    order.save!
+    order.update_status(params[:status])
     redirect_to :back
   end
 
@@ -51,17 +47,18 @@ class OrdersController < ApplicationController
     end
 
     cart = find_cart(params[:order][:store_id])
-
+    new_order_user = order_user(params[:user_email])
 
     if cart
       @order = Order.create_from_cart_for_user(cart,
-                                                order_user.id,
+                                                new_order_user.id,
                                                 params[:card_number],
                                                 shipping_id(params),
-                                                billing_id(params))
+                                                billing_id(params),
+                                                cart.store_id)
     
       if @order.valid?
-        # Resque.enqueue(SendConfirmationEmail, order_user.email, @order.confirmation, @order.confirmation_hash)
+        Resque.enqueue(SendConfirmationEmail, new_order_user.email, @order.confirmation, @order.confirmation_hash)
         destroy_current_session!(cart.id)
         redirect_to display_path(@order.confirmation_hash), notice: 'Thanks! Your order was submitted.'
       end
@@ -86,8 +83,7 @@ class OrdersController < ApplicationController
     current_session.carts.find_by_store_id(store_id)
   end 
 
-  def order_user
-    email = params[:user_email]
+  def order_user(email)
     current_user || User.find_by_email(email) || User.create_guest_user(email)
   end 
 

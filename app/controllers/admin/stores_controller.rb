@@ -2,9 +2,12 @@ class Admin::StoresController < ApplicationController
   layout "application"
 
   def index
-    if current_user && current_user.role == "platform_admin"
-      @active_stores = Store.where(status: "live")
-      @inactive_stores = Store.all.reject{ |s| s.status == "live" }
+    user ||= current_user
+    stores = Store.all
+
+    if user && user.role == "platform_admin"
+      @active_stores = stores.reject{ |s| s.status != "live" }
+      @inactive_stores = stores.reject{ |s| s.status == "live" }
     else
       redirect_to "/"
     end
@@ -15,15 +18,15 @@ class Admin::StoresController < ApplicationController
     @store.status = params[:status]
     @store.save
     if params[:status] == "live"
-      flash[:notice] = "#{@store.name} is now live."
-      Resque.enqueue(NotifySiteLive, @store)
+      flash[:notice] = "The store, #{@store.name}, is now live."
+      Resque.enqueue(NotifySiteLive, @store.name, @store.id)
     elsif params[:status] == "declined"
-      flash[:notice] = "#{@store.name} has been declined."
-      Resque.enqueue(NotifySiteDeclined, @store)
+      flash[:notice] = "I'm sorry but the store, #{@store.name}, store has been declined."
+      Resque.enqueue(NotifySiteDeclined, @store.name, @store.id)
     elsif params[:status] == "disabled"
-      flash[:notice] = "#{@store.name} has been disabled."
+      flash[:notice] = "The store, #{@store.name}, has been disabled."
     end
-      
+
     redirect_to '/admin/stores'
   end
 
