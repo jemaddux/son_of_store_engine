@@ -12,8 +12,8 @@ class UserMailer < ActionMailer::Base
     mail to: email
   end
 
-  def site_live(store_name, store_id)
-    @store = store_name
+  def site_live(store_path, store_id)
+    @store = store_path
     user = User.find(store_id)
     mail to: user.email
   end
