@@ -38,16 +38,18 @@ class StoresController < ApplicationController
     @store = Store.new(params[:store])
     @store.status = "pending"
     if @store.save
-      redirect_to "/stores/pending/#{@store.path}", notice: 'Store was successfully created.'
+      redirect_to "/stores/pending/#{@store.path}"
     else
       render action: "new"
     end
   end
 
   def update
-    @store = Store.find_by_path(params[:id])
+    @store = Store.find_by_path(params[:store][:path])
+    # raise params[:id]
+    #raise params[:store][:path].inspect
     if @store.update_attributes(params[:store])
-      redirect_to @store, notice: 'Store was successfully updated.'
+      redirect_to store_home_path(@store.path), notice: "The store #{@store.name} was successfully updated. Your store path is #{@store.path}, and your description is #{@store.description}."
     else
       render action: "edit"
     end
