@@ -1,6 +1,5 @@
 class StoresController < ApplicationController
   layout "application"
-  caches_page :show
 
   def show
     @user = current_user
@@ -15,7 +14,6 @@ class StoresController < ApplicationController
     @categories ||= @store.categories
     @products ||= @store.products[0..2]
     render layout: "store"
-    expires_in 5.minutes, public: true
   end
 
   def new

@@ -1,6 +1,4 @@
-class CategoriesController < ApplicationController
-  caches_page :show
-  
+class CategoriesController < ApplicationController  
   def index
     @categories = Category.all
     authorize! :manage, @category
