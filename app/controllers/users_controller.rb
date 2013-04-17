@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  caches_page :show
+  
   def new
     session[:return_to] = params[:return_to]
     @user = User.new

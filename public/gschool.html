@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Son of Store Engine</title>
+  <meta content="authenticity_token" name="csrf-param" />
+<meta content="Q26nUoaWGIF1+x+7lwxe/JKt5xr7aRJt8SN1Tra/Bvo=" name="csrf-token" />
+  <meta content="pk_test_cthswgOI3iIg9NuDEbhbSEbI" name="stripe-key" />
+
+  <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+  <![endif]-->
+
+  <link href="/assets/application.css?body=1" media="all" rel="stylesheet" type="text/css" />
+<link href="/assets/bootstrap_and_overrides.css?body=1" media="all" rel="stylesheet" type="text/css" />
+<link href="/assets/categories.css?body=1" media="all" rel="stylesheet" type="text/css" />
+<link href="/assets/home.css?body=1" media="all" rel="stylesheet" type="text/css" />
+<link href="/assets/line_items.css?body=1" media="all" rel="stylesheet" type="text/css" />
+<link href="/assets/orders.css?body=1" media="all" rel="stylesheet" type="text/css" />
+<link href="/assets/products.css?body=1" media="all" rel="stylesheet" type="text/css" />
+<link href="/assets/scaffolds.css?body=1" media="all" rel="stylesheet" type="text/css" />
+<link href="/assets/search.css?body=1" media="all" rel="stylesheet" type="text/css" />
+<link href="/assets/sessions.css?body=1" media="all" rel="stylesheet" type="text/css" />
+<link href="/assets/stores.css?body=1" media="all" rel="stylesheet" type="text/css" />
+<link href="/assets/trips.css?body=1" media="all" rel="stylesheet" type="text/css" />
+<link href="/assets/users.css?body=1" media="all" rel="stylesheet" type="text/css" />
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
+</head>
+
+<body>
+
+  <!-- Signup links -->
+  <div class="container">
+    <div class="pull-left btn-group">
+      <a href="/all_products" class="btn btn-info trip-button">All Products</a>
+    </div>
+    <div class="main_nav">
+        Logged in as,
+        as <a href="/profile">Chelsea Komlo</a>.
+        <a href="/logout">Log out</a>
+    </div>
+
+    <!-- Brand and main nav -->
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="left", style= "font-family:Arial; color:black">
+          <a href="http://lvh.me:8080/" class="brand">gSchool</a>
+          <span class="search">
+  <form accept-charset="UTF-8" action="/search" class="top_search navbar-search" method="get"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div>
+    <input class="search_text" id="search" name="search" type="text" />
+    <button class="search_button search-query btn btn-small btn-success" id="click_search" name="search_button" type="submit" value="Search">
+      <i class="icon-search"></i>
+    </button>
+</form></span>
+
+        </div>
+        <div class="cart pull-right">
+          Empty Cart
+          <ul>
+            <li><img alt="New_cart_sm3" src="/assets/new_cart_sm3.png" /></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="breaker" class="container"></div>
+
+  <div class="container">
+
+    <!-- Flash -->
+    <div class="row">
+      <div class="span12">
+        
+      </div>
+    </div>
+
+    <div class="row">
+
+    <div class="span3">
+      <div class="main_col with_ribbon">
+        <h2 class="ribbon"><img alt="Categories" src="/assets/categories.png" /></h2>
+        <ul class="nav nav-tabs nav-stacked">
+          <li><a href="/oregonsale/categories/1">Grub (8 items)</a></li>
+          <li><a href="/oregonsale/categories/2">Clothing (5 items)</a></li>
+          <li><a href="/oregonsale/categories/3">Weapons (6 items)</a></li>
+          <li><a href="/oregonsale/categories/4">Tools (6 items)</a></li>
+          <li><a href="/oregonsale/categories/5">Medicine (5 items)</a></li>
+          <li><a href="/oregonsale/categories/6">Essentials (4 items)</a></li>
+        </ul>
+      </div>
+    </div>
+
+  <div class="span9">
+
+      <div>
+        <div id="myCarousel" class="carousel slide">
+          <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+          </ol>
+          <!-- Carousel items -->
+          <div class="carousel-inner">
+            <div class="active item"><a href="/trips/new"><img alt="Carouselbanner2" src="/assets/CarouselBanner2.png" /></a></div>
+            <div class="item"><img alt="Carouselbanner3" src="/assets/CarouselBanner3.png" /></div>
+            <div class="item"><img alt="Carouselbanner1" src="/assets/CarouselBanner1.png" /></div>
+          </div>
+          <!-- Carousel nav -->
+          <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+          <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+        </div>
+      </div>
+
+    <ul class="thumbnails">
+        <li class="span3" id="46">
+  <div class="thumbnail adtl_col" id="46">
+    <h4 id="46" class="product_name">
+      Chelsea Komlo
+    </h4>
+    <span id="46" class="small_product">
+      <i>$42.42</i>
+    </span>
+    <form action="/line_items?product_id=46" class="button_to" method="post"><div><input class="btn btn-success" id="prod_46" type="submit" value="Add to Cart" /><input name="authenticity_token" type="hidden" value="Q26nUoaWGIF1+x+7lwxe/JKt5xr7aRJt8SN1Tra/Bvo=" /></div></form>
+  </div>
+</li>
+
+
+
+
+        <li class="span3" id="44">
+  <div class="thumbnail adtl_col" id="44">
+    <h4 id="44" class="product_name">
+      Danny Garcia
+    </h4>
+    <span id="44" class="small_product">
+      <i>$42.42</i>
+    </span>
+    <form action="/line_items?product_id=44" class="button_to" method="post"><div><input class="btn btn-success" id="prod_44" type="submit" value="Add to Cart" /><input name="authenticity_token" type="hidden" value="Q26nUoaWGIF1+x+7lwxe/JKt5xr7aRJt8SN1Tra/Bvo=" /></div></form>
+  </div>
+</li>
+
+
+
+
+        <li class="span3" id="45">
+  <div class="thumbnail adtl_col" id="45">
+    <h4 id="45" class="product_name">
+      Aimee Maher
+    </h4>
+    <span id="45" class="small_product">
+      <i>$42.42</i>
+    </span>
+    <form action="/line_items?product_id=45" class="button_to" method="post"><div><input class="btn btn-success" id="prod_45" type="submit" value="Add to Cart" /><input name="authenticity_token" type="hidden" value="Q26nUoaWGIF1+x+7lwxe/JKt5xr7aRJt8SN1Tra/Bvo=" /></div></form>
+  </div>
+</li>
+
+
+
+
+    </ul>
+
+  </div>
+</div>
+
+
+  <div class="big_product" id="big_product_46" >
+   <div class="product_pic" style="float: left;">
+  
+</div>
+<div>
+  <h2 class="big_product_title" >Chelsea Komlo</h2>
+  $42.42
+  <form action="/line_items?product_id=46" class="button_to" method="post"><div><input type="submit" value="Add to Cart" /><input name="authenticity_token" type="hidden" value="Q26nUoaWGIF1+x+7lwxe/JKt5xr7aRJt8SN1Tra/Bvo=" /></div></form>
+  Likes Tests
+  
+</div>
+
+  </div>
+  <div class="big_product" id="big_product_44" >
+   <div class="product_pic" style="float: left;">
+  
+</div>
+<div>
+  <h2 class="big_product_title" >Danny Garcia</h2>
+  $42.42
+  <form action="/line_items?product_id=44" class="button_to" method="post"><div><input type="submit" value="Add to Cart" /><input name="authenticity_token" type="hidden" value="Q26nUoaWGIF1+x+7lwxe/JKt5xr7aRJt8SN1Tra/Bvo=" /></div></form>
+  Danarchy
+  
+</div>
+
+  </div>
+  <div class="big_product" id="big_product_45" >
+   <div class="product_pic" style="float: left;">
+  
+</div>
+<div>
+  <h2 class="big_product_title" >Aimee Maher</h2>
+  $42.42
+  <form action="/line_items?product_id=45" class="button_to" method="post"><div><input type="submit" value="Add to Cart" /><input name="authenticity_token" type="hidden" value="Q26nUoaWGIF1+x+7lwxe/JKt5xr7aRJt8SN1Tra/Bvo=" /></div></form>
+  Likes Comics, will photoshop
+  
+</div>
+
+  </div>
+
+
+  </div>
+
+</body>
+</html>

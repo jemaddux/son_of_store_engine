@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+  caches_page :show
+
   def show
 
     @user ||= current_user
