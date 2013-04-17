@@ -21,7 +21,8 @@ module BootstrapFlashHelper
     Array(message).each do |msg|
       text = content_tag(:div, content_tag(:button, raw("&times;"),
             :class => "close", "data-dismiss" => "alert") + msg.html_safe,
-            :class => "alert fade in alert-#{type}")
+            :class => "alert fade in alert-#{type} span12"
+            )
       flash_messages << text if message
     end
   end

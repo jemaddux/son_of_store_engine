@@ -38,7 +38,7 @@ class StoresController < ApplicationController
     @store = Store.new(params[:store])
     @store.status = "pending"
     if @store.save
-      redirect_to "/stores/pending/#{@store.path}", notice: 'Store was successfully created.'
+      redirect_to "/stores/pending/#{@store.path}"
     else
       render action: "new"
     end
