@@ -20,52 +20,21 @@
               <%= yield %>
         </div>
      </div>
-    <!-- Save for Web Slices (main3.psd) -->
     <center>
-      <table id="Table_01" width="1201" height="816" border="0" cellpadding="0" cellspacing="0">
-        <tr>
-          <td colspan="5">
-            <%= image_tag "main3_01.gif", :size => "1200x26" %></td>
-          <td>
-            <%= image_tag "spacer.gif", :size => "1x26" %></td>
-        </tr>
-        <tr>
-          <td colspan="3" rowspan="2">
-            <%= image_tag "main3_02.gif", :size => "846x532" %></td>
-          <td>
-            <a href="/login">
-              <%= image_tag "LoginButton.jpg", :size => "173x169" %></a></td>
-          <td>
-            <a href="/users/new">
-              <%= image_tag "SignUpButton.jpg", :size => "181x169" %></a></td>
-          <td>
-            <%= image_tag "spacer.gif", :size => "1x169" %></td>
-        </tr>
-        <tr>
-          <td colspan="2" rowspan="3">
-            <%= image_tag "main3_05.gif", :size => "354x621" %></td>
-          <td>
-            <%= image_tag "spacer.gif", :size => "1x363" %></td>
-        </tr>
-        <tr>
-          <td rowspan="2">
-            <%= image_tag "main3_06.gif", :size =>"93x258" %></td>
-          <td>
-            <a href="/store_listing">
-              <%= image_tag "StoreButton.gif", :size => "216x205" %></a></td>
-          <td rowspan="2">
-            <%= image_tag "main3_08.gif", :size => "537x258"%></td>
-          <td>
-            <%= image_tag "spacer.gif", :size => "1x205" %></td>
-        </tr>
-        <tr>
-          <td>
-            <%= image_tag "main3_09.gif", :size => "216x53" %></td>
-          <td>
-            <%= image_tag "spacer.gif", :size => "1x53" %></td>
-        </tr>
-      </table>
-    </center>
-  </body>
+
+    <%=image_tag "main4.jpg", :alt => "index", :size => "1200x816", :usemap => "#viewstores" %>
+
+    <map name="viewstores" id="viewstores">
+      <area shape="circle" coords="203,657,77" href="/store_listing" alt="View All Stores" />
+      <area shape="circle" coords="925,94,64" href="/login" alt="Log In" />
+      <area shape="circle" coords="1084,90,56" href="/users/new" alt="Sign Up" />
+    </map>
+    <map name="login" id="login">
+      <area shape="circle" coords="200,665,62" href="/store_listing" alt="view_stores" />
+      <area shape="circle" coords="929,92,69" href="/login" alt="Log In" />
+    </map>
+  </center>
+ </body>
 </html>
+
 
