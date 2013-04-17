@@ -50,8 +50,8 @@ class OrdersController < ApplicationController
     new_order_user = order_user(params[:user_email])
 
     if cart
-      @order = OrderProcessor.process_order(params, cart, new_order_user, current_user)
-    
+      @order = OrderProcessor.process_order(params, cart,
+                                    new_order_user, current_user)
       if @order.valid?
         OrderProcessor.finalize_order_process(cart, new_order_user,
                                             @order, current_session)
@@ -81,5 +81,5 @@ class OrdersController < ApplicationController
 
   def order_user(email)
     current_user || User.find_by_email(email) || User.create_guest_user(email)
-  end 
+  end
 end

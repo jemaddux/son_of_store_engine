@@ -10,7 +10,8 @@ class OrderProcessor
   end
 
   def self.finalize_order_process(cart, new_order_user, order, current_session)
-    Resque.enqueue(SendConfirmationEmail, new_order_user.email, order.confirmation, order.confirmation_hash)
+    Resque.enqueue(SendConfirmationEmail, new_order_user.email,
+                      order.confirmation, order.confirmation_hash)
     destroy_current_session!(cart.id, current_session)
   end
 
@@ -25,6 +26,8 @@ class OrderProcessor
   end
 
   def self.destroy_current_session!(cart_id, current_session)
-    current_session.carts.find_by_id(cart_id).destroy if current_session.carts.find_by_id(cart_id)
+    if current_session.carts.find_by_id(cart_id)
+      current_session.carts.find_by_id(cart_id).destroy
+    end
   end
 end
