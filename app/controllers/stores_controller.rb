@@ -1,14 +1,10 @@
 class StoresController < ApplicationController
   layout "application"
+  caches_page :show
 
   def show
-
     @user = current_user
-
-    @admin = @user && (@user.role?(:admin) || @user.role?(:platform_admin))
-
     @store = Store.includes(:categories, :products).find_by_path(params[:store_id])
-
     @user_cart = Cart.find_current_cart(session[:user_session_id], @store)
 
     if @store && @store.status != "live"
@@ -19,6 +15,7 @@ class StoresController < ApplicationController
     @categories ||= @store.categories
     @products ||= @store.products.shuffle[0..2]
     render layout: "store"
+    expires_in 5.minutes, public: true
   end
 
   def new
