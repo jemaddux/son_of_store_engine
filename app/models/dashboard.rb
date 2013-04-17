@@ -6,7 +6,7 @@ class Dashboard
   end
 
   def store 
-    @store ||= Store.includes(:categories, :products, :orders, :users).find_by_id(@store_id)
+    @store ||= Store.find_by_id(@store_id)
   end 
 
   def products

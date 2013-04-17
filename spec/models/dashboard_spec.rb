@@ -36,6 +36,6 @@ describe Dashboard do
 
   it "finds the stores orders" do 
     dashboard = Dashboard.new("1")
-    expect(dashboard.orders).to eq [order]
+    expect(dashboard.store_orders).to eq [order]
   end
 end
