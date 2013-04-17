@@ -18,32 +18,37 @@ describe StoresController do
 
     context "given a user goes to visit a a store that does not exist" do 
       it "redirects to a list of suggested stores" do 
-        get :show, {:status => "live", :id => 400}, valid_session
+        get :show, {:status => "live", :store_id => 400}, valid_session
         expect(response).to render_template("suggested")
         expect(assigns(:stores)).to_not be_nil 
       end
     end
   end
 
-  describe "GET show" do
+  describe "store show" do
+
+    let!(:store_1){ FactoryGirl.create(:store)}
+    let!(:category){FactoryGirl.create(:category)}
+
+    before do 
+      category.store_id = store_1.id 
+      category.save!
+    end
+
     it "assigns the requested store as @store" do
-      pending
-      store = Store.create! valid_attributes
-      store.status = "live"
-      store.save
-      get :show, {:status => store.status, :id => store.id}, valid_session
-      assigns(:store).should eq(store)
+      get :show, {:status => store_1.status, :store_id => store_1.path}, valid_session
+      assigns(:store).should eq(store_1)
     end
   end
 
-  describe "GET new" do
+  describe "new store" do
     it "assigns a new store as @store" do
       get :new, {}, valid_session
       assigns(:store).should be_a_new(Store)
     end
   end
 
-  describe "GET edit" do
+  describe "edit" do
     it "assigns the requested store as @store" do
       store = Store.create! valid_attributes
       get :edit, {:id => store.to_param}, valid_session
@@ -51,7 +56,7 @@ describe StoresController do
     end
   end
 
-  describe "POST create" do
+  describe "create" do
     describe "with valid params" do
       it "creates a new Store" do
         expect {
@@ -88,7 +93,7 @@ describe StoresController do
     end
   end
 
-  describe "DELETE destroy" do
+  describe "destroy" do
     it "destroys the requested store" do
       store = Store.create! valid_attributes
       expect {
