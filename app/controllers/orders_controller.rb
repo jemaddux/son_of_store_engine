@@ -54,7 +54,8 @@ class OrdersController < ApplicationController
                                                 new_order_user.id,
                                                 params[:card_number],
                                                 shipping_id(params),
-                                                billing_id(params))
+                                                billing_id(params),
+                                                cart.store_id)
     
       if @order.valid?
         Resque.enqueue(SendConfirmationEmail, new_order_user.email, @order.confirmation, @order.confirmation_hash)

@@ -2,9 +2,12 @@ class StoresController < ApplicationController
   layout "application"
 
   def show
-    @user = current_user
-    @store = Store.includes(:categories, :products).find_by_path(params[:store_id])
-    @user_cart = Cart.find_current_cart(session[:user_session_id], @store)
+
+    @user ||= current_user
+
+    @store ||= Store.includes(:categories, :products).find_by_path(params[:store_id])
+
+    @user_cart ||= Cart.find_current_cart(session[:user_session_id], @store)
 
     if @store && @store.status != "live"
       render :text => 'This store is closed for maintenance. Please check back soon.', :status => '404'
