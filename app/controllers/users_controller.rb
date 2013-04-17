@@ -16,7 +16,7 @@ class UsersController < ApplicationController
       send_account_confirmation(@user.email)
 
       destination = session.delete(:return_to) || root_url
-      redirect_to destination, notice: "Your account has been successfully created!"
+      redirect_to destination, notice: "Hi #{@user.full_name}, your account has been successfully created!"
     else
       render :new
     end

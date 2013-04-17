@@ -17,10 +17,10 @@ class Admin::StoresController < ApplicationController
       flash[:notice] = "The store is now live."
       UserMailer.site_live(@store).deliver
     elsif params[:status] == "declined"
-      flash[:notice] = "The store has been declined."
+      flash[:notice] = "I'm sorry but the store, #{@store.name}, store has been declined."
       UserMailer.site_declined(@store).deliver
     end
-      
+
     redirect_to '/admin/stores'
   end
 
