@@ -29,11 +29,9 @@ class User < ActiveRecord::Base
     user
   end
 
-  def update_user(updated_role, store_id)
+  def update_user(updated_role, store)
     if updated_role == "user"
-      @store = Store.find_by_id(store_id)
-      store_admins = @store.users.reject { |user| user.role != "admin" }
-      if store_admins.size > 1
+      if Store.find_store_users(store).size > 1
         self.role = updated_role 
         self.save!
       end
@@ -41,7 +39,5 @@ class User < ActiveRecord::Base
       self.role = updated_role 
       self.save!
     end
-    # @user.role = params[:role]
-    # @user.save!
   end
 end

@@ -23,7 +23,7 @@ describe UsersController do
 
       it "the superuser cannot remove the stores final admin" do 
         put :update, { :id => admin.id, :role => "user", :store_id => store.id  }
-        expect(assigns(:user).id).to eq store.id
+        # expect(assigns(:user).id).to_not eq store.id
         expect(assigns(:user).role).to eq "admin"
       end
     end
