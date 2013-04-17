@@ -39,7 +39,6 @@ class Admin::AdminController < ActionController::Base
                       store_name, temp_password)
     else
       user.role = role
-      puts "hello"
       user.store_id = params[:store_id]
       user.save
       store_name = Store.find(params[:store_id]).name
