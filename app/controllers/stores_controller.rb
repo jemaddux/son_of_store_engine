@@ -2,23 +2,16 @@ class StoresController < ApplicationController
   layout "application"
 
   def show
-
-    @user ||= current_user
-
-    if Store.find_by_path(params[:store_id])
-
-      @store ||= Store.includes(:categories, :products).find_by_path(params[:store_id])
-
+    @store ||= Store.includes(:categories, :products).find_by_path(params[:store_id])
+    if @store && @store.status == "live"
       @user_cart ||= Cart.find_current_cart(session[:user_session_id], @store)
-
-      if @store && @store.status != "live"
-        render :text => 'This store is closed for maintenance. Please check back soon.', :status => '404'
-        return
-      end
-
       @categories ||= @store.categories
       @products ||= @store.products.shuffle[0..2]
       render layout: "store"
+    elsif @store && @store.status != "live"
+      render :text => 'This store is closed for maintenance.', 
+             :status => '404'
+      return
     else
       raise ActionController::RoutingError.new('Not Found')
     end
