@@ -2,13 +2,13 @@
 
   <div class="row">
     <div class="span11">
-      <% if current_user.role == "stocker" %>
+      <% if @user.role == "stocker" %>
 
       <% else %>
 
         <div id="admins">
            <%= link_to "Edit Store Details", 
-          edit_store_path(current_user.store_id) %>
+          edit_store_path(@user.store_id) %>
           <h3>Admins & Stockers</h3>
             <!-- Table bodies by status -->
             <div class="tab-content">
@@ -29,7 +29,8 @@
                     <td><%= admin.email %></td>
                     <td><%= admin.role %></td>
                     <td>
-                      <%= link_to 'Remove Admin', user_path(:id => admin.id, :role => "user"), :class => 'btn btn-mini', :method => "put", :confirm => "Are you sure?" %>
+                      
+                      <%= link_to 'Remove Admin', admin_remove_admin_path(:id => admin.id, :role => "user"), :class => 'btn btn-mini', :method => "put", :confirm => "Are you sure?" %>
                     </td>
                   </tr>
                 </div>

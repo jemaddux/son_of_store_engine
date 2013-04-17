@@ -5,7 +5,14 @@ class Store < ActiveRecord::Base
 
   has_many :products
 
+  has_many :users
+
   validates :name, :uniqueness => {:case_sensitive => false}
   validates :path, :uniqueness => {:case_sensitive => false}
+
+  def self.find_store_users(store_id)
+    store = find_by_id(store_id)
+    store.users.reject { |user| user.role != "admin" }
+  end 
 
 end
