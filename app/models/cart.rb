@@ -23,6 +23,6 @@ class Cart < ActiveRecord::Base
 
 
   def self.find_current_cart(session, store)
-    @cart ||= session && Session.find(session).carts.find_by_store_id(store.id)
+    @cart = session && Session.find(session).carts.find_by_store_id(store.id)
   end
 end

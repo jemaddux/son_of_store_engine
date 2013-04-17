@@ -3,13 +3,13 @@ class StoresController < ApplicationController
 
   def show
 
-    @user ||= current_user
+    @user = current_user
 
-    @admin ||= @user && (@user.role?(:admin) || @user.role?(:platform_admin))
+    @admin = @user && (@user.role?(:admin) || @user.role?(:platform_admin))
 
-    @store ||= Store.includes(:categories, :products).find_by_path(params[:store_id])
+    @store = Store.includes(:categories, :products).find_by_path(params[:store_id])
 
-    @user_cart ||= Cart.find_current_cart(session[:user_session_id], @store)
+    @user_cart = Cart.find_current_cart(session[:user_session_id], @store)
 
     if @store && @store.status != "live"
       render :text => 'This store is closed for maintenance. Please check back soon.', :status => '404'
@@ -45,9 +45,11 @@ class StoresController < ApplicationController
   end
 
   def update
-    @store = Store.find_by_path(params[:id])
+    @store = Store.find_by_path(params[:store][:path])
+    # raise params[:id]
+    #raise params[:store][:path].inspect
     if @store.update_attributes(params[:store])
-      redirect_to @store, notice: 'Store was successfully updated.'
+      redirect_to store_home_path(@store.path), notice: 'Store was successfully updated.'
     else
       render action: "edit"
     end
