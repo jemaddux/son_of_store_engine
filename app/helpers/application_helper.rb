@@ -1,6 +1,15 @@
 module ApplicationHelper
+
+  # def find_session    
+  #   session ||= Session.find(session[:user_session_id]) if session[:user_session_id] != nil
+  # end
+
+  # def find_session_cart
+  #   cart ||= find_session.carts.find_by_store_id(@store.id)
+  # end
+
   def cart_cost
-    if Session.find(session[:user_session_id]) && Session.find(session[:user_session_id]).carts.find_by_store_id(@store.id)
+    if Session.find(session[:user_session_id])  && Session.find(session[:user_session_id]).carts.find_by_store_id(@store.id)
       cart = Session.find(session[:user_session_id]).carts.find_by_store_id(@store.id)
       subtotals = cart.line_items.map do |item|
         item.total

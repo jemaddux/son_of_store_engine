@@ -34,7 +34,6 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.find(params[:id])
     @user.update_user(params[:user])
     @user.save
     destination = session.delete(:return_to) || :back

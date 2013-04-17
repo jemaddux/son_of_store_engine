@@ -10,6 +10,12 @@ class Order < ActiveRecord::Base
 
   validate :validate_credit_card
 
+  def update_status(status)
+    self.status = status
+    self.card_number = self.card_number || "4242424242424242"
+    self.save!
+  end
+
   def add_line_items(cart)
     cart.line_items.each do |item|
       item.cart_id = nil; line_items << item
