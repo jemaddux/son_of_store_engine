@@ -28,4 +28,14 @@ class User < ActiveRecord::Base
     user.save
     user
   end
+
+  def update_user(params)
+    self.full_name             = params[:full_name]
+    self.email                 = params[:email]
+    self.display_name          = params[:display_name]
+    self.password              = params[:password]
+    self.password_confirmation = params[:password_confirmation]
+    self.role                  = params[:role]
+    self.role ||= 'user'
+  end
 end

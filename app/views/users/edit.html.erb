@@ -1,0 +1,48 @@
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:
+      </h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :user_id, value: current_user.id %>
+  <div class="required field" style= "font-family:Arial; font-size:16px">
+    <%= f.label :full_name %>
+    <%= f.text_field :full_name %>
+  </div>
+  <div class="required field" style= "font-family:Arial; font-size:16px">
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </div>
+
+  <div class="field" style= "font-family:Arial; font-size:16px">
+    <%= f.label :display_name %>
+    <%= f.text_field :display_name %>
+  </div>
+
+  <div class="required field" style= "font-family:Arial; font-size:16px">
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </div>
+
+  <div class="required field" style= "font-family:Arial; font-size:16px">
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation %>
+  </div>
+
+  <% if can? :manage, User %>
+    <div class="field">
+      <%= f.label :role %>
+      <%= f.collection_select :role, User::ROLES, :to_s, :humanize %>
+    </div>
+  <% end %>
+  <div class="actions" style= "font-family:Arial; font-size:16px"><%= f.submit "Update Account" %></div>
+<% end %>
