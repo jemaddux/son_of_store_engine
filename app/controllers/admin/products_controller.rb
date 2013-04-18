@@ -1,11 +1,16 @@
 class Admin::ProductsController < Admin::AdminController
 
   def index
+    begin
+      authorize! :manage, Product
+    rescue
+      redirect_to store_home_path(params[:store_id])
+      return
+    end
     @dashboard = Dashboard.new(current_user.store_id)
     @user = current_user
-    authorize! :manage, Product
-
-    render :index, :notice => params.inspect
+    
+    render :index, :notice => current_user.inspect
   end
 
   def show
