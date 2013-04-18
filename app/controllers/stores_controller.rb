@@ -51,7 +51,7 @@ class StoresController < ApplicationController
   end
 
   def update
-    @store = Store.find_by_path(params[:store][:path])
+    @store = Store.find_by_id(params[:id])
     if @store.update_attributes(params[:store])
       notice_text = "#{@store.name} was updated. Your store path \
                     is #{@store.path}, and your description is \
