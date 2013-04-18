@@ -16,6 +16,7 @@ FactoryGirl.define do
     name
     description "This is a description"
     path
+    status "live"
   end
 
   factory :product do
@@ -84,7 +85,6 @@ FactoryGirl.define do
   factory :line_item do
     product
     cart
-    user
   end
 
   factory :billing_address, class: CustomerAddress do

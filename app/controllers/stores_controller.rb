@@ -2,26 +2,29 @@ class StoresController < ApplicationController
   layout "application"
 
   def show
-
-    @user ||= current_user
-
-    if Store.find_by_path(params[:store_id])
-
-      @store ||= Store.includes(:categories, :products).find_by_path(params[:store_id])
-
+    @store ||= Store.includes(:categories).find_by_path(params[:store_id])
+    if @store && @store.status == "live"
       @user_cart ||= Cart.find_current_cart(session[:user_session_id], @store)
-
-      if @store && @store.status != "live"
-        render :text => 'This store is closed for maintenance. Please check back soon.', :status => '404'
-        return
-      end
-
       @categories ||= @store.categories
-      @products ||= @store.products.shuffle[0..2]
+      @products ||= @store.categories.first.products[0..2]
       render layout: "store"
+    elsif @store && @store.status != "live"
+      render :text => 'This store is closed for maintenance.',
+             :status => '404'
+      return
     else
-      raise ActionController::RoutingError.new('Not Found')
+      suggested
     end
+  end
+
+  def suggested
+    @stores = Store.all.shuffle[0..3]
+    render :suggested
+  end
+
+  def store_listing
+    @stores = Store.all
+    render :store_listing
   end
 
   def new
@@ -50,7 +53,10 @@ class StoresController < ApplicationController
   def update
     @store = Store.find_by_path(params[:store][:path])
     if @store.update_attributes(params[:store])
-      redirect_to store_home_path(@store.path), notice: "The store #{@store.name} was successfully updated. Your store path is #{@store.path}, and your description is #{@store.description}."
+      notice_text = "#{@store.name} was updated. Your store path \
+                    is #{@store.path}, and your description is \
+                    #{@store.description}."
+      redirect_to store_home_path(@store.path), notice: notice_text
     else
       render action: "edit"
     end

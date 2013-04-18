@@ -1,6 +1,7 @@
 class Order < ActiveRecord::Base
 
-  attr_accessible :status, :user_id, :total_cost, :confirmation, :shipping_id, :billing_id, :card_number
+  attr_accessible :status, :user_id, :total_cost, :confirmation,
+                  :shipping_id, :billing_id, :card_number
   attr_accessible :confirmation_hash, :store_id
 
   has_many :line_items, :dependent => :destroy
@@ -33,7 +34,8 @@ class Order < ActiveRecord::Base
   end
 
 
-  def self.create_from_cart_for_user(cart, user_id, card_number, shipping_id, billing_id, store_id)
+  def self.create_from_cart_for_user(cart, user_id, card_number,
+                                     shipping_id, billing_id, store_id)
     total_cost = cart.calculate_total_cost
 
     order = Order.new( status:     "pending",
@@ -45,10 +47,7 @@ class Order < ActiveRecord::Base
                        card_number: card_number,
                        store_id: store_id)
 
-    order.add_line_items(cart)
-    order.card_number = card_number
-    order.save_payment(card_number)
-    order
+    order.process(cart, card_number)
   end
 
   def validate_credit_card
@@ -59,34 +58,16 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def self.shipping_address(params, user_id)
-
-    CustomerAddress.create do |a|
-      a.street_name  = params[:shipping_street_name]
-      a.city         = params[:shipping_city]
-      a.state        = params[:shipping_state]
-      a.zipcode      = params[:shipping_zipcode]
-      a.user_id      = user_id
-      a.address_type = 'shipping'
-    end
-  end
-
-
-  def self.billing_address(params, user_id)
-
-    CustomerAddress.create do |a|
-      a.street_name  = params[:billing_street_name]
-      a.city         = params[:billing_city]
-      a.state        = params[:billing_state]
-      a.zipcode      = params[:billing_zipcode]
-      a.user_id      = user_id
-      a.address_type = 'billing'
-    end
-  end
-
   def save_payment(card_number)
     self.status = "paid"
     self.confirmation = generate_confirmation_code
     self.save
   end
+
+  def process(cart, card_number)
+    self.add_line_items(cart)
+    self.card_number = card_number
+    self.save_payment(card_number)  
+    self
+  end 
 end

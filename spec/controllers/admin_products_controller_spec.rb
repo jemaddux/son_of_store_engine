@@ -19,6 +19,31 @@ describe Admin::ProductsController do
     login_user(admin)
   end
 
+
+  describe "retire and unretire" do
+
+    context "given an admin wants to retire a product" do
+
+      it "retires that product" do 
+        post :retire, {id: product1.id}
+        expect(Product.first.retired).to eq true
+      end 
+    end
+
+    context "given an admin wants to un-retire a product" do 
+
+      before do 
+        product1.retired = true
+        product1.save!
+      end
+
+      it "un-retires that product" do 
+        post :unretire, {id: product1.id}
+        expect(Product.first.retired).to eq false
+      end
+    end 
+  end
+
   describe "GET show" do
     it "assigns the requested product as @product" do
       product = Product.create! valid_attributes
@@ -116,26 +141,30 @@ describe Admin::ProductsController do
     end
   end
 
+
+  describe "GET index" do
+    it "assigns the requested product as @product" do
+      get :index
+    end
+  end
+
   describe "retire and unretire" do
     before (:each) do
       login_user(admin)
     end
+
+    it "retires a product" do
+      product = Product.create! valid_attributes
+      put :retire, {id: product.id}
+      expect(product.retired).to eq false
+    end
+
+    it "unretires a product" do
+      product = Product.create! valid_attributes
+      put :unretire, {id: product.id}
+      expect(product.retired).to eq false
+    end
   end
-
-
-  # describe "GET list" do
-  #   it "assigns all categories as @categories" do
-  #     category = Category.create(name: "test")
-  #     get :list
-  #     assigns(:categories).should eq([category])
-  #   end
-
-  #   it "assigns active products as @products" do
-  #     product = Product.create(name: "test", retired: false)
-  #     get :list
-  #     assigns(:products).should eq([product])
-  #   end
-  # end
 end
 
 

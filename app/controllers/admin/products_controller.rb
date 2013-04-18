@@ -1,11 +1,16 @@
 class Admin::ProductsController < Admin::AdminController
 
   def index
+    begin
+      authorize! :manage, Product
+    rescue
+      redirect_to store_home_path(params[:store_id])
+      return
+    end
     @dashboard = Dashboard.new(current_user.store_id)
     @user = current_user
-    authorize! :manage, Product
-
-    render :index, :notice => params.inspect
+    
+    render :index, :notice => current_user.inspect
   end
 
   def show
@@ -24,7 +29,8 @@ class Admin::ProductsController < Admin::AdminController
     product.retired = true
     product.save
 
-    redirect_to admin_products_path, notice: "The product '#{product.name}' was retired."
+    redirect_to admin_products_path,
+        notice: "The product '#{product.name}' was retired."
   end
 
   def unretire
@@ -33,7 +39,8 @@ class Admin::ProductsController < Admin::AdminController
     product.retired = false
     product.save
 
-    redirect_to admin_products_path, notice: "The product '#{product.name}' was unretired."
+    redirect_to admin_products_path,
+        notice: "The product '#{product.name}' was unretired."
   end
 
   def new
@@ -58,7 +65,8 @@ class Admin::ProductsController < Admin::AdminController
     authorize! :create, @product
 
     if @product.save
-      redirect_to admin_products_path, notice: "The product '#{@product.name}' was successfully created."
+      redirect_to admin_products_path,
+        notice: "The product '#{@product.name}' was successfully created."
     else
       redirect_to admin_products_path, notice: "The product was not created."
     end
@@ -73,7 +81,8 @@ class Admin::ProductsController < Admin::AdminController
     @product = Product.find(params[:id])
 
     if @product.update_attributes(params[:product])
-      redirect_to admin_products_path(@product), notice: "The product '#{@product.name}' was successfully updated."
+      redirect_to admin_products_path(@product),
+        notice: "The product '#{@product.name}' was successfully updated."
     else
       redirect_to admin_products_path, notice: "The product was not updated."
     end

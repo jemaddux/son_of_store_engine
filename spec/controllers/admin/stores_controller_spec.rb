@@ -51,7 +51,7 @@ describe Admin::StoresController do
 
   describe "PUT update" do  
     it "updates the requested store" do
-      pending
+      
       store = Store.create! valid_attributes
       user = User.create(role: "platform_admin")
       store.user_id = user.id
@@ -60,7 +60,7 @@ describe Admin::StoresController do
     end
 
     it "updates the requested store" do
-      pending
+      
       store = Store.create! valid_attributes
       store.status = "pending"
       put :change_status, {:store => "someStore", :store => "somePath", :id => 1, :status => "declined" }, valid_session

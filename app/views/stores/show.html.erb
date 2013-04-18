@@ -16,7 +16,7 @@
 
   <div class="span9">
 
-    <% cache "carousel", expires_in: 5.minutes do %>
+    <% cache "carousel", expires_in: 100.hours do %>
       <div>
         <div id="myCarousel" class="carousel slide">
           <ol class="carousel-indicators">
@@ -27,8 +27,7 @@
           <!-- Carousel items -->
           <div class="carousel-inner">
             <div class="active item"><%= link_to image_tag("CarouselBanner2.png"), new_trip_path %></div>
-            <div class="item"><%= image_tag("CarouselBanner3.png") %></div>
-            <div class="item"><%= image_tag("CarouselBanner1.png") %></div>
+            
           </div>
           <!-- Carousel nav -->
           <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>

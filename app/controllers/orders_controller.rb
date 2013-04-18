@@ -21,7 +21,7 @@ class OrdersController < ApplicationController
 
     cart = current_session.carts.find_by_store_id(@store_id)
 
-    if cart 
+    if cart
       if cart.calculate_total_cost <= 50
         flash[:error] =
           "Sorry. Your cart must contain at least $0.51 worth of goods."
@@ -50,17 +50,13 @@ class OrdersController < ApplicationController
     new_order_user = order_user(params[:user_email])
 
     if cart
-      @order = Order.create_from_cart_for_user(cart,
-                                                new_order_user.id,
-                                                params[:card_number],
-                                                shipping_id(params),
-                                                billing_id(params),
-                                                cart.store_id)
+      @order = OrderProcessor.process_order(params, cart, new_order_user)
     
       if @order.valid?
-        Resque.enqueue(SendConfirmationEmail, new_order_user.email, @order.confirmation, @order.confirmation_hash)
-        destroy_current_session!(cart.id)
-        redirect_to display_path(@order.confirmation_hash), notice: 'Thanks! Your order was submitted.'
+        OrderProcessor.finalize_order_process(cart, new_order_user,
+                                            @order, current_session)
+        redirect_to display_path(@order.confirmation_hash),
+                        notice: 'Thanks! Your order was submitted.'
       end
     else
       render action: "new"
@@ -77,29 +73,13 @@ class OrdersController < ApplicationController
     end
   end
 
-  private 
+  private
 
   def find_cart(store_id)
     current_session.carts.find_by_store_id(store_id)
-  end 
+  end
 
   def order_user(email)
     current_user || User.find_by_email(email) || User.create_guest_user(email)
-  end 
-
-  def send_order_confirmation(email,order)
-    UserMailer.order_confirmation(email, order).deliver
-  end
-
-  def destroy_current_session!(cart_id)
-    current_session.carts.find_by_id(cart_id).destroy if current_session.carts.find_by_id(cart_id)
-  end
-
-  def shipping_id(params)
-    Order.shipping_address(params, current_user).id
-  end
-
-  def billing_id(params)
-    Order.billing_address(params, current_user).id
   end
 end

@@ -38,4 +38,10 @@ describe Dashboard do
     dashboard = Dashboard.new("1")
     expect(dashboard.store_orders).to eq [order]
   end
+
+  it "orders by status" do 
+    dashboard = Dashboard.new("1")
+    expect(dashboard.orders_by_status).to be_kind_of(Hash) 
+    expect(dashboard.orders_by_status["pending"]).to eq [order]
+  end
 end

@@ -41,16 +41,16 @@ StoreEngine::Application.routes.draw do
   get "user_profile" => "users#show"
   get "profile" => "users#profile"
   get "my_cart" => "carts#show"
-  #get "admin" => "products#index", :as => "admin"
   get "logout" => "sessions#destroy", :as => "logout"
   get "login" => "sessions#new", :as => "login"
+  get "/stores/store_listing" => "stores#store_listing", :as => "store_listing"
   get "search" => "search#user_search", :as => "search"
   get "/stores/pending/:path" => "stores#pending", :as => "pending"
   put "new/admin" => "admin/admin#new_admin"
   get "signup_admin" => "admin/admin#signup_admin"
   put "create_admin" => "admin/admin#create_admin"
 
-  resources :stores
+  resources :stores 
 
   namespace :admin do
     put "/administer" => "admin#administer"
@@ -96,4 +96,5 @@ StoreEngine::Application.routes.draw do
   end
 
   root :to => 'home#show'
+  match "/suggested" => "stores#suggested", as: "suggested"
 end
