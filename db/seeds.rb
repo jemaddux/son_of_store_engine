@@ -19,7 +19,7 @@ end
 def seed_categories(store, count)
   count.times do |x|
     begin
-      name = Andrey::Word.generate(length: 7)
+      name = Faker::Lorem.word
       store.categories.create!(name: name)
       puts "Category #{name} created for store #{store.id}."
     rescue
