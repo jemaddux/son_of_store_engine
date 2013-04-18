@@ -14,6 +14,8 @@ gem 'therubyracer'
 gem 'uuid'
 gem 'resque', '~>1.24.0'
 gem 'newrelic_rpm'
+gem 'faker'
+gem 'andrey'
 gem 'dalli'
 
 group :assets do
