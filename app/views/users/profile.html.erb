@@ -5,24 +5,33 @@
     <title> Your User Profile</title>
   </head>
   <br>
-  <body>
-    <div style= "float:left; font-family:Arial; font-size:25px; color:#08C">
-      <h2 style= "color:black;">Account Information</h2>
-      <br>
-        <div><b>Name:</b> <%= current_user.full_name %></div>
-        <br>
-        <div><b>Email:</b> <%= current_user.email %></div>
-    </div>
-    <br>
-    <br>
-    <br>
-    <br>
+  <br>
+  <br>
+  <br>
+
+
+<table border="1" cellpadding="10" style="font-size:30px">
+  <tr align="left" style="background-color:#61c84c; color:white">
+    <th>Name</th>
+    <th>Email</th>
+</tr>
+
+  <tr style="background-color:#eeedc8">
+    <td><%= current_user.full_name %></td>
+    <td><%= current_user.email %></td>
+    </tr>
+</table>
+
     <br>
     <br>
     <br>
     <br>
     <div>
       <h5><%= link_to "Edit your account", edit_user_path(current_user.id) %></h5>
+    </div>
+
+    <div>
+      <h5><%= link_to "View past orders", user_profile_path %></h5>
     </div>
 
     <div style= "left; font-family:Arial; font-size:30px;">
