@@ -2,6 +2,36 @@ require 'spec_helper'
 
 describe UsersController do
 
+  describe "update a users profile" do 
+
+    let(:updated_user){FactoryGirl.build(:user)}
+    let!(:user){FactoryGirl.create(:user)}
+
+    before do 
+      FactoryGirl.create(:user)
+    end
+
+    it "updates their profile" do 
+      pending
+      post :update, id: user.id
+      expect(User.first.name).to eq updated_user
+    end
+  end
+
+  describe "edit" do 
+
+    let(:user){FactoryGirl.create(:user)}
+
+    before do 
+      login_user(user)
+    end
+
+    it "returns that user" do 
+      get :edit, id: user.id
+      expect(assigns(:user)).to eq user
+    end
+  end
+
   describe "GET 'new'" do
     it "renders new view" do
       get :new

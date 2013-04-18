@@ -16,6 +16,7 @@ FactoryGirl.define do
     name
     description "This is a description"
     path
+    status "live"
   end
 
   factory :product do
