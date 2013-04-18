@@ -34,7 +34,8 @@
           <td></td>
     </table>
 
-    <p><%= button_to "Checkout", new_order_path, { store_id: @cart.store_id, :class => 'icon-shopping-cart btn btn-success' } %></p>
+    <p><%= link_to "Checkout", new_order_path(store_id: @cart.store_id), :class => 'icon-shopping-cart btn btn-success'  %></p>
 </div>
+
 
 
