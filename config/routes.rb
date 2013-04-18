@@ -50,6 +50,7 @@ StoreEngine::Application.routes.draw do
   get "signup_admin" => "admin/admin#signup_admin"
   put "create_admin" => "admin/admin#create_admin"
 
+  resources :stores
 
   namespace :admin do
     put "/administer" => "admin#administer"

@@ -35,8 +35,8 @@ describe CartsController do
     end
 
     it "assigns the requested cart as @cart" do
-      get :show, {:id => cart.to_param, store_id: cart.store_id}, valid_session
-      assigns(:cart).should eq([cart])
+      get :show, {store_id: cart.store.path }, valid_session
+      assigns(:cart).should eq(cart)
     end
   end
 
