@@ -35,6 +35,7 @@
             <th><%= link_to "View My Store", store_home_path(store_path) %></th>
             <th><%= link_to "Edit My Store",
               edit_store_path(current_user.store_id) %></th>
+            <th><%= link_to "Administer My Store", store_index_path(store_path) %> </th>
         <% else %>
            <th><%= link_to "You don't have a store. Click to create a store", new_store_path %></th>
         <% end %>
