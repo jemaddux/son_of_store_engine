@@ -26,20 +26,24 @@ class LineItemsController < ApplicationController
     @line_item = LineItem.find(params[:id])
     if @line_item
       @line_item.update_attribute("quantity", @line_item.increase_quantity)
-      redirect_to @line_item.cart, notice: 'Product quantity has been updated.'
+      cart = Cart.find_by_id(@line_item.cart_id)
+      store = Store.find_by_id(cart.store_id)
+      redirect_to store_show_path(store.path), notice: 'Product quantity has been updated.'
     end
   end
 
   def decrease
     @line_item = LineItem.find(params[:id])
     if @line_item
+      cart = Cart.find_by_id(@line_item.cart_id)
+      store = Store.find_by_id(cart.store_id)
       if @line_item.quantity <= 1
         @line_item.delete
-        redirect_to @line_item.cart,
+        redirect_to store_show_path(store.path),
                     notice: 'Product quantity has been updated.'
       else
         @line_item.update_attribute("quantity", @line_item.decrease_quantity)
-        redirect_to @line_item.cart,
+        redirect_to store_show_path(store.path),
                     notice: 'Product quantity has been updated.'
       end
     end
