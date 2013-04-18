@@ -10,7 +10,18 @@ describe StoresController do
     {}
   end
 
-  describe "get suggested stores" do 
+  describe "an admin updates a store's details" do 
+
+    let(:store){FactoryGirl.create(:store)}
+
+    it "updates the details of that store" do 
+      pending
+      put :update, {name: "a name"}
+      expect(Store.first.name).to eq "a name"
+    end
+  end
+
+  describe "get suggested stores and store listing" do 
     let!(:store_1){ FactoryGirl.create(:store)}
     let!(:store_2){ FactoryGirl.create(:store)}
     let!(:store_3){ FactoryGirl.create(:store)}
@@ -22,6 +33,20 @@ describe StoresController do
         expect(response).to render_template("suggested")
         expect(assigns(:stores)).to_not be_nil 
       end
+    end
+
+    context "given a user clicks to see a list of all stores" do 
+      it "redirects to a list of all stores" do 
+        get :store_listing
+        expect(assigns(:stores)).to eq Store.all
+      end
+    end
+  end
+
+  describe "get pending stores" do 
+    it "renders pending" do 
+      store = FactoryGirl.create(:store)
+      get :pending, path: store.path
     end
   end
 

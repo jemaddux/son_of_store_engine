@@ -29,5 +29,4 @@ class Admin::StoresController < ApplicationController
 
     redirect_to '/admin/stores'
   end
-
 end

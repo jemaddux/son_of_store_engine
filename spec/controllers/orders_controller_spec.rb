@@ -197,4 +197,18 @@ describe OrdersController do
       end
     end
   end
+
+  describe "an admin updates order's status" do 
+
+    before do 
+      @request.env['HTTP_REFERER'] = 'http://localhost:3000/'
+    end
+
+    let(:order){FactoryGirl.create(:order)}
+
+    it "changes that order's status" do 
+      post :change_status, { id: order.id, status: "cancelled" }
+      expect(Order.first.status).to eq "cancelled"
+    end
+  end
 end
