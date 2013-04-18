@@ -46,6 +46,9 @@ body {
 .main_nav {
   text-align: right;
   padding: 20px 0px;
+  font-family: 'Miniver', cursive;
+  font-size: 20px;
+  color:black;
 }
 
 // main nav color? #E4B742;
@@ -120,18 +123,94 @@ body {
 .nav{
   margin: 0px;
 }
-.top_search{
-  display: inline;
-  float: right;
-}
-.search_text{
-  margin-top: 10px;
-}
-.search_button{
-  margin-top: -3px;
-}
+
 .left{
   float: left;
+  padding: 0px 0px;
+  font-family: 'Miniver', cursive;
+  font-size: 20px;
+  color:black;
+}
+
+#h5
+{
+    float:left;
+    list-style-type: none;
+    color: black;
+    font-family: 'Miniver', cursive;
+    font-size: 30px;
+    text-align: left;
+    padding:0;margin:1;background-image:none;
+}
+
+#sse2
+{
+    /*You can decorate the menu's container, such as adding background images through this block*/
+    background-color: #D5DBAD;
+    height: 38px;
+    padding: 15px;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+#sses2
+{
+    margin:0 auto;/*This will make the menu center-aligned. Removing this line will make the menu align left.*/
+}
+
+#sses2 ul 
+{ 
+    position: relative;
+    list-style-type: none;
+    float:right;
+    padding:0;margin:0;
+}
+#sses2 li
+{
+    float:right;
+    list-style-type: none;
+    padding:0;margin:0;background-image:none;
+}
+
+#sses2 h5
+{
+    float:left;
+    list-style-type: none;
+    color: black;
+    font-family: 'Miniver', cursive;
+    font-size: 30px;
+    text-align: left;
+    padding:0;margin:1;background-image:none;
+}
+
+
+/*CSS for background bubble*/
+#sses2 li.highlight
+{
+    background:#990;
+    top:0px;
+    height:30px;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    z-index: 1;
+    position: absolute;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000')";/*For IE 8*/
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#000000'); /*For IE 5.5 - 7*/
+}
+#sses2 li a
+{
+    height:20px;
+    padding-top: 8px;
+    margin: 0 20px;/*used to adjust the distance between each menu item. Now the distance is 20+20=40px.*/
+    color: black;
+    font: normal 20px arial;
+    text-align: center;
+    text-decoration: none;
+    float: left;
+    display: block;
+    position: relative;
+    z-index: 1;
 }
 
 

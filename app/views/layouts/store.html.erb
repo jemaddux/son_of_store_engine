@@ -18,6 +18,7 @@
   <%= stylesheet_link_tag "application", :media => "all" %>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
 </head>
+<link href='http://fonts.googleapis.com/css?family=Miniver' rel='stylesheet' type='text/css'>
 
 <body>
 
@@ -40,9 +41,8 @@
     <!-- Brand and main nav -->
     <div class="navbar">
       <div class="navbar-inner">
-          <div class="left", style= "font-family:Arial; color:black">
+          <div class="left">
             <%= link_to @store.name, root_url, :class => "brand" %>
-            <%= render :partial => 'search/search' %>
           </div>
         <div class="cart pull-right">
           <% unless @user_cart %>Empty<% end %> Cart

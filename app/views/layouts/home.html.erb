@@ -8,6 +8,7 @@
 <meta http-equiv="Imagetoolbar" content="no">
 <%= stylesheet_link_tag "application", :media => "all" %>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
+  <link href='http://fonts.googleapis.com/css?family=Miniver' rel='stylesheet' type='text/css'>
 
 
   <title>The Market Collective</title>
@@ -20,51 +21,26 @@
               <%= yield %>
         </div>
      </div>
-    <!-- Save for Web Slices (main3.psd) -->
-    <center>
-      <table id="Table_01" width="1201" height="816" border="0" cellpadding="0" cellspacing="0">
-        <tr>
-          <td colspan="5">
-            <%= image_tag "main3_01.gif", :size => "1200x26" %></td>
-          <td>
-            <%= image_tag "spacer.gif", :size => "1x26" %></td>
-        </tr>
-        <tr>
-          <td colspan="3" rowspan="2">
-            <%= image_tag "main3_02.gif", :size => "846x532" %></td>
-          <td>
-            <a href="/login">
-              <%= image_tag "LoginButton.jpg", :size => "173x169" %></a></td>
-          <td>
-            <a href="/users/new">
-              <%= image_tag "SignUpButton.jpg", :size => "181x169" %></a></td>
-          <td>
-            <%= image_tag "spacer.gif", :size => "1x169" %></td>
-        </tr>
-        <tr>
-          <td colspan="2" rowspan="3">
-            <%= image_tag "main3_05.gif", :size => "354x621" %></td>
-          <td>
-            <%= image_tag "spacer.gif", :size => "1x363" %></td>
-        </tr>
-        <tr>
-          <td rowspan="2">
-            <%= image_tag "main3_06.gif", :size =>"93x258" %></td>
-          <td>
-            <a href="/stores/store_listing">
-              <%= image_tag "StoreButton.gif", :size => "216x205" %></a></td>
-          <td rowspan="2">
-            <%= image_tag "main3_08.gif", :size => "537x258"%></td>
-          <td>
-            <%= image_tag "spacer.gif", :size => "1x205" %></td>
-        </tr>
-        <tr>
-          <td>
-            <%= image_tag "main3_09.gif", :size => "216x53" %></td>
-          <td>
-            <%= image_tag "spacer.gif", :size => "1x53" %></td>
-        </tr>
-      </table>
+     <div id="sse2">
+        <div id="sses2">
+          <h5>The Market Collective</h5
+          <ul>
+            <li><a href="/store_listing">View All Stores</a></li>
+      <% if current_user %>
+        <% if @admin %>
+          <li><%= link_to "(Admin)", profile_path %></li>
+        <% end %>
+          <li><%= link_to "Log out", logout_path %></li>
+          <li><%= link_to "Hi, #{current_user.full_name}!", profile_path %></li>
+        <% else %>
+          <li><%= link_to "Sign up", new_user_path %> </li>
+          <li><%= link_to "Log in", login_path %></li>.
+        <% end %>
+          </ul>
+        </div>
+      </div>
+     <center>
+      <%= image_tag "mainbanner.jpg" %>
     </center>
   </body>
 </html>
