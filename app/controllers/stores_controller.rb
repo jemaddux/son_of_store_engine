@@ -9,7 +9,7 @@ class StoresController < ApplicationController
       @products ||= @store.categories.first.products[0..2]
       render layout: "store"
     elsif @store && @store.status != "live"
-      render :text => 'This store is closed for maintenance.', 
+      render :text => 'This store is closed for maintenance.',
              :status => '404'
       return
     else
@@ -24,6 +24,7 @@ class StoresController < ApplicationController
 
   def store_listing
     @stores = Store.all
+    render :store_listing
   end
 
   def new
@@ -52,7 +53,10 @@ class StoresController < ApplicationController
   def update
     @store = Store.find_by_path(params[:store][:path])
     if @store.update_attributes(params[:store])
-      redirect_to store_home_path(@store.path), notice: "The store #{@store.name} was successfully updated. Your store path is #{@store.path}, and your description is #{@store.description}."
+      notice_text = "#{@store.name} was updated. Your store path \
+                    is #{@store.path}, and your description is \
+                    #{@store.description}."
+      redirect_to store_home_path(@store.path), notice: notice_text
     else
       render action: "edit"
     end

@@ -62,12 +62,6 @@ describe OrdersController do
           expect(response).to render_template("new")
         end
 
-        it "validates that the user has entered a valid email" do 
-          pending
-          post :create,  card_number: '4242424242424242', user_email: "not_a_valid_email", order: { "store_id" => cart.store_id }
-          expect(Order.count).to eq 0
-        end 
-
         it "allows that user to check out" do 
           post :create,  card_number: '4242424242424242', user_email: "email@email.test", order: { "store_id" => cart.store_id }
           expect(Order.count).to eq 1
@@ -154,13 +148,6 @@ describe OrdersController do
     before (:each) do 
       ApplicationController.any_instance.stub(:current_session).and_return(cart.session)
     end
-
-    it "assigns all orders as @orders" do
-      pending "need to add validation for this index, will be specific to each user"
-      order = FactoryGirl.create(:order)
-      get :index, {}
-      assigns(:orders).should eq([order])
-    end
   end
 
   describe "when a user views a single order" do
@@ -195,6 +182,30 @@ describe OrdersController do
         post :create, { "status" => "invalid value", order: { "store_id" => cart.store_id } }
         response.should render_template("new")
       end
+    end
+  end
+
+  describe "an admin updates order's status" do 
+
+    before do 
+      @request.env['HTTP_REFERER'] = 'http://localhost:3000/'
+    end
+
+    let(:order){FactoryGirl.create(:order)}
+
+    it "renders the edit form" do 
+      get :edit, id: order.id
+      expect(assigns(:order)).to eq order
+    end
+
+    it "changes that order's status" do 
+      post :change_status, { id: order.id, status: "cancelled" }
+      expect(Order.first.status).to eq "cancelled"
+    end
+
+    it "updates attributes of that order" do 
+      put :update, id: order.id, order: {store_id: 4}
+      expect(assigns(:order).store_id).to eq 4
     end
   end
 end

@@ -32,11 +32,11 @@ class User < ActiveRecord::Base
   def update_user_role(updated_role, store)
     if updated_role == "user"
       if Store.find_store_users(store).size > 1
-        self.role = updated_role 
+        self.role = updated_role
         self.save!
       end
     else
-      self.role = updated_role 
+      self.role = updated_role
       self.save!
     end
   end

@@ -4,10 +4,13 @@ class Admin::AdminController < ActionController::Base
 
   before_filter :require_admin_login
 
-  def remove 
+  def remove
     @user = User.find(params[:id])
-    @user.update_user_role(params[:role], @user.store_id) 
-    notice =  ("Admin removed" if @user.role == "user") || "Store must have at least one Admin" 
+    @user.update_user_role(params[:role], @user.store_id)
+    notice = "Store must have at least one Admin"
+    if (@user.role == "user")
+      (notice = "Admin removed")
+    end
     redirect_to :back, notice: notice
   end
 
@@ -28,13 +31,15 @@ class Admin::AdminController < ActionController::Base
     end
     if user.nil?
       temp_password = create_random_password(10)
-      User.create(full_name: "Pending", store_id: params[:store_id], email: params[:email], role: "pending_#{role}", password: temp_password)
+      User.create(full_name: "Pending", store_id: params[:store_id],
+                  email: params[:email], role: "pending_#{role}",
+                  password: temp_password)
       store_name = Store.find(params[:store_id]).name
-      Resque.enqueue(SendNewAdminEmail, params[:email], store_name, temp_password)
+      Resque.enqueue(SendNewAdminEmail, params[:email],
+                      store_name, temp_password)
     else
       user.role = role
-      puts "hello"
-      user.store_id = params[:store_id] 
+      user.store_id = params[:store_id]
       user.save
       store_name = Store.find(params[:store_id]).name
       Resque.enqueue(MakeUserNewAdmin, params[:email], store_name)

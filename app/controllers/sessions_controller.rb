@@ -5,22 +5,17 @@ class SessionsController < ApplicationController
       if params[:redirect]
         redirect_to params[:redirect]
       elsif user.role? :user
-        # redirect_to :back
-        logger.debug ">>> #{session[:return_to_url].inspect}"
-        redirect_back_or_to root_url, notice: "Logged in."
-      elsif user.role?(:stocker)
-        redirect_to "/"
+        redirect_to :back, notice: "Logged in."
       elsif user.role?(:platform_admin)
         redirect_to "/admin/stores/"
-      elsif user.role?(:admin)
+      elsif user.role?(:admin) || user.role?(:stocker)
         store = Store.find_by_id(user.store_id)
         redirect_to store_index_path(store), notice: "Logged in."
       elsif user.role?(:pending_admin)
         redirect_to '/signup_admin', notice: "Please update your password."
       end
     else
-      flash.now.alert = "Email or password was invalid."
-      render :new
+      render :new, notice: "Email or password was invalid."
     end
   end
 
@@ -31,6 +26,6 @@ class SessionsController < ApplicationController
   def destroy
     logout
     redirect_to root_url, notice: "Logged out."
-    session[:user_session_id] = nil 
+    session[:user_session_id] = nil
   end
 end
