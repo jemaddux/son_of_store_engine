@@ -1,14 +1,14 @@
 class Admin::OrdersController < Admin::AdminController
+  before_filter: :require_admin
+
   def index
     @orders = Order.all
-    authorize! :manage, Order
 
     render :index
   end
 
   def show
     @order = Order.find(params[:id])
-    authorize! :manage, Order
 
     render :show
   end
@@ -19,11 +19,6 @@ class Admin::OrdersController < Admin::AdminController
     order.save
     redirect_to "/admin"
   end
-
-  # def edit
-  #   @order = Order.find(params[:id])
-  #   authorize! :update, Order
-  # end
 
   def update
     @order = Order.find(params[:id])

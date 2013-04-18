@@ -28,7 +28,8 @@ class LineItemsController < ApplicationController
       @line_item.update_attribute("quantity", @line_item.increase_quantity)
       cart = Cart.find_by_id(@line_item.cart_id)
       store = Store.find_by_id(cart.store_id)
-      redirect_to store_show_path(store.path), notice: 'Product quantity has been updated.'
+      redirect_to store_show_path(store.path),
+            notice: 'Product quantity has been updated.'
     end
   end
 

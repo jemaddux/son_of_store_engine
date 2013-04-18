@@ -3,11 +3,11 @@ class Admin::StoresController < ApplicationController
 
   def index
     user ||= current_user
-    stores = Store.all
+    stores = Store.scoped
 
     if user && user.role == "platform_admin"
-      @active_stores = stores.reject{ |s| s.status != "live" }
-      @inactive_stores = stores.reject{ |s| s.status == "live" }
+      @active_stores = stores.where(status: "live")
+      @inactive_stores = stores.where("status != 'live'")
     else
       redirect_to "/"
     end

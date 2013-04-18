@@ -10,7 +10,7 @@ class Admin::ProductsController < Admin::AdminController
     @dashboard = Dashboard.new(current_user.store_id)
     @user = current_user
 
-    render :index, :notice => current_user.inspect
+    render :index
   end
 
   def show

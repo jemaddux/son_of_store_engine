@@ -37,10 +37,10 @@ class Dashboard
   def orders_by_status
     orders_with_status = {}
     store_orders.each do |order|
-      if orders_with_status[order.status] == nil
-        orders_with_status[order.status] = [order]
-      else
+      if orders_with_status[order.status]
         orders_with_status[order.status] << order
+      else
+        orders_with_status[order.status] = [order]
       end
     end
     orders_with_status

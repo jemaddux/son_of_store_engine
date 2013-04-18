@@ -48,7 +48,7 @@
           <% unless @user_cart %>Empty<% end %> Cart
           <ul>
           <% if @user_cart %>
-            <li><%= cart_cost %><br /><%= link_to "View", my_cart_path %></li>
+            <li><%= cart_cost %><br/><%= link_to "View", store_show_path(@store.id) %></li>
             <li><%= link_to "Checkout", new_order_path(store_id: @store.id), :class => 'btn btn-small btn-success' %></li>
             <li><%= link_to image_tag("new_cart_sm3.png"), my_cart_path(@store.id) %></li>
           <% else %>

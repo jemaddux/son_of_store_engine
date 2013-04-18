@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
     redirect_to root_url
   end
 
-  helper_method :current_cart
+  helper_method :current_cart, :require_admin
 
   def current_session
     Session.find(session[:user_session_id])
@@ -14,5 +14,9 @@ class ApplicationController < ActionController::Base
     user_session = Session.create
     session[:user_session_id] = user_session.id
     user_session
+  end
+
+  def require_admin
+    authorize! :manage, Order
   end
 end

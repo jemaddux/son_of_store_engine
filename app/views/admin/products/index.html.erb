@@ -7,7 +7,7 @@
       <% else %>
 
         <div id="admins">
-           <%= link_to "Edit Store Details", 
+           <%= link_to "Edit Store Details",
           edit_store_path(@user.store_id) %>
           <h3>Admins &amp; Stockers</h3>
             <!-- Table bodies by status -->
@@ -24,12 +24,12 @@
                 <tbody>
               <% @dashboard.admins.each do |admin| %>
                 <div class="tab-pane" id="admin">
-                  <tr>  
+                  <tr>
                     <td><%= admin.full_name %></td>
                     <td><%= admin.email %></td>
                     <td><%= admin.role %></td>
                     <td>
-                      
+
                       <%= link_to 'Remove Admin', admin_remove_admin_path(:id => admin.id, :role => "user"), :class => 'btn btn-mini', :method => "put", :confirm => "Are you sure?" %>
                     </td>
                   </tr>
@@ -38,9 +38,9 @@
               </tbody>
               </table>
             </div>
-            <%= form_tag new_admin_path, :method => "put" do %>  
-              <input type="email", name="email"> 
-              <input type="hidden", name="store_id", value="<%= current_user.store_id %>"> 
+            <%= form_tag new_admin_path, :method => "put" do %>
+              <input type="email", name="email">
+              <input type="hidden", name="store_id", value="<%= current_user.store_id %>">
               <%= submit_tag "Create New Admin", :class => 'btn btn-primary'%>
               <%= submit_tag "Create New Stocker", :class => 'btn btn-primary'%>
             <% end %>
@@ -55,11 +55,13 @@
             <% end %>
           </ul>
 
+          <br><br><br>
+
           <!-- Table bodies by status -->
           <div class="tab-content">
             <% @dashboard.orders_by_status.each do |status, orders| %>
               <div class="tab-pane" id="<%= status %>">
-                <%= render :partial => 'orders/order_table', :locals => 
+                <%= render :partial => 'orders/order_table', :locals =>
                       { :orders => orders } %>
                 <!-- This probably needs to be hidden in the controller. -->
               </div>
@@ -85,18 +87,18 @@
                 </a>
               </li>
           </ul>
-
+<br><br><br>
           <!-- Table bodies by category -->
           <div class="tab-content">
             <% @dashboard.categories.each do |category| %>
               <div class="tab-pane" id="<%= category.name %>">
-                <%= render :partial => 'product_table', :locals => 
+                <%= render :partial => 'product_table', :locals =>
                   { :products => category.products.active } %>
               </div>
             <% end %>
             <!-- Retired Products category -->
               <div class="tab-pane" id="retired">
-                <%= render :partial => "product_table", :locals => 
+                <%= render :partial => "product_table", :locals =>
                   { :products => @dashboard.retired_products } %>
               </div>
           </div>
