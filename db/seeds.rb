@@ -2,7 +2,7 @@ def seed_products(store, count)
   count.times do |x|
     begin
       puts "Creating product #{x + 1} for store #{store.id}."
-      name = Andrey::Word.generate(length: 10).to_s + rand(10000).to_s
+      name = Faker::Lorem.words(2).join(" ") + rand(10000).to_s
       desc = Faker::Lorem.sentence(word_count = 6)
       store.products.create!(name:         name,
                              description:  desc,
@@ -30,53 +30,53 @@ def seed_categories(store, count)
 end
 
 def seed_users(count)
-  count.times do |x|
-    puts "Creating user #{x + 1}"
-    User.create!(full_name:             "full_name#{x + 1}",
-                 email:                 "user#{x + 1}@email.com",
-                 display_name:          "display_name#{x + 1}",
+  1.upto count do |x|
+    puts "Creating user #{x}"
+    User.create!(full_name:             "full_name#{x}",
+                 email:                 "user#{x}@email.com",
+                 display_name:          "display_name#{x}",
                  password:              "password",
                  password_confirmation: "password")
   end
 end
 
 def seed_store_admins(store, count)
-  count.times do |x|
-    User.create!(full_name:    "store admin #{x + 1}",
-                email:        "storeadmin#{x + 1}@email.com",
-                password:     "password",
-                role:         :admin,
-                display_name: "storeadmin#{x + 1}",
-                store_id:     store.id)
+  1.upto count do |x|
+    User.create!(full_name:    "store admin #{x}",
+                 email:         "#{store.name}admin#{x}@email.com",
+                 password:      "password",
+                 role:          :admin,
+                 display_name:  "storeadmin#{x}",
+                 store_id:      store.id)
   end
 end
 
 def seed_store_stockers(store, count)
-  count.times do |x|
-    User.create!(full_name:    "store stocker#{x + 1}",
-                email:        "storestocker#{x + 1}@email.com",
-                password:     "password",
-                role:         :stocker,
-                display_name: "storestocker#{x + 1}",
-                store_id:     store.id)
+  1.upto count do |x|
+    User.create!(full_name:    "store stocker#{x}",
+                 email:        "#{store.name}stocker#{x}@email.com",
+                 password:     "password",
+                 role:         :stocker,
+                 display_name: "storestocker#{x}",
+                 store_id:     store.id)
   end
 end
 
 def seed_store_orders(store, count)
   statuses = %w[pending shipped cancelled returned paid]
-  count.times do |x|
+  1.upto count do |x|
     begin
-      puts "creating order #{x +1} for store #{store.id}."
-      shipping = CustomerAddress.create!(street_name:  "shippingstreet#{x+1}",
-                                         city:         "shippingcity#{x+1}",
-                                         state:        "shippingstate#{x+1}",
-                                         zipcode:      "shippingzipcode#{x+1}",
+      puts "creating order #{x} for store #{store.id}."
+      shipping = CustomerAddress.create!(street_name:  "shippingstreet#{x}",
+                                         city:         "shippingcity#{x}",
+                                         state:        "shippingstate#{x}",
+                                         zipcode:      "shippingzipcode#{x}",
                                          address_type: "shipping",
                                          user_id:      rand(10_000))
-      billing = CustomerAddress.create!(street_name:   "billingstreet#{x+1}",
-                                         city:         "billingcity#{x+1}",
-                                         state:        "billingstate#{x+1}",
-                                         zipcode:      "billingzipcode#{x+1}",
+      billing = CustomerAddress.create!(street_name:   "billingstreet#{x}",
+                                         city:         "billingcity#{x}",
+                                         state:        "billingstate#{x}",
+                                         zipcode:      "billingzipcode#{x}",
                                          address_type: "billing",
                                          user_id:      shipping.user_id)
 
@@ -84,8 +84,8 @@ def seed_store_orders(store, count)
       order = Order.create!(status:              statuses.sample,
                             user_id:             shipping.user_id,
                             store_id:            store.id,
-                            card_number:         '4242 4242 4242 4242',
-                            confirmation_hash:   self.generate_confirmation_hash,
+                            card_number:         '4242424242424242',
+                            confirmation_hash:   Order.generate_confirmation_hash,
                             shipping_id:         shipping.id,
                             billing_id:          billing.id
                             )
@@ -107,7 +107,7 @@ store1 = Store.create!(name: "Oregon Sale", description: "Oregon Sale", path: "o
 store2 = Store.create!(name: "Cloak and Dagger", description: "Hide Yo Self", path: "cloakanddagger", status: "live")
 store3 = Store.create!(name: "gSchool", description: "We build developers", path: "gschool", status: "live")
 store4 = Store.create!(name: "Blair's Juices", description: "Kale, muthatrucka!", path: "kale", status: "live")
-store5 = Store.create!(name: "James' Survial Store", description: "We provide what you need to escape this wretched 'Merica", path: "hideyokids", status: "live")
+store5 = Store.create!(name: "James' Survial Store", description: "We provide what you need to escape this wretched 'Merika", path: "hideyokids", status: "live")
 store6 = Store.create!(name: "Jorge's goat farm", description: "Come have fun at the expense of fainting goats!", path: "goats", status: "live")
 store7 = Store.create!(name: "Shane's Irish Pub", description: "Come get wasted with mates that are good craic!", path: "stpatrick", status: "live")
 store8 = Store.create!(name: "Kareem's Magic Pill", description: "Work, work, work. You'll never need to sleep again!", path: "robot", status: "live")
