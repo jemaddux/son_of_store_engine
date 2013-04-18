@@ -1,47 +1,45 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <h1 style= "font-family:Arial; font-size: 40px;"> <%= current_user.full_name%>'s User Profile </h1>
+    <br>
     <title> Your User Profile</title>
   </head>
-  <br>
   <body>
-    <div style= "float:left; font-family:Arial; font-size:25px; color:#08C">
-      <h2 style= "color:black;">Account Information</h2>
-      <br>
-        <div><b>Name:</b> <%= current_user.full_name %></div>
-        <br>
-        <div><b>Email:</b> <%= current_user.email %></div>
-    </div>
+    <%= image_tag "profile.png" %>
     <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <div>
-      <h5><%= link_to "Edit your account", edit_user_path(current_user.id) %></h5>
-    </div>
+    <table border="1" cellpadding="10" style="font-size:30px">
+      <tr align="left" style="background-color:#61c84c; color:white">
+        <th>Name</th>
+        <th>Email</th>
+        <th>Info</th>
+        <th>View</th>
+      </tr>
 
-    <div style= "left; font-family:Arial; font-size:30px;">
-      <h2>My Store</h2>
-    <% if current_user.store_id != nil %>
-        <br>
-      <div style= "left; font-family:Arial; font-size:25px;"
-        <br>
-        <% store_path = Store.find(current_user.store_id).path%>
-        <%= link_to "View My Store", store_home_path(store_path) %>
-        <%= link_to "Edit My Store",
-          edit_store_path(current_user.store_id) %>
-      </div>
-      <br>
-    <% else %>
-      <div style= "left; font-family:Arial; font-size:20px; ">
-       <%= link_to "You don't have a store. Click to create a store", new_store_path %>
-    <% end %>
-    </div>
+      <tr style="background-color:#eeedc8">
+        <td><%= current_user.full_name %></td>
+        <td><%= current_user.email %></td>
+        <td><%= link_to "Edit", edit_user_path(current_user.id) %></td>
+        <td><%= link_to "Orders", user_profile_path %></td>
+      </tr>
+    </table>
 
+    <br>
+    <br>
+    <%= image_tag "mystore.png" %>
+    <br>
+
+    <table border="1" cellpadding="10" style="font-size:30px">
+      <tr align="left" style="background-color:#eeedc8; color:white">
+        <% if current_user.store_id != nil %>
+            <% store_path = Store.find(current_user.store_id).path%>
+            <th><%= link_to "View My Store", store_home_path(store_path) %></th>
+            <th><%= link_to "Edit My Store",
+              edit_store_path(current_user.store_id) %></th>
+            <th><%= link_to "Administer My Store", store_index_path(store_path) %> </th>
+        <% else %>
+           <th><%= link_to "You don't have a store. Click to create a store", new_store_path %></th>
+        <% end %>
+      </tr>
+    </table>
   </body>
 </html>
