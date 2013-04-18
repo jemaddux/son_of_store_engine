@@ -50,7 +50,6 @@ StoreEngine::Application.routes.draw do
   get "signup_admin" => "admin/admin#signup_admin"
   put "create_admin" => "admin/admin#create_admin"
 
-  resources :stores 
 
   namespace :admin do
     put "/administer" => "admin#administer"
@@ -91,6 +90,7 @@ StoreEngine::Application.routes.draw do
     match "/stock/products" => "admin/products#index", as: "index"
     match "/admin/products" => "admin/products#index", as: "index"
     match "/admin" => "admin/products#index", as: "index"
+    match "/my_cart" => "carts#show", as: "show"
 
     resources :categories
   end

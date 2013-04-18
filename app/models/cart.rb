@@ -1,7 +1,7 @@
 class Cart < ActiveRecord::Base
   attr_accessible :store_id, :session_id
 
-  has_many :line_items, :dependent => :destroy
+  has_many :line_items
 
   belongs_to :session
   belongs_to :store
@@ -12,7 +12,8 @@ class Cart < ActiveRecord::Base
       current_item.quantity += 1
     else
       current_item = line_items.build(product_id: product.id,
-                price: product.price)
+                                      price: product.price, 
+                                      cart_id: self.id)
     end
     current_item
   end

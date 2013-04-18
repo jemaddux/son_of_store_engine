@@ -15,9 +15,11 @@ class LineItemsController < ApplicationController
   end
 
   def destroy
-    @line_item = LineItem.find(params[:id])
+    @line_item = LineItem.find_by_id(params[:id])
+    cart = Cart.find_by_id(@line_item.cart_id)
+    store = Store.find_by_id(cart.store_id)
     @line_item.destroy
-    redirect_to @line_item.cart
+    redirect_to store_show_path(store.path)
   end
 
   def increase

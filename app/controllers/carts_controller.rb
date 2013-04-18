@@ -4,7 +4,8 @@ class CartsController < ApplicationController
   end
 
   def show
-    @cart = current_session.carts.where(store_id: params[:store_id])
+    store = Store.find_by_path(params[:store_id])
+    @cart = current_session.carts.find_by_store_id(store.id)
   end
 
   def new
