@@ -193,9 +193,19 @@ describe OrdersController do
 
     let(:order){FactoryGirl.create(:order)}
 
+    it "renders the edit form" do 
+      get :edit, id: order.id
+      expect(assigns(:order)).to eq order
+    end
+
     it "changes that order's status" do 
       post :change_status, { id: order.id, status: "cancelled" }
       expect(Order.first.status).to eq "cancelled"
+    end
+
+    it "updates attributes of that order" do 
+      put :update, id: order.id, order: {store_id: 4}
+      expect(assigns(:order).store_id).to eq 4
     end
   end
 end
