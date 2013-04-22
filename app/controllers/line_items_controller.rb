@@ -1,16 +1,14 @@
 class LineItemsController < ApplicationController
   def create
     product = Product.find(params[:product_id])
-    if current_session.carts.find_by_store_id(product.store_id)
-      @cart = current_session.carts.find_by_store_id(product.store_id)
-      @line_item = @cart.add_product(product)
-      @line_item.quantity = params[:quantity] if params[:quantity]
+    if current_cart = current_session.carts.find_by_store_id(product.store_id)
+      @cart = current_cart
     else
       @cart = Cart.create(session_id: current_session.id,
                           store_id: product.store_id)
-      @line_item = @cart.add_product(product)
-      @line_item.quantity = params[:quantity] if params[:quantity]
     end
+    @line_item = @cart.add_product(product)
+    @line_item.quantity = params[:quantity] if params[:quantity]
     redirect_after_create
   end
 
